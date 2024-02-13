@@ -15,13 +15,13 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->index()->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('status')->index();
             $table->string('password');
             $table->string('phone_number')->nullable();
             $table->timestamp('phone_number_verified_at')->nullable();
-            $table->string('status')->index();
-            $table->string('whatsapp_number')->nullable();
-            $table->unsignedBigInteger('nationality_id')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->string('image')->nullable();
+            $table->string('default_language')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

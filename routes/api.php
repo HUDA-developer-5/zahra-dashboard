@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\User\Auth\LoginApiController;
+use App\Http\Controllers\Api\User\Auth\LogoutApiController;
+use App\Http\Controllers\Api\User\Auth\PasswordResetTokenAPIController;
+use App\Http\Controllers\Api\User\Auth\RegisterApiController;
+use App\Http\Controllers\Api\User\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::group(['middleware' => ['throttle:10,1', 'api-language']], function () {
+    // signup routes
+    Route::group(['prefix' => 'users'], function () {
+        Route::group(['prefix' => 'auth'], function () {
+            // signup routes
+            Route::post('signup', [RegisterApiController::class, 'register']);
+            Route::post('login', [LoginApiController::class, 'login']);
+            Route::post('login', [LoginApiController::class, 'login']);
+            Route::post('password/forget', [PasswordResetTokenAPIController::class, 'sendResetLink']);
+            Route::post('password/reset', [PasswordResetTokenAPIController::class, 'resetPassword']);
+        });
+    });
+
+    // Authed Routes
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('logout', [LogoutApiController::class, 'logout']);
+            Route::get('profile', [UserApiController::class, 'getProfile']);
+        });
+    });
 });

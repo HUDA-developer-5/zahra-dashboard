@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\User\Auth\PasswordResetTokenAPIController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/reset-password/{token}', [PasswordResetTokenAPIController::class, 'showResetPasswordPage'])->name('reset_password');
+
 Route::get('/', function () {
     return view('welcome');
 });

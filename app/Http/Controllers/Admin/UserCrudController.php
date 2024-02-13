@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\UserStatusEnums;
+use App\Enums\User\UserStatusEnums;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\Nationality;
 use Backpack\CRUD\app\Http\Controllers\CrudController;

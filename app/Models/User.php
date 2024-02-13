@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\FilesHelper;
 use App\Traits\HasImage;
+use App\Traits\UserTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,10 +13,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, CrudTrait, SoftDeletes, HasImage;
+    use HasApiTokens, HasFactory, Notifiable, CrudTrait, SoftDeletes, HasImage, UserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -30,9 +32,9 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'phone_number_verified_at',
-        'whatsapp_number',
         'image',
-        'nationality_id',
+        'country_id',
+        'default_language',
     ];
 
     public static string $destination_path = 'users';
@@ -67,8 +69,8 @@ class User extends Authenticatable
         return FilesHelper::filePath($this->image);
     }
 
-    public function nationality(): BelongsTo
-    {
-        return $this->belongsTo(Nationality::class, 'nationality_id', 'id');
-    }
+//    public function country(): BelongsTo
+//    {
+//        return $this->belongsTo(Nationality::class, 'country_id', 'id');
+//    }
 }
