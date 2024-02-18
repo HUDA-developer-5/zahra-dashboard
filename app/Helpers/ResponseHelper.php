@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ResponseHelper
 {
-    public static function successResponse($data, $code = ResponseAlias::HTTP_OK): JsonResponse
+    public static function successResponse($data, string $message = null, $code = ResponseAlias::HTTP_OK): JsonResponse
     {
-        return response()->json(['data' => $data, 'code' => $code], $code);
+        return response()->json(['message' => $message, 'data' => $data, 'code' => $code], $code);
     }
 
 

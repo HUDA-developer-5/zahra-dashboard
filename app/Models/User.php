@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Helpers\FilesHelper;
-use App\Traits\HasImage;
 use App\Traits\UserTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
@@ -13,11 +12,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, CrudTrait, SoftDeletes, HasImage, UserTrait;
+    use HasApiTokens, HasFactory, Notifiable, CrudTrait, SoftDeletes, UserTrait, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,18 +59,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function setImageAttribute($value)
-    {
-        $this->setImageAttributeValue($value, 'image');
-    }
-
     public function getImagePathAttribute(): string
     {
         return FilesHelper::filePath($this->image);
     }
 
-//    public function country(): BelongsTo
-//    {
-//        return $this->belongsTo(Nationality::class, 'country_id', 'id');
-//    }
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('email')->index()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('status')->index();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('phone_number_verified_at')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();

@@ -32,10 +32,21 @@ return [
     ],
 
     'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => 'http://example.com/callback-url',
         "recaptcha" => [
             'site_key' => env('GOOGLE_RECAPTCHA_KEY', '6LfSHGwpAAAAAHSf2_Z6cVevHILdT7wkvUIAaAMz'),
             'secret_key' => env('GOOGLE_RECAPTCHA_SECRET', '6LfSHGwpAAAAAOkczdQ7obC7WZGv8LAmKyaY_EZy'),
         ]
-    ]
+    ],
+    'apple' => [
+        'client_id' => env('APPLE_CLIENT_ID'),
+        'client_secret' => env('APPLE_CLIENT_SECRET'),
+        'redirect' => env('APPLE_REDIRECT_URI'),
+        'key_id' => env('APPLE_KEY_ID'),
+        'team_id' => env('APPLE_TEAM_ID'),
+        'private_key' => env('APPLE_PRIVATE_KEY'),
+    ],
 
 ];

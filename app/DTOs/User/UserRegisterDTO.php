@@ -8,9 +8,9 @@ class UserRegisterDTO extends Data
 {
     public string $name;
 
-    public string $phone_number;
-
-    public string $password;
-
     public string $email;
+
+    public ?string $phone_number;
+
+    public ?string $password;
 }

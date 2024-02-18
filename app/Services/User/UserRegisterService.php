@@ -13,8 +13,8 @@ class UserRegisterService
         $user = new User();
         $user->name = $userRegisterDTO->name;
         $user->email = $userRegisterDTO->email;
-        $user->phone_number = $userRegisterDTO->phone_number;
-        $user->password = bcrypt($userRegisterDTO->password);
+        $user->phone_number = ($userRegisterDTO->phone_number) ?: null;
+        $user->password = ($userRegisterDTO->password) ? bcrypt($userRegisterDTO->password) : null;
         $user->status = UserStatusEnums::Active->name;
         $user->save();
         return $user;

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\CountryApiController;
 use App\Http\Controllers\Api\User\Auth\LoginApiController;
 use App\Http\Controllers\Api\User\Auth\LogoutApiController;
 use App\Http\Controllers\Api\User\Auth\PasswordResetTokenAPIController;
 use App\Http\Controllers\Api\User\Auth\RegisterApiController;
+use App\Http\Controllers\Api\User\Auth\SocialAuthApiController;
 use App\Http\Controllers\Api\User\UserApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,12 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::group(['middleware' => ['throttle:10,1', 'api-language']], function () {
+
+    // social routes
+    Route::post('social/auth/{provider}', [SocialAuthApiController::class, 'authenticateWithProvider']);
+    Route::get('social/auth/{provider}/callback', [SocialAuthApiController::class, 'handleProviderCallback']);
+
+
     // signup routes
     Route::group(['prefix' => 'users'], function () {
         Route::group(['prefix' => 'auth'], function () {
@@ -35,12 +43,16 @@ Route::group(['middleware' => ['throttle:10,1', 'api-language']], function () {
             Route::post('password/reset', [PasswordResetTokenAPIController::class, 'resetPassword']);
         });
     });
+    Route::get('countries', [CountryApiController::class, 'index']);
 
     // Authed Routes
     Route::group(['middleware' => ['auth:api']], function () {
         Route::group(['prefix' => 'users'], function () {
             Route::get('logout', [LogoutApiController::class, 'logout']);
             Route::get('profile', [UserApiController::class, 'getProfile']);
+            Route::post('profile', [UserApiController::class, 'update']);
+            Route::delete('profile', [UserApiController::class, 'deleteAccount']);
+            Route::post('password/change', [UserApiController::class, 'changePassword']);
         });
     });
 });

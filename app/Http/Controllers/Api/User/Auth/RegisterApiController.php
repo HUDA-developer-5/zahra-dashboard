@@ -27,7 +27,7 @@ class RegisterApiController extends Controller
         } catch (\Exception|\TypeError $exception) {
             DB::rollBack();
             Log::error($exception->getMessage());
-            return ResponseHelper::errorResponse($exception->getMessage());
+            return ResponseHelper::errorResponse(error: trans('api.something went wrong'));
         }
     }
 }

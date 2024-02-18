@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api\User;
+namespace App\Http\Resources\Api;
 
-use App\Http\Resources\Api\CountryApiResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserApiResource extends JsonResource
+class CountryApiResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,10 +17,7 @@ class UserApiResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->image_path,
-            'phone_number' => $this->phone_number,
-            'email' => $this->email,
-            'country' => CountryApiResource::make($this->country)
+            'code' => $this->code,
         ];
     }
 }

@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Hash;
 trait UserTrait
 {
     // create temporary user token
-    public function createAccessToken(User $user): AccessTokenDTO
+    public function createAccessToken(User $user, string $name = 'api'): AccessTokenDTO
     {
         // Create an access token with a custom expiration time
-        $token = $user->createToken('api');
+        $token = $user->createToken($name);
         // Get the access token
         return AccessTokenDTO::from([
             'accessToken' => $token->accessToken,
