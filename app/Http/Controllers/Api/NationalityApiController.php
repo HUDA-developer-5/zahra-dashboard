@@ -19,7 +19,6 @@ class NationalityApiController extends Controller
                 ]
             );
         } catch (\Exception|\TypeError $exception) {
-            dd($exception->getMessage());
             Log::error($exception->getMessage());
             return ResponseHelper::errorResponse(error: trans('api.something went wrong'));
         }
