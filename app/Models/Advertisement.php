@@ -25,7 +25,7 @@ class Advertisement extends Model
         'phone_number',
         'whatsapp_number',
         'type',
-        'country_id',
+        'nationality_id',
         'state_id',
         'city_id',
         'latitude',
@@ -35,7 +35,7 @@ class Advertisement extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function user(): BelongsTo
@@ -43,18 +43,18 @@ class Advertisement extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function country(): BelongsTo
+    public function nationality(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(Nationality::class, 'nationality_id', 'id');
     }
 
     public function state(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'state_id', 'id');
+        return $this->belongsTo(State::class, 'state_id', 'id');
     }
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'city_id', 'id');
+        return $this->belongsTo(City::class, 'city_id', 'id');
     }
 }

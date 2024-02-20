@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('phone_number', 20)->nullable();
             $table->string('whatsapp_number', 20)->nullable();
             $table->string('type', 50)->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('latitude')->nullable();

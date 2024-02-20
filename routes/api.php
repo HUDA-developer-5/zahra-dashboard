@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\CountryApiController;
+use App\Http\Controllers\Api\CategoryApiController;
+use App\Http\Controllers\Api\NationalityApiController;
 use App\Http\Controllers\Api\User\Auth\LoginApiController;
 use App\Http\Controllers\Api\User\Auth\LogoutApiController;
 use App\Http\Controllers\Api\User\Auth\PasswordResetTokenAPIController;
@@ -43,7 +44,9 @@ Route::group(['middleware' => ['throttle:10,1', 'api-language']], function () {
             Route::post('password/reset', [PasswordResetTokenAPIController::class, 'resetPassword']);
         });
     });
-    Route::get('countries', [CountryApiController::class, 'index']);
+    Route::get('nationalities', [NationalityApiController::class, 'index']);
+    Route::get('categories', [CategoryApiController::class, 'index']);
+    Route::get('categories/{id}', [CategoryApiController::class, 'listChild']);
 
     // Authed Routes
     Route::group(['middleware' => ['auth:api']], function () {

@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('password')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('phone_number_verified_at')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('nationality_id')->nullable();
             $table->string('image')->nullable();
             $table->string('default_language')->nullable();
             $table->rememberToken();

@@ -10,3 +10,8 @@
     </a>
 </li>
 <x-backpack::menu-item title="Users" icon="la la-question" :link="backpack_url('user')"/>
+
+<x-backpack::menu-item title="Nationalities" icon="la la-question" :link="backpack_url('nationality')" />
+<x-backpack::menu-item title="States" icon="la la-question" :link="backpack_url('state')" />
+<x-backpack::menu-item title="Cities" icon="la la-question" :link="backpack_url('city')" />
+<x-backpack::menu-item title="Categories" icon="la la-question" :link="backpack_url('category')" />

@@ -6,7 +6,6 @@ use App\DTOs\User\UpdateUserProfileDTO;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateUserProfileApiRequest extends FormRequest
 {
@@ -27,10 +26,10 @@ class UpdateUserProfileApiRequest extends FormRequest
     {
         $id = auth('api')->id();
         return [
-            'name' => 'nullable|max:200|required_without_all:phone_number,email,country_id,image',
+            'name' => 'nullable|max:200|required_without_all:phone_number,email,nationality_id,image',
             'phone_number' => ['sometimes', 'nullable', 'phone:mobile', Rule::unique('users', 'phone_number')->ignore($id, 'id')],
             'email' => ['sometimes', 'nullable', 'email::rfc,dns', Rule::unique('users', 'email')->ignore($id, 'id')],
-            'country_id' => ['sometimes', 'nullable', 'exists:countries,id'],
+            'nationality_id' => ['sometimes', 'nullable', 'exists:nationalities,id'],
             'image' => ['sometimes', 'nullable', File::image()
                 ->min(1)
                 ->max(2 * 1024)
@@ -41,6 +40,6 @@ class UpdateUserProfileApiRequest extends FormRequest
 
     public function getDTO()
     {
-        return UpdateUserProfileDTO::from(request()->only(['name', 'phone_number', 'email', 'country_id', 'image']));
+        return UpdateUserProfileDTO::from(request()->only(['name', 'phone_number', 'email', 'nationality_id', 'image']));
     }
 }

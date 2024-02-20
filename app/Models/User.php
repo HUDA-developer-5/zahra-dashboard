@@ -33,7 +33,7 @@ class User extends Authenticatable
         'phone_number',
         'phone_number_verified_at',
         'image',
-        'country_id',
+        'nationality_id',
         'default_language',
     ];
 
@@ -64,8 +64,8 @@ class User extends Authenticatable
         return FilesHelper::filePath($this->image);
     }
 
-    public function country(): BelongsTo
+    public function nationality(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(Nationality::class, 'nationality_id', 'id');
     }
 }

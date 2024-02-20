@@ -57,7 +57,7 @@ class UserService
             'name' => $updateUserProfileDTO->name ?? $user->name,
             'email' => $updateUserProfileDTO->email ?? $user->email,
             'phone_number' => $updateUserProfileDTO->phone_number ?? $user->phone_number,
-            'country_id' => $updateUserProfileDTO->country_id ?? $user->country_id
+            'nationality_id' => $updateUserProfileDTO->nationality_id ?? $user->nationality_id
         ]);
 
         if ($updateUserProfileDTO->image && $updateUserProfileDTO->image->isFile()) {

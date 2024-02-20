@@ -8,28 +8,22 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class State extends Model
+class Nationality extends Model
 {
     use CrudTrait;
     use HasFactory, SoftDeletes, HasTranslations, HasTranslatedName;
 
-    protected $table = "states";
-
-    protected $fillable = ['name', 'status', 'nationality_id', 'name_ar'];
+    protected $table = "nationalities";
 
     protected array $translatable = ['name'];
 
-    public function nationality(): BelongsTo
-    {
-        return $this->belongsTo(Nationality::class, 'nationality_id', 'id');
-    }
+    protected $fillable = ['name', 'code', 'status', 'order', 'name_ar'];
 
-    public function cities(): HasMany
+    public function states(): HasMany
     {
-        return $this->hasMany(City::class, 'state_id', 'id');
+        return $this->hasMany(State::class, 'nationality_id', 'id');
     }
 }

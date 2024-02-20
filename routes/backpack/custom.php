@@ -39,4 +39,8 @@ Route::group([
 ], function () {
     Route::crud('admin', 'AdminCrudController');
     Route::crud('user', 'UserCrudController');
+    Route::crud('nationality', 'NationalityCrudController');
+    Route::crud('state', 'StateCrudController');
+    Route::crud('city', 'CityCrudController');
+    Route::crud('category', 'CategoryCrudController');
 });

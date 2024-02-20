@@ -13,7 +13,7 @@ class UpdateUserProfileDTO extends Data
 
     public ?string $email;
 
-    public ?int $country_id;
+    public ?int $nationality_id;
 
     public ?UploadedFile $image;
 }

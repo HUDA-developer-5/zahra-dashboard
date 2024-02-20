@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CountryApiResource extends JsonResource
+class NationalityApiResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,6 +18,7 @@ class CountryApiResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
+            'states' => StateApiResource::collection($this->states)
         ];
     }
 }
