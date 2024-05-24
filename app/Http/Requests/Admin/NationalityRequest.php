@@ -30,6 +30,7 @@ class NationalityRequest extends FormRequest
             'name_en' => 'required',
             'status' => 'required',
             'code' => ['required', Rule::unique('nationalities', 'code')->ignore($this->id)],
+            'currency' => ['required', Rule::unique('nationalities', 'currency')->ignore($this->id)],
             'order' => 'required|integer|min:0',
         ];
     }

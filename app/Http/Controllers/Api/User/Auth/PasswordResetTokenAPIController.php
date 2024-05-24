@@ -27,11 +27,29 @@ class PasswordResetTokenAPIController extends Controller
         }
     }
 
+    public function sendResetLinkWeb(ForgetPasswordApiRequest $request)
+    {
+        try {
+            $user = (new UserService())->findByEmail($request->get('email'));
+            if (!$user) {
+                toastr()->error(trans('api.invalid email'));
+                return redirect()->route('web.home');
+            }
+            (new UserResetPasswordService())->sendEmail($user->email);
+            session()->flash('reset_email_sent', true);
+            return redirect()->route('web.home');
+        } catch (\Exception $exception) {
+            toastr()->error(trans('api.something went wrong'));
+            return redirect()->route('web.home');
+        }
+    }
+
     public function showResetPasswordPage($token)
     {
         $record = (new UserResetPasswordService())->getTokenRecord($token);
         if (!$record) {
-            return "Invalid Token";
+            toastr()->error(trans('api.invalid token'));
+            return redirect()->route('web.home');
         }
         return view("reset_password")->with(['token' => $token]);
     }
@@ -42,18 +60,24 @@ class PasswordResetTokenAPIController extends Controller
         // get record
         $record = $userResetPasswordService->getTokenRecord($request->get('token'));
         if (!$record) {
-            return "invalid token";
+            toastr()->error(trans('api.invalid token'));
+            return redirect()->route('web.home');
         }
         // reset user password
         $userService = new UserService();
         $user = $userService->findByEmail($record->email);
         if (!$user) {
-            return "User not Valid";
+            toastr()->error(trans('api.invalid email'));
+            return redirect()->route('web.home');
         }
         // reset user password
         $user = $userService->updatePassword($user, $request->get('password'));
         // remove reset token record
         $userResetPasswordService->deleteRecord($request->get('token'));
-        return "Your password changed successfully";
+        $user->revokeTokens($user);
+        // session logout
+        auth('users')->logout();
+        toastr()->success(trans('web.Your password changed successfully please login again'));
+        return redirect()->route('web.home');
     }
 }

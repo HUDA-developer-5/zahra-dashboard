@@ -43,4 +43,8 @@ Route::group([
     Route::crud('state', 'StateCrudController');
     Route::crud('city', 'CityCrudController');
     Route::crud('category', 'CategoryCrudController');
+    Route::crud('premium-commission', 'PremiumCommissionCrudController');
+    Route::crud('free-commission', 'FreeCommissionCrudController');
+    Route::crud('dynamic-page', 'DynamicPageCrudController');
+    Route::crud('banner', 'BannerCrudController');
 });

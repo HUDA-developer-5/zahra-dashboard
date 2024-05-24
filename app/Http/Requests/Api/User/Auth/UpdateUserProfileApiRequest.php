@@ -27,7 +27,7 @@ class UpdateUserProfileApiRequest extends FormRequest
         $id = auth('api')->id();
         return [
             'name' => 'nullable|max:200|required_without_all:phone_number,email,nationality_id,image',
-            'phone_number' => ['sometimes', 'nullable', 'phone:mobile', Rule::unique('users', 'phone_number')->ignore($id, 'id')],
+            'phone_number' => ['sometimes', 'nullable', Rule::unique('users', 'phone_number')->ignore($id, 'id')],
             'email' => ['sometimes', 'nullable', 'email::rfc,dns', Rule::unique('users', 'email')->ignore($id, 'id')],
             'nationality_id' => ['sometimes', 'nullable', 'exists:nationalities,id'],
             'image' => ['sometimes', 'nullable', File::image()
@@ -38,7 +38,7 @@ class UpdateUserProfileApiRequest extends FormRequest
         ];
     }
 
-    public function getDTO()
+    public function getDTO(): UpdateUserProfileDTO
     {
         return UpdateUserProfileDTO::from(request()->only(['name', 'phone_number', 'email', 'nationality_id', 'image']));
     }

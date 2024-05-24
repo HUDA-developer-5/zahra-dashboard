@@ -15,3 +15,7 @@
 <x-backpack::menu-item title="States" icon="la la-question" :link="backpack_url('state')" />
 <x-backpack::menu-item title="Cities" icon="la la-question" :link="backpack_url('city')" />
 <x-backpack::menu-item title="Categories" icon="la la-question" :link="backpack_url('category')" />
+<x-backpack::menu-item title="Premium commissions" icon="la la-question" :link="backpack_url('premium-commission')" />
+<x-backpack::menu-item title="Free commissions" icon="la la-question" :link="backpack_url('free-commission')" />
+<x-backpack::menu-item title="Dynamic pages" icon="la la-question" :link="backpack_url('dynamic-page')" />
+<x-backpack::menu-item title="Banners" icon="la la-question" :link="backpack_url('banner')" />

@@ -8,6 +8,7 @@ use Illuminate\Validation\Rules\Password;
 
 class UserRegisterApiRequest extends FormRequest
 {
+    protected $errorBag = 'register';
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,7 +26,7 @@ class UserRegisterApiRequest extends FormRequest
     {
         return [
             'name' => 'required|max:200',
-            'phone_number' => 'required|unique:users,phone_number|phone:mobile',
+            'phone_number' => 'required|unique:users,phone_number',
             'email' => 'required|email::rfc,dns|unique:users,email',
             'password' => ['required', Password::min(8)
 //                ->letters()

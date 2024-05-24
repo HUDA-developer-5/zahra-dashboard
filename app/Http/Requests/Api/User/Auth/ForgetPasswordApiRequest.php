@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ForgetPasswordApiRequest extends FormRequest
 {
+    protected $errorBag = 'forget_password';
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,7 +23,7 @@ class ForgetPasswordApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email::rfc,dns',
+            'email' => 'required|email:rfc,dns',
         ];
     }
 }

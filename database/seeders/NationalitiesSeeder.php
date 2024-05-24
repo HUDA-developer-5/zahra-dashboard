@@ -258,6 +258,7 @@ class NationalitiesSeeder extends Seeder
             $nationality_model = new Nationality();
             $nationality_model->id = $nationality['id'];
             $nationality_model->code = $nationality['code'];
+            $nationality_model->currency = $nationality['code'];
             $nationality_model->status = $nationality['status'];
             $nationality_model->name = ['ar' => $nationality['name']['ar'], 'en' => $nationality['name']['en']];
             $nationality_model->order = $nationality['order'];

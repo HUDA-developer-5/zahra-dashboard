@@ -7,6 +7,8 @@ use Illuminate\Validation\Rules\Password;
 
 class ResetPasswordApiRequest extends FormRequest
 {
+    protected $errorBag = 'resetPassword';
+
     /**
      * Determine if the user is authorized to make this request.
      */

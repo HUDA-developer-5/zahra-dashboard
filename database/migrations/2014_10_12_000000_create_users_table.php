@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->string('image')->nullable();
             $table->string('default_language')->nullable();
+            $table->float('balance')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

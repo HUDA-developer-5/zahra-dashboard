@@ -18,7 +18,8 @@ class NationalityApiResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
-            'states' => StateApiResource::collection($this->states)
+            'currency' => $this->currency,
+            'states' => StateApiResource::collection($this->whenLoaded('states'))
         ];
     }
 }

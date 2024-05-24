@@ -14,9 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('advertisement_id');
             $table->string('type');//image/video
-            $table->string('mime_type')->nullable();//image/video
             $table->string('file');
-            $table->boolean('is_main')->default(false);
             $table->timestamps();
         });
     }

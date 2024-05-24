@@ -31,11 +31,10 @@ class CategoryApiController extends Controller
         try {
             return ResponseHelper::successResponse(
                 data: [
-                    'categories' => CategoryApiResource::collection((new CategoryService())->listChild($id))
+                    'categories' => CategoryApiResource::collection((new CategoryService())->listChild($id, ['child']))
                 ]
             );
         } catch (\Exception|\TypeError $exception) {
-            dd($exception->getMessage());
             Log::error($exception->getMessage());
             return ResponseHelper::errorResponse(error: trans('api.something went wrong'));
         }

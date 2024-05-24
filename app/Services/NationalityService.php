@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\CommonStatusEnums;
+use App\Models\City;
 use App\Models\Nationality;
 
 class NationalityService
@@ -17,5 +18,20 @@ class NationalityService
                     }]);
             }])
             ->get();
+    }
+
+    public function listToMenu()
+    {
+        return Nationality::where('status', "=", CommonStatusEnums::Active->value)->orderBy('order')->get();
+    }
+
+    public function listCitiesToFilter()
+    {
+        $countryId = session()->get('country_id');
+        if (!$countryId && auth('users')->check()) {
+            $countryId = auth('users')->user()->nationality_id;
+        }
+
+        return City::where('status', '=', CommonStatusEnums::Active->value)->where('nationality_id', '=', $countryId)->get();
     }
 }

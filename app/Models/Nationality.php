@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\CommonStatusEnums;
 use App\Traits\HasTranslatedName;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
@@ -20,7 +19,7 @@ class Nationality extends Model
 
     protected array $translatable = ['name'];
 
-    protected $fillable = ['name', 'code', 'status', 'order', 'name_ar'];
+    protected $fillable = ['name', 'code', 'currency', 'status', 'order', 'name_ar'];
 
     public function states(): HasMany
     {

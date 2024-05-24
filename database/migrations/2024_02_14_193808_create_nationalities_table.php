@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->json("name");
             $table->string("code")->unique()->index();
+            $table->string("currency")->unique()->index();
             $table->string("status");
             $table->unsignedTinyInteger("order");
             $table->softDeletes();

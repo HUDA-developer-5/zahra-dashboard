@@ -17,7 +17,7 @@ class StateApiResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'cities' => CityApiResource::collection($this->cities)
+            'cities' => CityApiResource::collection($this->whenLoaded('cities'))
         ];
     }
 }

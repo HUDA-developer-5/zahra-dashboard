@@ -13,15 +13,19 @@
     "backpack/pro": "^2.0",
     "backpack/theme-coreuiv4": "^1.1",
     "guzzlehttp/guzzle": "^7.8",
-    "laravel/cashier": "^15.2",
+    "laravel/cashier": "^15.3",
     "laravel/framework": "^10.10",
     "laravel/passport": "^11.8",
-    "laravel/socialite": "^5.12",
+    "laravel/socialite": "^5.14",
     "laravel/tinker": "^2.8",
+    "livewire/livewire": "^3.4",
+    "mcamara/laravel-localization": "^1.8",
     "propaganistas/laravel-phone": "^5.0",
     "sendgrid/sendgrid": "^8.0",
     "spatie/laravel-data": "^3.8",
-    "spatie/laravel-translatable": "^6.5"
+    "spatie/laravel-html": "^3.5",
+    "spatie/laravel-translatable": "^6.5",
+    "yoeunes/toastr": "^2.3"
   },
   "require-dev": {
     "backpack/generators": "^4.0",

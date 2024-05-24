@@ -38,14 +38,16 @@ class UserResetPasswordService
 
     public function getLink(string $token): string
     {
-        return route('reset_password', ['token' => $token]);
+        return url()->route('web.home') . '?token=' . $token;
     }
 
     protected function saveToken(string $email, string $token): void
     {
+        DB::table('password_reset_tokens')->where('email', '=', $email)->delete();
         DB::table('password_reset_tokens')->insert([
             'email' => $email,
-            'token' => $token
+            'token' => $token,
+            'created_at' => now()
         ]);
     }
 

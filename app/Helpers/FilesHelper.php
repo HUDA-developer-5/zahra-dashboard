@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 
 use App\Traits\HasImage;
+use Illuminate\Support\Str;
 
 class FilesHelper
 {
@@ -13,6 +14,10 @@ class FilesHelper
     {
         if (!$file) {
             return '';
+        }
+        // if the image has http word return it for testing
+        if (Str::contains($file, 'http')) {
+            return $file;
         }
         return url(self::fileFullPath($file));
     }
@@ -27,6 +32,6 @@ class FilesHelper
         if (app()->environment(['staging', 'testing', 'development'])) {
             $root_folder = "staging";
         }
-        return $root_folder . "/public/uploads/" . $destination_path;
+        return $root_folder . "/uploads/" . $destination_path;
     }
 }

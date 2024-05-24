@@ -15,18 +15,18 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthApiController extends Controller
 {
-    public function authenticateWithProvider(Request $request)
+    public function authenticateWithProvider(string $provider)
     {
         // Redirect the user to the Google authentication page
-        return Socialite::driver($request->get('provider'))->stateless()->redirect();
+        return Socialite::driver($provider)->stateless()->redirect();
     }
 
-    public function handleProviderCallback(Request $request)
+    public function handleProviderCallback(string $provider)
     {
         try {
             DB::beginTransaction();
             // Retrieve user data from Google
-            $providerUser = Socialite::driver($request->get('provider'))->stateless()->user();
+            $providerUser = Socialite::driver($provider)->stateless()->user();
 
             // Check if the user already exists in your database
             $user = User::where('email', $providerUser->email)->first();
@@ -43,6 +43,10 @@ class SocialAuthApiController extends Controller
             // Generate API token for the user
 //            $token = $user->createToken('GoogleToken')->plainTextToken;
             $accessToken = $user->createAccessToken($user);
+
+//            Auth::login($user);
+//            return redirect()->intended('/home');
+
             // Return token as response
             return ResponseHelper::successResponse(data: [
                 'user' => UserApiResource::make($user),
@@ -51,7 +55,7 @@ class SocialAuthApiController extends Controller
         } catch (\Exception $e) {
             // Handle exception if any
             DB::rollBack();
-            return ResponseHelper::errorResponse(error: 'Failed to authenticate with ' . $request->get('provider'));
+            return ResponseHelper::errorResponse(error: 'Failed to authenticate with ' . $provider);
         }
     }
 }

@@ -68,6 +68,11 @@ class NationalityCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            "label" => 'Currency',
+            "name" => "currency"
+        ]);
+
+        $this->crud->addColumn([
             "label" => 'Order',
             "name" => "order"
         ]);
@@ -103,6 +108,11 @@ class NationalityCrudController extends CrudController
         $this->crud->addField([
             "label" => 'Code',
             "name" => "code"
+        ]);
+
+        $this->crud->addField([
+            "label" => 'Currency',
+            "name" => "currency"
         ]);
 
         $this->crud->addField([
@@ -142,6 +152,11 @@ class NationalityCrudController extends CrudController
         $this->crud->addColumn([
             "label" => 'Code',
             "name" => "code"
+        ]);
+
+        $this->crud->addColumn([
+            "label" => 'Currency',
+            "name" => "currency"
         ]);
 
         $this->crud->addColumn([

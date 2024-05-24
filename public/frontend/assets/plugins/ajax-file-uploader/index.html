@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+    <title>AJAX-enabled File Uploader Demos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/jquery.uploader.css">
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <style rel="stylesheet">
+        html,* { font-family: 'Inter'; box-sizing: border-box; }
+body { background-color: #fafafa; line-height:1.6;}
+.lead { font-size: 1.5rem; font-weight: 300; }
+        .container {
+            max-width: 760px;
+            margin: 100px auto;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>AJAX-enabled File Uploader Demos</h1>
+    <div id="carbon-block" style="margin:30px auto"></div>
+<div style="margin:30px auto"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2783044520727903"
+     crossorigin="anonymous"></script>
+<!-- jQuery_demo -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2783044520727903"
+     data-ad-slot="2780937993"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+    <p class="lead">
+        A lightweight and AJAX-enabled file uploader plugin that provides a convenient solution for uploading single or multiple files via AJAX.
+    </p>
+    <ul>
+        <li>
+            <i>Multiple File Upload</i>
+            <input type="text" id="demo1" value="">
+        </li>
+        <li>
+            <i>Single File Upload</i>
+            <input type="text" id="demo2" value="">
+        </li>
+        <li>
+            <i>With preselected Files</i>
+            <input type="text" id="demo3" value="">
+        </li>
+    </ul>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./dist/jquery.uploader.min.js"></script>
+<script type="application/javascript">
+    let ajaxConfig = {
+        ajaxRequester: function (config, uploadFile, pCall, sCall, eCall) {
+            let progress = 0
+            let interval = setInterval(() => {
+                progress += 10;
+                pCall(progress)
+                if (progress >= 100) {
+                    clearInterval(interval)
+                    const windowURL = window.URL || window.webkitURL;
+                    sCall({
+                        data: windowURL.createObjectURL(uploadFile.file)
+                    })
+                    // eCall("上传异常")
+                }
+            }, 300)
+        }
+    }
+    $("#demo1").uploader({multiple: true, ajaxConfig: ajaxConfig,autoUpload: false})
+    $("#demo2").uploader({ajaxConfig: ajaxConfig})
+    $("#demo3").uploader({
+        multiple: true,
+        defaultValue: [
+            {
+                name: "jQuery",
+                url: "https://www.jqueryscript.net/dummy/5.jpg"
+            }, {
+                name: "script",
+                url: "https://www.jqueryscript.net/dummy/6.jpg"
+            }
+        ],
+        ajaxConfig: ajaxConfig
+    })
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1VDDWMRSTH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1VDDWMRSTH');
+</script>
+<script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+</body>
+</html>
