@@ -31,6 +31,11 @@ class CategoryService
         return Category::where('status', "=", CommonStatusEnums::Active->value)->whereNull('parent_id')->with('child')->get();
     }
 
+    public function listAllCats()
+    {
+        return Category::where('status', "=", CommonStatusEnums::Active->value)->get();
+    }
+
     public function listParentCatsToHome(string $search = null)
     {
         return Category::where('status', "=", CommonStatusEnums::Active->value)->whereNull('parent_id')

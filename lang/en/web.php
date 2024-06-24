@@ -6,7 +6,7 @@ return [
     "Search" => "Search",
     "Home" => "Home",
     "Share your ads" => "Share your ads",
-    "Show All" => "Show Al",
+    "Show All" => "Show All",
     "Download our app" => "Download our app",
     "Categories" => "Categories",
     "Company" => "Company",
@@ -275,4 +275,8 @@ return [
     'offer sent successfully' => 'offer sent successfully',
     'approved' => 'Approved',
     'Write Something' => 'Write Something',
+    'translate' => 'Translate',
+    'Highest Offer' => 'Highest Offer',
+    'Lowest Offer' => 'Lowest Offer',
+    'No data found' => 'No data found',
 ];

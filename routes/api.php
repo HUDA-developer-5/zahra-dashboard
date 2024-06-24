@@ -121,9 +121,10 @@ Route::group(['middleware' => ['throttle:100,1', 'api-language']], function () {
             // Chat
             Route::group(['prefix' => 'chat'], function () {
                 Route::get('/', [UserApiController::class, 'listChats']);
+                Route::get('/start-chat/{id}', [UserApiController::class, 'startChat']);
                 Route::get('/{id}/messages', [UserApiController::class, 'listChatMessages']);
                 Route::get('/{id}/messages/mark-as-read', [UserApiController::class, 'markChatAsRead']);
-                Route::post('/send', [UserApiController::class, 'sendMessage'])->name('web.chats.send');
+                Route::post('/send', [UserApiController::class, 'sendMessage']);
             });
         });
     });

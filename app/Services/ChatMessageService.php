@@ -43,7 +43,7 @@ class ChatMessageService
             ]);
     }
 
-    public function sendTextMessage(int $chatId, string $message, int $sender_id): bool
+    public function sendTextMessage(int $chatId, string $message, int $sender_id): ChatMessage|bool
     {
         $chat = Chat::find($chatId);
         if (!$chat) {
@@ -56,8 +56,7 @@ class ChatMessageService
         }
         // mark previous messages as read from this user
         $this->marchChatMessagesAsRead($chatId, $sender_id);
-        $this->createTextMessage($chat, $message, ChatMessageFromTypeEnums::FROM_USER, $sender_id, $receiver_id);
-        return true;
+        return $this->createTextMessage($chat, $message, ChatMessageFromTypeEnums::FROM_USER, $sender_id, $receiver_id);
     }
 
     public function createTextMessage(Chat $chat, $message, ChatMessageFromTypeEnums $fromType, int $senderId, int $receiverId): ChatMessage
@@ -128,14 +127,15 @@ class ChatMessageService
                     });
                 }
                 $query->where('receiver_id', '=', $userId);
-            })->with('messages', 'sender', 'unReadMessages')->latest()->get();
+            })->with('messages', 'sender', 'unReadMessages')->latest()->paginate();
     }
 
-    public function getChatMessages(int $chatId)
+    public function getChatMessages(int $chatId, int $perPage = 50)
     {
         return ChatMessage::where('chat_id', '=', $chatId)
             ->with('sender', 'receiver', 'offer.advertisement')
-            ->get();
+            ->latest()
+            ->paginate($perPage);
     }
 
     public function getUserUnreadMessages(int $userId, int $limit = null)

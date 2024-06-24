@@ -2,6 +2,7 @@
 
 return [
 
+    'asset_url' => env('asset_url'),
     /*
     |---------------------------------------------------------------------------
     | Class Namespace
@@ -74,6 +75,7 @@ return [
             'jpg', 'jpeg', 'mpga', 'webp', 'wma',
         ],
         'max_upload_time' => 5, // Max duration (in minutes) before an upload is invalidated...
+        'cleanup' => true, // Should cleanup temporary uploads older than 24 hrs...
     ],
 
     /*
@@ -113,7 +115,7 @@ return [
     |
     */
 
-    'inject_assets' => true,
+    'inject_assets' => false,
 
     /*
     |---------------------------------------------------------------------------
@@ -156,6 +158,4 @@ return [
     */
 
     'pagination_theme' => 'tailwind',
-
-    'asset_url' => env('APP_URL', 'http://localhost'),
 ];

@@ -9,7 +9,9 @@
   "license": "MIT",
   "require": {
     "php": "^8.1",
+    "backpack/backupmanager": "^5.0",
     "backpack/crud": "^6.2",
+    "backpack/permissionmanager": "^7.2",
     "backpack/pro": "^2.0",
     "backpack/theme-coreuiv4": "^1.1",
     "guzzlehttp/guzzle": "^7.8",

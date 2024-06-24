@@ -7,14 +7,15 @@ if($('#map').length != 0) {
     async function initMap() {
         const { Map } = await google.maps.importLibrary("maps");
 
-        var latitude = document.getElementById('latitude');
-        var longitude = document.getElementById('longitude');
+        var latitude = $("#latitude").val();
+        var longitude = $("#longitude").val();
         if (latitude !== null) {
             latitude = parseFloat(latitude);
         }
         if (longitude !== null) {
             longitude = parseFloat(longitude);
         }
+
         if (!latitude || !longitude) {
             latitude = 30.033333;
             longitude = 31.233334;

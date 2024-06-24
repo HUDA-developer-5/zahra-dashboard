@@ -58,6 +58,15 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            'dump' => [
+                'dump_binary_path' => '/usr/bin', // only the path, without `mysqldump` or `pg_dump`
+                // 'dump_binary_path' => '/Applications/MAMP/Library/bin/', // works for MAMP on Mac OS
+                // 'dump_binary_path' => '/opt/homebrew/bin/', // works for Laravel Valet on Mac OS
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+                // 'exclude_tables' => ['table1', 'table2'],
+                // 'add_extra_option' => '--optionname=optionvalue',
+            ],
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],

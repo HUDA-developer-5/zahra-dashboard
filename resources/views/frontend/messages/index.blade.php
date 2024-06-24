@@ -43,7 +43,12 @@
                                                     </div>
                                                     <div class="d-flex justify-content-between">
                                                         <p class="last-msg text-gray mb-0">{{ \Illuminate\Support\Str::limit($chat->messages?->last()?->message, 120) }}</p>
-                                                        <span class="count">{{ $chat->unReadChatMessagesCount(auth('users')->id()) }}</span>
+                                                        @php
+                                                            $unreadCount = $chat->unReadChatMessagesCount(auth('users')->id());
+                                                        @endphp
+                                                        @if($unreadCount)
+                                                            <span class="count">{{ $unreadCount }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

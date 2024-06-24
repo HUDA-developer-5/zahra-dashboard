@@ -30,6 +30,15 @@ Route::get('social/auth/{provider}', [SocialAuthApiController::class, 'authentic
 Route::any('social/auth/{provider}/callback', [SocialAuthApiController::class, 'handleProviderCallback']);
 
 Route::group(['middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'localize'], 'prefix' => LaravelLocalization::setLocale()], function () {
+
+    Livewire::setUpdateRoute(function ($handle) {
+        return Route::post('/livewire/update', $handle);
+    });
+
+    Livewire::setScriptRoute(function ($handle) {
+        return Route::get('/livewire/livewire.js', $handle);
+    });
+
     // signup routes
     Route::group(['prefix' => 'users'], function () {
         Route::group(['prefix' => 'auth'], function () {
@@ -55,6 +64,7 @@ Route::group(['middleware' => ['localeSessionRedirect', 'localizationRedirect', 
     Route::get('/how-to-be-premium', [HomeWebController::class, 'showPremiumPage'])->name('web.premium.show');
     Route::post('/add-comment-guest/{id}', [HomeWebController::class, 'addCommentGuest'])->name('web.comments.add.guest-user');
     Route::group(['prefix' => 'products'], function () {
+        Route::get('/translate/{id}', [HomeWebController::class, 'translateProduct'])->name('web.products.translate');
         Route::get('/search', [HomeWebController::class, 'filterProducts'])->name('web.products.search');
         Route::get('/menu-search', [HomeWebController::class, 'searchProductsFromMenu'])->name('web.search.menu');
         Route::get('/{id}', [HomeWebController::class, 'showProduct'])->name('web.products.show');
@@ -109,6 +119,7 @@ Route::group(['middleware' => ['localeSessionRedirect', 'localizationRedirect', 
 
         Route::group(['prefix' => 'messages'], function () {
             Route::get('/', [HomeWebController::class, 'listChats'])->name('web.chats.list');
+            Route::get('/start-chat/{id}', [HomeWebController::class, 'startChat'])->name('web.chats.start');
             Route::post('/send', [HomeWebController::class, 'sendMessage'])->name('web.chats.send');
         });
     });

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\HasImage;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use App\Enums\Advertisement\AdvertisementMediaTypeEnums;
 use App\Enums\Advertisement\AdvertisementPriceTypeEnums;
 use App\Enums\Advertisement\AdvertisementTypeEnums;
@@ -18,7 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Advertisement extends Model
 {
-    use HasFactory, HasTranslatedName, HasTranslations, SoftDeletes, HasTranslatedDescription;
+    use CrudTrait;
+    use HasFactory, HasTranslatedName, HasTranslations, SoftDeletes, HasTranslatedDescription, HasImage;
 
     protected $table = "advertisements";
 

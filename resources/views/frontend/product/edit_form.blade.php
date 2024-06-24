@@ -78,7 +78,7 @@
 
                                 <div class="col-lg-12 mb-3">
                                     <div class="form-input">
-                                        {{ html()->textarea('name')->placeholder(trans('web.Description'))->class('form-control')->rows(5)->maxlength(1024)->id('info-desc') }}
+                                        {{ html()->textarea('description')->placeholder(trans('web.Description'))->class('form-control')->rows(5)->maxlength(1024)->id('info-desc') }}
                                         <label class="form-label" for="info-desc">{{ trans('web.Description') }}</label>
                                     </div>
                                 </div>
@@ -169,10 +169,10 @@
                                 </div>
 
                                 <div class="col-lg-12 mb-3">
-                                    <div id="map"></div>
                                     <input type="hidden" name="latitude" id="latitude" value="{{ $product->latitude }}">
                                     <input type="hidden" name="longitude" id="longitude"
                                            value="{{ $product->longitude }}">
+                                    <div id="map"></div>
                                 </div>
 
                                 <div class="col-lg-6 mb-3">

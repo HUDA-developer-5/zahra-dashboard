@@ -42,7 +42,8 @@
                           maxlength="250"></textarea>
 
                 <div class="d-flex gap-2">
-                    <button class="btn btn-gradiant btn-send-replay py-1 px-4 mt-2">{{ trans('web.Send') }}</button>
+                    <a href="javascript:void(0);" data-bs-toggle="modal"
+                       data-bs-target="#beforeLoginModal" class="btn btn-gradiant btn-send-replay py-1 px-4 mt-2">{{ trans('web.Send') }}</a>
                     <a href="javascript:void(0);" class="btn btn-border btn-cancel-replay py-1 px-4 mt-2">{{ trans('web.Cancel') }}</a>
                 </div>
                 {{ html()->form()->close() }}

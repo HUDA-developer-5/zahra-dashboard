@@ -30,7 +30,7 @@ class ChangePasswordApiRequest extends FormRequest
 //                ->numbers()
 //                ->symbols()
 //                ->uncompromised()
-                , 'confirmed'],
+                , 'confirmed', 'different:old_password'],
         ];
     }
 }

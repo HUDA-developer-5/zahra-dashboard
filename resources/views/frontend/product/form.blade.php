@@ -63,11 +63,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mb-3">
-                                    @if($menuCategories)
+                                    @if($allCategories)
                                         <div class="sec-select">
                                             <select class="select2 w-100 form-control" name="category_id" required
                                                     value="{{ old('category_id') }}">
-                                                @foreach($menuCategories as $category)
+                                                @foreach($allCategories as $category)
                                                     <option value="{{ $category->id }}"> {{ $category->name }}</option>
                                                 @endforeach
                                             </select>

@@ -11,8 +11,9 @@
                 <div class="row">
                     @include('frontend.components.side_menu', ['title' => trans('web.My Ads')])
 
-                    @if($products->count())
-                        <div class="col-lg-9">
+
+                    <div class="col-lg-9">
+                        @if($products->count())
                             <div class="ads-list-sec">
                                 @foreach($products as $product)
                                     <div class="card d-block d-md-flex flex-row gap-3 mb-3">
@@ -46,7 +47,8 @@
                                                     <span class="me-2"><i class="far fa-eye"></i></span>
                                                     <span>{{ trans('web.View') }}</span>
                                                 </a>
-                                                <a href="{{ route('web.products.edit', ['id'=>$product->id]) }}" class="btn btn-border">
+                                                <a href="{{ route('web.products.edit', ['id'=>$product->id]) }}"
+                                                   class="btn btn-border">
                                                     <span class="me-2"> <i class="fa-solid fa-pen"></i> </span>
                                                     <span>{{ trans('web.Edit') }}</span>
                                                 </a>
@@ -54,10 +56,16 @@
                                         </div>
                                     </div>
                                 @endforeach
-
                             </div>
-                        </div>
-                    @endif
+                        @else
+                            <div class="card mb-3">
+                                <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                    <p class="fw-600 mb-0">{{ trans('web.No data found') }}</p>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
                 </div>
             </div>
         </div>

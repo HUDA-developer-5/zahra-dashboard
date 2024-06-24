@@ -69,6 +69,7 @@ class AdvertisementService
         $featured = $featuredQuery->where('type', '=', AdvertisementTypeEnums::Premium->value)
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->inRandomOrder()
+            ->latest()
             ->take($limit)
             ->get();
 
@@ -82,6 +83,7 @@ class AdvertisementService
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->orderByDesc('type')
             ->inRandomOrder()
+            ->latest()
             ->take($limit)
             ->get();
 
@@ -92,6 +94,7 @@ class AdvertisementService
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->orderByDesc('type')
             ->inRandomOrder()
+            ->latest()
             ->take($limit)
             ->get();
         return [
@@ -592,6 +595,10 @@ class AdvertisementService
             });
         }
 
+        if ($request->filled('is_featured')) {
+            $query->where('type', '=', AdvertisementTypeEnums::Premium->value);
+        }
+
         // nearby
         if ($request->filled('near_by') && $request->filled('latitude') && $request->filled('longitude')) {
             $query->whereRaw(
@@ -648,12 +655,22 @@ class AdvertisementService
             }
 
             if ($sortBy == 'low_price') {
-                $query->orderBy('price', 'asc')
-                    ->orderBy('min_price', 'asc');
+                $query->where('price_type', '=', AdvertisementPriceTypeEnums::Fixed->value)
+                    ->orderBy('price', 'asc');
             }
 
             if ($sortBy == 'high_price') {
-                $query->orderBy('price', 'desc')
+                $query->where('price_type', '=', AdvertisementPriceTypeEnums::Fixed->value)
+                    ->orderBy('price', 'desc');
+            }
+
+            if ($sortBy == 'low_offer') {
+                $query->where('price_type', '=', AdvertisementPriceTypeEnums::OpenOffer->value)
+                    ->orderBy('min_price');
+            }
+
+            if ($sortBy == 'high_offer') {
+                $query->where('price_type', '=', AdvertisementPriceTypeEnums::OpenOffer->value)
                     ->orderBy('max_price', 'desc');
             }
         }

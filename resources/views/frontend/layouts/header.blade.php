@@ -49,5 +49,7 @@
               rel="stylesheet">
     @endif
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.min.css') }}">
+
+    @livewireStyles
 </head>
 <body class="@if(LaravelLocalization::getCurrentLocale() == 'ar') rtl @endif">

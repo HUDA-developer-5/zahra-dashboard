@@ -22,4 +22,7 @@ return [
     'message sent successfully' => 'تم ارسال رسالتك بنجاح',
     'no chat found' => 'لم يتم العثور على الدردشة',
     'chat marked as read successfully' => 'تم تعيين الدردشة كمقروءة بنجاح',
+    'you must login first' => 'يجب عليك تسجيل الدخول',
+    'not allowed to report your comment' => 'غير مسموح لك بالتقييم علي تعليقك',
+    'not allowed to follow your comment' => 'غير مسموح لك بالمتابعة علي تعليقك',
 ];

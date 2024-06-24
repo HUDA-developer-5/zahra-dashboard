@@ -48,6 +48,34 @@
                                                                    id="flexCheckChecked_{{$secondChild->id}}" {{ in_array($secondChild->id, request('categories_id', [])) ? 'checked' : '' }}>
                                                             <label class="form-check-label"
                                                                    for="flexCheckChecked_{{$secondChild->id}}">{{ $secondChild->name }}</label>
+
+                                                            @if($secondChild->child?->count())
+                                                                @foreach($secondChild->child as $thirdChild)
+                                                                    <ul>
+                                                                        <li class="form-check ">
+                                                                            <input name="categories_id[]" class="form-check-input"
+                                                                                   type="checkbox" value="{{$thirdChild->id}}"
+                                                                                   id="flexCheckChecked_{{$thirdChild->id}}" {{ in_array($thirdChild->id, request('categories_id', [])) ? 'checked' : '' }}>
+                                                                            <label class="form-check-label"
+                                                                                   for="flexCheckChecked_{{$thirdChild->id}}">{{ $thirdChild->name }}</label>
+
+                                                                            @if($thirdChild->child?->count())
+                                                                                @foreach($thirdChild->child as $fourthChild)
+                                                                                    <ul>
+                                                                                        <li class="form-check ">
+                                                                                            <input name="categories_id[]" class="form-check-input"
+                                                                                                   type="checkbox" value="{{$fourthChild->id}}"
+                                                                                                   id="flexCheckChecked_{{$fourthChild->id}}" {{ in_array($fourthChild->id, request('categories_id', [])) ? 'checked' : '' }}>
+                                                                                            <label class="form-check-label"
+                                                                                                   for="flexCheckChecked_{{$fourthChild->id}}">{{ $fourthChild->name }}</label>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </li>
+                                                                    </ul>
+                                                                @endforeach
+                                                            @endif
                                                         </li>
                                                     </ul>
                                                 @endforeach

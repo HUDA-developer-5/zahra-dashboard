@@ -28,4 +28,7 @@ return [
     'message sent successfully' => 'message sent successfully',
     'no chat found' => 'No chat found',
     'chat marked as read successfully' => 'Chat marked as read successfully',
+    'you must login first' => 'You must login first',
+    'not allowed to report your comment' => 'Not allowed to report your comment',
+    'not allowed to follow your comment' => 'Not allowed to follow your comment',
 ];

@@ -6,6 +6,8 @@
 @section('content')
 
     <div id="main-wrapper">
+
+{{--        <livewire:category />--}}
         <div id="categories" class="py-4">
             <div class="container">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -76,7 +78,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-4">
-                        <a href="{{ route('web.products.search') }}"
+                        <a href="{{ route('web.products.search', ['is_featured' => 1]) }}"
                            class="text-primary fw-bold">{{ trans('web.View More') }}</a>
                     </div>
                 @endif

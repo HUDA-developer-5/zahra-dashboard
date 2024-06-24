@@ -2,12 +2,12 @@
 {{ html()->hidden('type', $type)->id($type) }}
 <div class="d-flex flex-wrap align-items-center gap-2 filter">
 
-    @if($parentCategories)
+    @if($allCats)
         <div class="sec-select">
             <select class="select2 w-100 form-control" name="category_id">
                 <option label="{{ trans('web.Category') }}"> </option>
-                @foreach($parentCategories as $parentCategory)
-                    <option value="{{ $parentCategory->id }}" {{ request('category_id') == $parentCategory->id ? 'selected' : '' }}> {{ $parentCategory->name }}</option>
+                @foreach($allCats as $cat)
+                    <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}> {{ $cat->name }}</option>
                 @endforeach
             </select>
         </div>

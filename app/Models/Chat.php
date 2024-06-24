@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use App\Enums\ChatTypeEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Chat extends Model
 {
+    use CrudTrait;
     use HasFactory;
 
     protected $table = 'chats';

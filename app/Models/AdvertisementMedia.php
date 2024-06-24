@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use App\Helpers\FilesHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AdvertisementMedia extends Model
 {
+    use CrudTrait;
     use HasFactory;
 
     protected $table = "advertisement_media";

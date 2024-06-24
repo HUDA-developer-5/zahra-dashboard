@@ -39,6 +39,12 @@
                                         </div>
                                     </div>
                                 @endforeach
+                            @else
+                                <div class="card mb-3">
+                                    <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                        <p class="fw-600 mb-0">{{ trans('web.No data found') }}</p>
+                                    </div>
+                                </div>
                             @endif
 
                             <div class="text-sm-end">

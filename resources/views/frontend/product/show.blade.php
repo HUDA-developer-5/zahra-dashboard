@@ -12,17 +12,22 @@
                 <div class="pro-slider">
                     <div class="model-list">
                         <div class="d-flex gap-2">
-                            <a href="javascript:void(0)" class="best">
-                                <img src="{{ asset('frontend/assets/images/icons/crown.svg') }}" alt="crown icon"
-                                     loading="lazy">
-                            </a>
+                            @if($product->type == \App\Enums\Advertisement\AdvertisementTypeEnums::Premium->value)
+                                <a href="javascript:void(0)" class="best">
+                                    <img src="{{ asset('frontend/assets/images/icons/crown.svg') }}" alt="crown icon"
+                                         loading="lazy">
+                                </a>
+                            @endif
 
                             @if(auth('users')->check())
-                                @includeIf("frontend.components.fav_icon", ["isFav" => $product->is_favourite, "product_id"=>$product->id])
-
                                 @if(auth('users')->user()->id != $product->user_id)
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#adsReportModal"
-                                       class="flag"><i class="far fa-flag"></i></a>
+                                    @includeIf("frontend.components.fav_icon", ["isFav" => $product->is_favourite, "product_id"=>$product->id])
+
+                                    @if(auth('users')->user()->id != $product->user_id)
+                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                           data-bs-target="#adsReportModal"
+                                           class="flag"><i class="far fa-flag"></i></a>
+                                    @endif
                                 @endif
 
                                 @if(auth('users')->user()->id == $product->user_id)
@@ -58,6 +63,18 @@
                                 </a>
                             </div>
                         @endif
+
+                        @if($product->videos->count() > 0)
+                            @foreach($product->videos as $productVideo)
+                                <div>
+                                    <a href="{{ $productVideo->file_path }}" data-fancybox="gallery">
+                                        <video width="100%" height="360" controls>
+                                            <source src="{{ $productVideo->file_path }}" type="video/mp4">
+                                        </video>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="slider slider-nav">
                         @if($product->images->count() > 0)
@@ -82,6 +99,18 @@
                                 </a>
                             </div>
                         @endif
+
+                        @if($product->videos->count() > 0)
+                            @foreach($product->videos as $productVideo)
+                                <div>
+                                    <a href="{{ asset('frontend/assets/images/video-poster.png') }}"
+                                       data-fancybox="gallery">
+                                        <img src="{{ asset('frontend/assets/images/video-poster.png') }}"
+                                             alt="{{ $product->name }}">
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -100,12 +129,22 @@
                             <p class="price text-primary fw-bold fs-5 mb-2">{{ $product->default_price }} {{ trans('web.'.$product->currency) }}</p>
                         @else
                             <div class="text-md-end">
-                                @if($product->is_sold == 0 && $product->price_type == \App\Enums\Advertisement\AdvertisementPriceTypeEnums::OpenOffer->value)
-                                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#offerModal"
-                                       class="text-success fs-7 fw-bold mb-0 addProductAction"
-                                       data-id="{{ $product->id }}"
-                                       data-action="openOffer">{{ trans('web.Open offer') }}</a>
+                                @if(auth('users')->check() && auth('users')->user()->id != $product->user_id)
+                                    @auth('users')
+                                        @if($product->is_sold == 0 && $product->price_type == \App\Enums\Advertisement\AdvertisementPriceTypeEnums::OpenOffer->value)
+                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                               data-bs-target="#offerModal"
+                                               class="text-success fs-7 fw-bold mb-0 addProductAction"
+                                               data-id="{{ $product->id }}"
+                                               data-action="openOffer">{{ trans('web.Open offer') }}</a>
+                                        @endif
+                                    @else
+                                        <a href="javascript:void(0);" data-bs-toggle="modal"
+                                           data-bs-target="#beforeLoginModal"
+                                           class="text-success fs-7 fw-bold mb-0">{{ trans('web.Open offer') }}</a>
+                                    @endauth
                                 @endif
+
                                 <p class="price text-primary fw-bold fs-5 mb-2">
                                     <span class="fs-6 text-gray me-1">{{ trans('web.highest offer') }} :</span>
                                     {{ $product->max_offer_price }} {{ trans('web.'.$product->currency) }}
@@ -152,29 +191,34 @@
                         </div>
                     </div>
                     <div class="btns d-flex flex-wrap justify-content-sm-end gap-2 mt-3 mt-sm-0">
-                        @if($product->is_sold == 0 && $product->price_type != \App\Enums\Advertisement\AdvertisementPriceTypeEnums::OpenOffer->value)
-                            <a href="#" class="btn btn-gradiant btn-chat addProductAction" data-id="{{ $product->id }}"
-                               data-action="chat">
-                                <span class="me-2"><i class="far fa-comments"></i></span>
-                                <span>{{ trans('web.Chat') }}</span>
-                            </a>
+                        @if(auth('users')->check() && auth('users')->user()->id != $product->user_id)
+                            @if($product->is_sold == 0 && $product->price_type != \App\Enums\Advertisement\AdvertisementPriceTypeEnums::OpenOffer->value)
+                                <a href="#" class="btn btn-gradiant btn-chat addProductAction"
+                                   data-id="{{ $product->id }}"
+                                   data-action="chat">
+                                    <span class="me-2"><i class="far fa-comments"></i></span>
+                                    <span>{{ trans('web.Chat') }}</span>
+                                </a>
 
-                            <a target="_blank" href="https://wa.me/{{ $product->whatsapp_number }}"
-                               class="btn btn-border btn-whatsapp addProductAction" data-id="{{ $product->id }}"
-                               data-action="whatsapp">
-                                <i class="fa-brands fa-whatsapp"></i>
-                                <span>{{ trans('What’s up') }}</span>
-                            </a>
+                                <a target="_blank" href="https://wa.me/{{ $product->whatsapp_number }}"
+                                   class="btn btn-border btn-whatsapp addProductAction" data-id="{{ $product->id }}"
+                                   data-action="whatsapp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                    <span>{{ trans('What’s up') }}</span>
+                                </a>
 
-                            <a href="tel:{{$product->phone_number}}" class="btn btn-border btn-call addProductAction"
-                               data-id="{{ $product->id }}" data-action="call">
-                                <i class="fas fa-phone-volume"></i></a>
-                        @endif
+                                <a href="tel:{{$product->phone_number}}"
+                                   class="btn btn-border btn-call addProductAction"
+                                   data-id="{{ $product->id }}" data-action="call">
+                                    <i class="fas fa-phone-volume"></i></a>
+                            @endif
 
-                        @if($product->is_sold == 1 && $product->user_id && auth('users')->id() != $product->user_id)
-                            <a href="{{ route('web.products.purchased', ['id' => $product->id]) }}"
-                               class="btn btn-gradiant btn-purchased"><span class="me-2"><i
-                                            class="fas fa-basket-shopping"></i></span><span>I {{ trans('web.Purchased') }}</span></a>
+                            @if($product->is_sold == 1 && $product->user_id && auth('users')->id() != $product->user_id)
+                                <a href="{{ route('web.products.purchased', ['id' => $product->id]) }}"
+                                   class="btn btn-gradiant btn-purchased"><span class="me-2"><i
+                                                class="fas fa-basket-shopping"></i></span><span>I {{ trans('web.Purchased') }}</span></a>
+                            @endif
+
                         @endif
                     </div>
                 </div>
@@ -182,10 +226,14 @@
         </div>
         <div id="product-details" class="mb-4">
             <div class="container">
-                <div class="card">
+                <div class="d-flex flex-wrap justify-content-between mb-2">
                     <h3 class="text-dark fw-bold">{{ trans('web.Description') }}</h3>
-                    <p>{{ $product->description }}</p>
+                    <a href="javascript:void(0)" class="text-primary" id="translateDescription"><span class="me-2"><img
+                                    src="{{ asset('frontend/assets/images/icons/translate.svg') }}"
+                                    alt="icon"></span><span>{{ trans('web.translate') }}</span></a>
                 </div>
+                <p>{{ $product->description }}</p>
+                <p id="translatedDescription"></p>
             </div>
         </div>
 
@@ -211,7 +259,8 @@
             <div class="container">
                 <div class="d-flex justify-content-between">
                     <h4>{{ trans('web.related ads') }}</h4>
-                    <a href="{{ route('web.products.search') }}" class="text-primary">{{ trans('web.See More') }}</a>
+                    <a href="{{ route('web.products.search', ['categories_id[]' => $product->category_id]) }}"
+                       class="text-primary">{{ trans('web.See More') }}</a>
                 </div>
                 <div class="ads-list-sec">
                     <div class="row">
@@ -231,3 +280,22 @@
     @endif
     @include("frontend.components.report_product", ['product_id'=>$product->id])
 @stop
+
+@section("script")
+    <script>
+        $(document).ready(function () {
+            $("#translateDescription").on('click', function () {
+                $("#translatedDescription").html('');
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('web.products.translate', ['id' => $product->id]) }}",
+                    success: function (data) {
+                        if (data.success) {
+                            $("#translatedDescription").html(data.data);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endsection

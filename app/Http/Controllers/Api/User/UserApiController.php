@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Enums\ChatTypeEnums;
 use App\Enums\User\PaymentTransactionStatusEnum;
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AddCardRequest;
 use App\Http\Requests\Api\PayCommissionByCardRequest;
 use App\Http\Requests\Api\RechargeWalletRequest;
+use App\Http\Requests\Api\SendChatMessageRequest;
 use App\Http\Requests\Api\User\Auth\ChangePasswordApiRequest;
 use App\Http\Requests\Api\User\Auth\UpdateUserProfileApiRequest;
 use App\Http\Resources\Api\User\ListCardsApiResource;
@@ -17,6 +19,7 @@ use App\Http\Resources\Api\User\ListMessagesApiResource;
 use App\Http\Resources\Api\User\ListNotificationsApiResource;
 use App\Http\Resources\Api\User\ShowWalletApiResource;
 use App\Http\Resources\Api\User\UserApiResource;
+use App\Services\Advertisement\AdvertisementService;
 use App\Services\ChatMessageService;
 use App\Services\NotificationService;
 use App\Services\PayCommissionService;
@@ -257,17 +260,40 @@ class UserApiController extends Controller
         $total_unread_messages = $chatMessagesService->getUserUnreadMessagesCount($user->id);
 
         if (!count($chats)) {
-            return ResponseHelper::errorResponse(error: trans('api.no chat found'));
+            return ResponseHelper::successResponse(data: []);
         }
         return ListChatsApiResource::collection($chats)->additional(['total_unread_messages' => $total_unread_messages]);
     }
 
-    public function listChatMessages(int $chatId)
+    public function startChat(int $id)
+    {
+        $user = auth('api')->user();
+        $advertisementService = new AdvertisementService();
+        $advertisement = $advertisementService->findPublic($id);
+        if (!$advertisement || $advertisement->user_id == $user->id) {
+            return ResponseHelper::errorResponse(error: trans('api.not found'));
+        }
+        if ($advertisement->user_id) {
+            $chatType = ChatTypeEnums::USER_TO_USER;
+            $receiver_id = $advertisement->user_id;
+        } else {
+            $chatType = ChatTypeEnums::USER_TO_ADMIN;
+            $receiver_id = $advertisement->admin_id;
+        }
+        $chatMessagesService = new ChatMessageService();
+        $chatMessagesService->startChat($receiver_id, $user->id, $chatType);
+        $chats = $chatMessagesService->getUserChats($user->id);
+        $total_unread_messages = $chatMessagesService->getUserUnreadMessagesCount($user->id);
+
+        return ListChatsApiResource::collection($chats)->additional(['total_unread_messages' => $total_unread_messages]);
+    }
+
+    public function listChatMessages(int $chatId, Request $request)
     {
         $chatMessagesService = new ChatMessageService();
-        $chats = $chatMessagesService->getChatMessages($chatId);
+        $chats = $chatMessagesService->getChatMessages($chatId, $request->get('per_page', 50));
         if (!count($chats)) {
-            return ResponseHelper::errorResponse(error: trans('api.no chat found'));
+            return ResponseHelper::successResponse(data: []);
         }
         return ListMessagesApiResource::collection($chats);
     }
@@ -277,5 +303,16 @@ class UserApiController extends Controller
         $chatMessagesService = new ChatMessageService();
         $chatMessagesService->marchChatMessagesAsRead($chatId, auth('api')->id());
         return ResponseHelper::successResponse([], trans('api.chat marked as read successfully'));
+    }
+
+    public function sendMessage(SendChatMessageRequest $request)
+    {
+        $user = auth('api')->user();
+        $chatMessagesService = new ChatMessageService();
+        $chatMessage = $chatMessagesService->sendTextMessage($request->get('chat_id'), $request->get('message'), $user->id);
+        if ($chatMessage) {
+            return ListMessagesApiResource::make($chatMessage);
+        }
+        return ResponseHelper::errorResponse(error: trans('api.something went wrong'));
     }
 }

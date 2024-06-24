@@ -274,4 +274,8 @@ return [
     'offer sent successfully' => 'تم ارسال العرض بنجاح',
     'approved' => 'تمت الموافقة',
     'Write Something' => 'اكتب شيء',
+    'translate' => 'ترجمة',
+    'Highest Offer' => 'العرض الاعلى',
+    'Lowest Offer' => 'العرض الادنى',
+    'No data found' => 'لاتوجد بيانات',
 ];

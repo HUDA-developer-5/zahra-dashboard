@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Enums\Advertisement\AdvertisementPriceTypeEnums;
 use App\Enums\Advertisement\AdvertisementTypeEnums;
 use App\Enums\Advertisement\OfferStatusEnums;
+use App\Enums\ChatTypeEnums;
 use App\Enums\CommonStatusEnums;
 use App\Enums\StaticPagesEnums;
 use App\Helpers\GlobalHelper;
@@ -30,6 +31,7 @@ use App\Services\DynamicPageService;
 use App\Services\NationalityService;
 use App\Services\NotificationService;
 use App\Services\PayCommissionService;
+use App\Services\TranslationService;
 use App\Services\User\UserService;
 use Exception;
 use Illuminate\Http\Request;
@@ -45,6 +47,7 @@ class HomeWebController extends Controller
         $ads = (new AdvertisementService())->filterAds($request);
         $categoryService = new CategoryService();
         $parentCategories = $categoryService->listParentCatsToHome();
+        $allCats = $categoryService->listAllCats();
         $parent_cat_id = $request->get('parent_cat_id');
         $subCats = [];
         if (!$parent_cat_id && $parentCategories) {
@@ -64,6 +67,7 @@ class HomeWebController extends Controller
             'token' => $token,
             'termsAndConditions' => (new DynamicPageService())->getPage(StaticPagesEnums::TermsAndConditions->value),
             'banner' => (new AdvertisementService())->getActiveBanner(),
+            'allCats' => $allCats
         ];
         return view('frontend.home.index')->with($data);
     }
@@ -293,10 +297,9 @@ class HomeWebController extends Controller
             return redirect()->route('web.home');
         }
         $reportedComment = $advertisementService->findComment($commentId);
-//        dd($reportedComment);
         $user = auth('users')->user();
         if (!$reportedComment || $reportedComment->user_id == $user->id) {
-            toastr()->error(trans('api.not allowed'));
+            toastr()->error(trans('api.not allowed to report your comment'));
             return redirect()->route('web.products.show', $advertisement->id);
         }
         $advertisementService->reportComment($user, $advertisement, $reportedComment, $request->get('comment'));
@@ -316,7 +319,7 @@ class HomeWebController extends Controller
         $reportedComment = $advertisementService->findComment($commentId);
         $user = auth('users')->user();
         if (!$reportedComment || $reportedComment->user_id == $user->id) {
-            toastr()->error(trans('api.not allowed'));
+            toastr()->error(trans('api.not allowed to follow your comment'));
             return redirect()->route('web.products.show', $advertisement->id);
         }
 
@@ -383,14 +386,16 @@ class HomeWebController extends Controller
         ]);
     }
 
-    public function showAddProduct()
+    public function showAddProduct(Request $request)
     {
         $user = auth('users')->user();
         $cards = (new UserService())->listUserCards($user);
+        $allCategories = (new CategoryService())->listAllCats();
         $data = [
             'price_types' => AdvertisementPriceTypeEnums::asArray(),
             'premiumDetails' => (new DynamicPageService())->getPage(StaticPagesEnums::HowToBePremium->value),
-            'cards' => $cards
+            'cards' => $cards,
+            'allCategories' => $allCategories
         ];
         return view('frontend.product.form')->with($data);
     }
@@ -628,6 +633,32 @@ class HomeWebController extends Controller
         return view('frontend.messages.index')->with($data);
     }
 
+    public function startChat(int $id)
+    {
+        $user = auth('users')->user();
+        $advertisementService = new AdvertisementService();
+        $advertisement = $advertisementService->findPublic($id);
+        if (!$advertisement || $advertisement->user_id == $user->id) {
+            toastr()->error(trans('api.not found'));
+            return redirect()->route('web.home');
+        }
+        if ($advertisement->user_id) {
+            $chatType = ChatTypeEnums::USER_TO_USER;
+            $receiver_id = $advertisement->user_id;
+        } else {
+            $chatType = ChatTypeEnums::USER_TO_ADMIN;
+            $receiver_id = $advertisement->admin_id;
+        }
+        $chatMessagesService = new ChatMessageService();
+        $chatMessagesService->startChat($receiver_id, $user->id, $chatType);
+        $data = [
+            'chats' => $chatMessagesService->getUserChats($user->id),
+            'total_unread_messages' => $chatMessagesService->getUserUnreadMessagesCount($user->id)
+        ];
+
+        return view('frontend.messages.index')->with($data);
+    }
+
     public function updateOfferStatus(int $id, int $offerId, string $status)
     {
         try {
@@ -666,5 +697,16 @@ class HomeWebController extends Controller
         }
         toastr()->error(trans('api.something went wrong'));
         return redirect()->route('web.chats.list');
+    }
+
+    public function translateProduct(int $id)
+    {
+        $advertisementService = new AdvertisementService();
+        $advertisement = $advertisementService->findActiveAds($id);
+        if (!$advertisement) {
+            return response()->json(['success' => false, 'message' => trans('api.not found')]);
+        }
+        $translatedDescription = (new TranslationService())->translateProduct($advertisement);
+        return response()->json(['success' => true, 'data' => $translatedDescription]);
     }
 }

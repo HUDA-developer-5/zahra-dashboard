@@ -184,7 +184,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <h3 class="text-dark text-center fw-bold mb-3">Please log in or create an account</h3>
+                <h3 class="text-dark text-center fw-bold mb-3">{{ trans('web.Please log in or create an account') }}</h3>
                 <a data-bs-toggle="modal" href="#loginModal" role="button"
                    class="btn btn-gradiant fw-bold w-100">{{  trans('web.Login')}}</a>
             </div>
@@ -365,7 +365,8 @@
                                id="agree-1" required>
                         <label class="form-check-label fw-bold" for="flexCheckChecked-1">
                             {{ trans('web.By signing up, I agree with the') }}
-                            <a data-bs-toggle="modal" href="#registerTermsModal" role="button" class="text-decoration-underline text-primary">{{ trans('web.Terms of use & Privacy policy') }}</a>
+                            <a data-bs-toggle="modal" href="#registerTermsModal" role="button"
+                               class="text-decoration-underline text-primary">{{ trans('web.Terms of use & Privacy policy') }}</a>
                         </label>
                         @if($errors->register->has("remember"))
                             <div class="error-note">
@@ -408,29 +409,29 @@
     </div>
 </div>
 @guest()
-@if(isset($termsAndConditions))
-<div class="modal registerTermsModal fade" id="registerTermsModal" aria-hidden="true"  tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0">
-            <div class="modal-header justify-content-center border-0">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
-                </button>
-                <h3 class="text-capitalize text-center fw-bold mb-0">{{ $termsAndConditions->{'title_' . app()->getLocale()} }}</h3>
-            </div>
-            <div class="modal-body">
-                <p>{!! $termsAndConditions->{'content_' . app()->getLocale()} !!}</p>
-                <div class="text-center">
-                    <a data-bs-toggle="modal" href="#registerModal" role="button" class="text-primary">
-                        <i class="fas fa-chevron-left"></i>
-                        <span class="ms-3 fw-600">{{ trans('web.Back to create account') }}</span>
-                    </a>
+    @if(isset($termsAndConditions))
+        <div class="modal registerTermsModal fade" id="registerTermsModal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0">
+                    <div class="modal-header justify-content-center border-0">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
+                        </button>
+                        <h3 class="text-capitalize text-center fw-bold mb-0">{{ $termsAndConditions->{'title_' . app()->getLocale()} }}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>{!! $termsAndConditions->{'content_' . app()->getLocale()} !!}</p>
+                        <div class="text-center">
+                            <a data-bs-toggle="modal" href="#registerModal" role="button" class="text-primary">
+                                <i class="fas fa-chevron-left"></i>
+                                <span class="ms-3 fw-600">{{ trans('web.Back to create account') }}</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@endif
+    @endif
 @endguest
 <div class="modal main-modal forgetPasswordModal fade" id="forgetPasswordModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -688,7 +689,7 @@
         @if(session()->has('login_error'))
         $('#loginModal').modal('show');
         @endif
-        
+
         @if($errors->register->count())
         $('#registerModal').modal('show');
         @endif
@@ -709,34 +710,43 @@
         @endif
 
         // search in products after typing more than three letters in menuSearchInput input field call ajax and render result
-        $("#menuSearchInput").keyup(function () {
-            var value = $(this).val();
-            //reset search result
-            $(".searchResultList").addClass("d-none");
-            $(".searchResultList .search-list").html('');
-            // if (value.length > 2) {
-            $.ajax({
-                type: "get",
-                url: "{{ route('web.search.menu') }}",
-                data: {search: value},
-                success: function (data) {
-                    if (data.success) {
-                        $(".searchResultNoData").addClass("d-none");
-                        $(".searchResultList").removeClass("d-none");
-                        $(".searchResultList .search-list").html(data.html);
-                    } else {
-                        $(".searchResultList").addClass("d-none");
-                        $(".searchResultNoData").removeClass("d-none");
+        $("#menuSearchInput").on('keydown', function (event) {
+            if (event.key === 'Enter') {
+                var value = $(this).val();
+                //reset search result
+                $(".searchResultList").addClass("d-none");
+                $(".searchResultList .search-list").html('');
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('web.search.menu') }}",
+                    data: {search: value},
+                    success: function (data) {
+                        if (data.success) {
+                            $(".searchResultNoData").addClass("d-none");
+                            $(".searchResultList").removeClass("d-none");
+                            $(".searchResultList .search-list").html(data.html);
+                        } else {
+                            $(".searchResultList").addClass("d-none");
+                            $(".searchResultNoData").removeClass("d-none");
+                        }
                     }
-                }
-            });
-            // }
+                });
+            }
+        });
+
+        // Hide the popup when the ESC key is pressed
+        $(document).on('keydown', function (event) {
+            if (event.key === 'Escape') {
+                $(".searchResultList").addClass("d-none");
+                $(".searchResultNoData").addClass("d-none");
+            }
         });
 
     });
 </script>
 
 @yield('script')
+@livewireScripts
 </body>
 </html>
 

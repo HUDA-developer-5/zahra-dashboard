@@ -25,6 +25,8 @@
                                         <option value="default" {{ request('sort_by') == 'default' ? 'selected' : '' }}> {{ trans('web.Default') }}</option>
                                         <option value="high_price" {{ request('sort_by') == 'high_price' ? 'selected' : '' }}> {{ trans('web.Highest Price') }}</option>
                                         <option value="low_price" {{ request('sort_by') == 'low_price' ? 'selected' : '' }}> {{ trans('web.Lowest Price') }}</option>
+                                        <option value="high_offer" {{ request('sort_by') == 'high_offer' ? 'selected' : '' }}> {{ trans('web.Highest Offer') }}</option>
+                                        <option value="low_offer" {{ request('sort_by') == 'low_offer' ? 'selected' : '' }}> {{ trans('web.Lowest Offer') }}</option>
                                     </select>
                                 </div>
                                 @auth('users')
