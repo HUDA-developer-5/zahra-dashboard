@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\CurrencyScope;
 use App\Traits\HasImage;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use App\Enums\Advertisement\AdvertisementMediaTypeEnums;
@@ -59,11 +60,34 @@ class Advertisement extends Model
         'premium_amount',
         'start_date',
         'expire_date',
+        'sub_category_id_1',
+        'sub_category_id_2',
+        'sub_category_id_3',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new CurrencyScope());
+    }
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function subCategory1(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'sub_category_id_1', 'id');
+    }
+
+    public function subCategory2(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'sub_category_id_2', 'id');
+    }
+
+    public function subCategory3(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'sub_category_id_3', 'id');
     }
 
     public function user(): BelongsTo

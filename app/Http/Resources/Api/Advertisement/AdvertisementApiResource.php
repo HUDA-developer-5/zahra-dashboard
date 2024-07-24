@@ -47,6 +47,9 @@ class AdvertisementApiResource extends JsonResource
             'state' => StateApiResource::make($this->state),
             'city' => CityApiResource::make($this->city),
             'category' => CategoryApiResource::make($this->category),
+            'sub_category_1' => $this->sub_category_id_1 ? CategoryApiResource::make($this->subCategory1) : null,
+            'sub_category_2' => $this->sub_category_id_2 ? CategoryApiResource::make($this->subCategory2) : null,
+            'sub_category_3' => $this->sub_category_id_3 ? CategoryApiResource::make($this->subCategory3) : null
         ];
     }
 }
