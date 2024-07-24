@@ -23,6 +23,12 @@ class CreateAdvertisementDTO extends Data
 
     public int $category_id;
 
+    public ?int $sub_category_id_1;
+
+    public ?int $sub_category_id_2;
+
+    public ?int $sub_category_id_3;
+
     public ?int $is_sold;
 
     public int $is_negotiable;
