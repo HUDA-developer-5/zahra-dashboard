@@ -14,7 +14,8 @@ class CurrencyScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
         // get currency from header or default to SAR
-        $currency = request()->header('currency-of-country', 'SAR');
+        $country_key = request()->header('country-key', 'SA');
+        $currency = $country_key == 'SA' ? 'SAR' : ($country_key == 'EG' ? 'EGP' : 'AED');
 
         // filter by currency
         $builder->where('currency', $currency);
