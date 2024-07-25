@@ -49,7 +49,7 @@
                             <div id="pro_videos" class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="flex-grow-1">{{ trans('web.Product Video') }} <span
-                                                class="text-gray">( {{ trans('web.optional') }} )</span></h6>
+                                            class="text-gray">( {{ trans('web.optional') }} )</span></h6>
                                     <p> (<span class="text-secondary">0</span>/20)</p>
                                 </div>
                                 <div>
@@ -62,18 +62,17 @@
                                 <h5 class="fw-bold mb-3">{{ trans('web.Add Info') }}</h5>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 mb-3">
-                                    @if($allCategories)
-                                        <div class="sec-select">
-                                            <select class="select2 w-100 form-control" name="category_id" required
-                                                    value="{{ old('category_id') }}">
-                                                @foreach($allCategories as $category)
-                                                    <option value="{{ $category->id }}"> {{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endif
+                                <div class="col-lg-6 mb-3" id="categorySelects">
+                                    <div class="sec-select">
+                                        <select class="select2 w-100 form-control" name="category_id" id="category_id" required>
+                                            <option value="" selected disabled>{{ trans('web.Select Category') }}</option>
+                                            @foreach($allCategories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="col-lg-6 mb-3" id="subCategorySelects"></div>
                                 <div class="col-lg-6 mb-3">
                                     <div class="form-input">
                                         <input type="text" id="info-title" name="name" class="form-control" required
@@ -112,7 +111,8 @@
                                         <div class="currency">
                                             <select class="form-select" name="currency" value="{{ old('currency') }}">
                                                 @foreach($countries as $country)
-                                                    <option value="{{ $country->currency }}"> {{ $country->currency }}</option>
+                                                    <option
+                                                        value="{{ $country->currency }}"> {{ $country->currency }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -142,7 +142,8 @@
                                                     <select class="form-select" name="currency"
                                                             value="{{ old('currency') }}">
                                                         @foreach($countries as $country)
-                                                            <option value="{{ $country->currency }}"> {{ $country->currency }}</option>
+                                                            <option
+                                                                value="{{ $country->currency }}"> {{ $country->currency }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -252,7 +253,8 @@
                                         <div>
                                             <img src="{{ asset('frontend/assets/images/icons/info-circle.svg') }}"
                                                  alt="info circle">
-                                            <span class="fw-bold">{{ $premiumDetails->{"title_". app()->getLocale()} }}</span>
+                                            <span
+                                                class="fw-bold">{{ $premiumDetails->{"title_". app()->getLocale()} }}</span>
                                         </div>
                                         <div class="d-flex flex-wrap mb-2">
                                             {!! $premiumDetails->{"content_". app()->getLocale()} !!}
@@ -315,15 +317,16 @@
                         <div class="text-center fw-bold mb-3">
                             <h3>{{ trans('web.To confirm, please pay') }}</h3>
                             <p>
-                                <span class="text-primary payPremiumAmount"></span>{{ auth('users')->user()->default_currency }}
+                                <span
+                                    class="text-primary payPremiumAmount"></span>{{ auth('users')->user()->default_currency }}
                             </p>
                         </div>
                         <div class="d-flex gap-2">
                             <a data-bs-toggle="modal" href="#payByModal" role="button"
                                class="btn btn-gradiant py-3 w-50"><span
-                                        class="fw-bold">{{ trans('web.Confirm') }}</span> </a>
+                                    class="fw-bold">{{ trans('web.Confirm') }}</span> </a>
                             <a class="btn btn-border py-3 w-50" data-bs-dismiss="modal" aria-label="Close"><span
-                                        class="fw-bold">{{  trans('web.Cancel') }}</span> </a>
+                                    class="fw-bold">{{  trans('web.Cancel') }}</span> </a>
                         </div>
                     </div>
                 </div>
@@ -362,9 +365,11 @@
 
                                 @foreach($cards as $card)
                                     <div class="card mb-3">
-                                        <div class="d-flex justify-content-between align-items-center check-form border-0 p-0">
-                                            <label class="form-check-label w-75 d-sm-flex flex-wrap justify-content-between align-items-center gap-3 "
-                                                   for="premiumAd">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center check-form border-0 p-0">
+                                            <label
+                                                class="form-check-label w-75 d-sm-flex flex-wrap justify-content-between align-items-center gap-3 "
+                                                for="premiumAd">
                                                 <div class="img mb-2 mb-sm-0">
                                                     @if($card->brand == "visa")
                                                         <img src="{{ asset('frontend/assets/images/visa-logo.svg') }}"
@@ -395,9 +400,9 @@
                         @endif
                         <div class="d-flex gap-2">
                             <a href="#" id="submitConfirmPay" class="btn btn-gradiant py-3 w-50"><span
-                                        class="fw-bold">{{  trans('web.Confirm') }}</span> </a>
+                                    class="fw-bold">{{  trans('web.Confirm') }}</span> </a>
                             <a class="btn btn-border py-3 w-50" data-bs-dismiss="modal" aria-label="Close"><span
-                                        class="fw-bold">{{ trans('web.Cancel') }}</span> </a>
+                                    class="fw-bold">{{ trans('web.Cancel') }}</span> </a>
                         </div>
                     </div>
                 </div>
@@ -419,10 +424,11 @@
                         </div>
                         <form>
                             <div class="d-flex gap-2">
-                                <a class="btn btn-gradiant py-3 w-50" href="{{  route('web.products.add')}}"><span class="fw-bold">{{ trans('web.Add New Advertisement') }}</span>
+                                <a class="btn btn-gradiant py-3 w-50" href="{{  route('web.products.add')}}"><span
+                                        class="fw-bold">{{ trans('web.Add New Advertisement') }}</span>
                                 </a>
                                 <a class="btn btn-border py-3 w-50" data-bs-dismiss="modal" aria-label="Close"><span
-                                            class="fw-bold">{{  trans('web.Cancel') }}</span> </a>
+                                        class="fw-bold">{{  trans('web.Cancel') }}</span> </a>
                             </div>
                         </form>
                     </div>
@@ -434,7 +440,8 @@
 
         @section("script")
             <script src="{{ asset('frontend/assets/js/map.js') }}"></script>
-            <script src="{{ asset('frontend/assets/plugins/ajax-file-uploader/dist/jquery.uploader.min.js') }}"></script>
+            <script
+                src="{{ asset('frontend/assets/plugins/ajax-file-uploader/dist/jquery.uploader.min.js') }}"></script>
             <script>
                 $(document).ready(function () {
 
@@ -691,6 +698,70 @@
                             $('#cityList').append('<option value="">{{ trans('web.Select City') }}</option>');
                         }
                     });
+                });
+
+
+                $(document).ready(function () {
+                    // Function to create a new select element
+                    function createSubCategorySelect(level) {
+                        return `
+                            <div class="col-lg-6 mb-3 sub-category-${level}">
+                                <div class="sec-select">
+                                    <select class="select2 w-100 form-control" name="sub_category_id_${level}" id="sub_category_id_${level}">
+                                        <option value="">{{ trans('web.Select Sub Category') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Function to fetch and populate subcategories
+                    function fetchSubCategories(parentId, level) {
+                        $.ajax({
+                            type: "GET",
+                            url: `/categories/${parentId}/subcategories`,
+                            success: function (data) {
+                                if (data.length > 0) {
+                                    // Append a new select for subcategories if subcategories exist
+                                    const newSelect = createSubCategorySelect(level);
+                                    $('#subCategorySelects').append(newSelect);
+
+                                    // Populate the new select with subcategories
+                                    $.each(data, function (index, subCategory) {
+                                        $(`#sub_category_id_${level}`).append(`<option value="${subCategory.id}">${subCategory.name}</option>`);
+                                    });
+
+                                    // Attach change event to the new select
+                                    $(`#sub_category_id_${level}`).change(function () {
+                                        const selectedSubCategoryId = $(this).val();
+                                        // Remove selects for deeper levels
+                                        $(`.sub-category-${level + 1}`).remove();
+                                        // Fetch subcategories for the selected subcategory
+                                        if (selectedSubCategoryId) {
+                                            fetchSubCategories(selectedSubCategoryId, level + 1);
+                                        }
+                                    });
+
+                                    // Initialize select2 for the new select
+                                    $(`#sub_category_id_${level}`).select2();
+                                }
+                            }
+                        });
+                    }
+
+                    // Attach change event to the initial category select
+                    $('#category_id').change(function () {
+                        const categoryId = $(this).val();
+                        // Remove all subcategory selects
+                        $('#subCategorySelects').empty();
+                        // Fetch subcategories for the selected category
+                        if (categoryId) {
+                            fetchSubCategories(categoryId, 1);
+                        }
+                    });
+
+                    // Initialize select2 for the initial category select
+                    $('#category_id').select2();
                 });
 
             </script>

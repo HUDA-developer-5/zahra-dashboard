@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\User\Auth\PasswordResetTokenAPIController;
 use App\Http\Controllers\Api\User\Auth\SocialAuthApiController;
+use App\Http\Controllers\Payment\PaymentWebHookController;
 use App\Http\Controllers\Web\HomeWebController;
 use App\Http\Controllers\Web\PaymentWebController;
 use App\Http\Controllers\Web\UserRegisterWebController;
@@ -52,6 +53,11 @@ Route::group(['middleware' => ['localeSessionRedirect', 'localizationRedirect', 
             Route::post('password/reset', [PasswordResetTokenAPIController::class, 'resetPassword'])->name('password.reset');
         });
     });
+
+
+    // get subCategories using ajax
+    Route::get('/categories/{parentId}/subcategories', [HomeWebController::class, 'getSubCategories']);
+
 
     Route::get('/', [HomeWebController::class, 'index'])->name('web.home');
     Route::post('/change-lang', [HomeWebController::class, 'changeLanguage'])->name('web.change_lang');

@@ -22,6 +22,7 @@ use App\Http\Requests\Web\SubscribeNewsletterWebRequest;
 use App\Http\Resources\Api\Advertisement\SimpleAdvertisementApiResource;
 use App\Http\Resources\Api\CityApiResource;
 use App\Http\Resources\Api\StateApiResource;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\State;
 use App\Services\Advertisement\AdvertisementService;
@@ -35,6 +36,7 @@ use App\Services\TranslationService;
 use App\Services\User\UserService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use function PHPUnit\Framework\isFalse;
@@ -708,5 +710,23 @@ class HomeWebController extends Controller
         }
         $translatedDescription = (new TranslationService())->translateProduct($advertisement);
         return response()->json(['success' => true, 'data' => $translatedDescription]);
+    }
+
+
+    public function getSubCategories($parent_id)
+    {
+        // Fetch subcategories for the given parent category ID
+        $subcategories = Category::where('parent_id', $parent_id)->get();
+
+        // Map subcategories to include localized names
+        $localizedSubcategories = $subcategories->map(function ($subcategory){
+            return [
+                'id' => $subcategory->id,
+                'name' => $subcategory->name,
+            ];
+        });
+
+        // Return the subcategories as a JSON response
+        return response()->json($localizedSubcategories);
     }
 }
