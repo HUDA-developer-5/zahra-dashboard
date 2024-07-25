@@ -9,6 +9,7 @@ return [
     "Download our app" => "قم بتنزيل تطبيقنا ",
     "Categories" => "الأقسام",
     "Category" => "القسم",
+    "select_Sub_Category" => "اختر القسم الفرعي",
     "Company" => "الشركة",
     "Important links" => "روابط مهمة",
     "Contact us" => "اتصل بنا",

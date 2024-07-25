@@ -63,9 +63,9 @@ class AdvertisementService
         $limit = (int)$request->get('limit', 8);
 
         $featuredQuery = $this->adsBuilder();
-        if ($request->get('type') == 'featured') {
+//        if ($request->get('type') == 'featured') {
             $featuredQuery = $this->commonFilters($featuredQuery, $request);
-        }
+//        }
         $featured = $featuredQuery->where('type', '=', AdvertisementTypeEnums::Premium->value)
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->inRandomOrder()
@@ -76,9 +76,9 @@ class AdvertisementService
         $ignoreFeatured = $featured->pluck('id', 'id')->toArray();
 
         $latestQuery = $this->adsBuilder();
-        if ($request->get('type') == 'latest') {
+//        if ($request->get('type') == 'latest') {
             $latestQuery = $this->commonFilters($featuredQuery, $request);
-        }
+//        }
         $latest = $latestQuery->whereNotIn('id', $ignoreFeatured)
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->orderByDesc('type')
@@ -562,6 +562,18 @@ class AdvertisementService
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
+        }
+
+        if ($request->filled('sub_category_id_1') && $request->sub_category_id_1 !== "null") {
+            $query->where('sub_category_id_1', $request->sub_category_id_1);
+        }
+
+        if ($request->filled('sub_category_id_2') && $request->sub_category_id_2 !== "null") {
+            $query->where('sub_category_id_2', $request->sub_category_id_2);
+        }
+
+        if ($request->filled('sub_category_id_3') && $request->sub_category_id_3 !== "null") {
+            $query->where('sub_category_id_3', $request->sub_category_id_3);
         }
 
         if ($request->filled('country_id')) {

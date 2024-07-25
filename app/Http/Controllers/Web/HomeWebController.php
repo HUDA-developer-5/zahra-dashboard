@@ -74,6 +74,19 @@ class HomeWebController extends Controller
         return view('frontend.home.index')->with($data);
     }
 
+    public function getAds(Request $request)
+    {
+        $ads = (new AdvertisementService())->filterAds($request);
+        $featuredAds = $ads['featured'];
+        $latestAds = $ads['latest'];
+
+        $featuredAdsHtml = view('frontend.render.featuredAds', compact('featuredAds'))->render();
+        $latestAdsHtml = view('frontend.render.latestAds', compact('latestAds'))->render();
+
+        return response()->json(['featuredAdsHtml' => $featuredAdsHtml, 'latestAdsHtml' => $latestAdsHtml]);
+
+    }
+
     public function changeLanguage(Request $request)
     {
         $lang = $request->get('language');

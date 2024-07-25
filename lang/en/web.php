@@ -42,6 +42,7 @@ return [
     "View More" => "View More",
     "Latest" => "Latest",
     "Category" => "Category",
+    "select_Sub_Category" => "select Sub Category",
     "City" => "City",
     "Near by" => "Near by",
     "Available photo" => "Available photo",
