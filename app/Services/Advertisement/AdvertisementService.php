@@ -63,9 +63,9 @@ class AdvertisementService
         $limit = (int)$request->get('limit', 8);
 
         $featuredQuery = $this->adsBuilder();
-//        if ($request->get('type') == 'featured') {
+        if ($request->get('type') == 'featured') {
             $featuredQuery = $this->commonFilters($featuredQuery, $request);
-//        }
+        }
         $featured = $featuredQuery->where('type', '=', AdvertisementTypeEnums::Premium->value)
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->inRandomOrder()
@@ -76,9 +76,9 @@ class AdvertisementService
         $ignoreFeatured = $featured->pluck('id', 'id')->toArray();
 
         $latestQuery = $this->adsBuilder();
-//        if ($request->get('type') == 'latest') {
+        if ($request->get('type') == 'latest') {
             $latestQuery = $this->commonFilters($featuredQuery, $request);
-//        }
+        }
         $latest = $latestQuery->whereNotIn('id', $ignoreFeatured)
             ->where('status', '=', AdvertisementStatusEnums::Active->value)
             ->orderByDesc('type')
@@ -87,7 +87,7 @@ class AdvertisementService
             ->take($limit)
             ->get();
 
-        $ignoreLatest = $featured->pluck('id', 'id')->toArray();
+        $ignoreLatest = $latest->pluck('id', 'id')->toArray();
 
         $more = $this->adsBuilder()
             ->whereNotIn('id', array_merge($ignoreFeatured, $ignoreLatest))
@@ -102,6 +102,24 @@ class AdvertisementService
             'latest' => $latest,
             'more' => $more,
         ];
+    }
+
+
+    public function filterAdvertisements(Request $request, string $adType)
+    {
+        $limit = (int)$request->get('limit', 8);
+
+        $adsQuery = $this->adsBuilder();
+        $adsQuery = $this->commonFilters($adsQuery, $request);
+
+        $ads = $adsQuery->where('type', '=', $adType)
+            ->where('status', '=', AdvertisementStatusEnums::Active->value)
+            ->inRandomOrder()
+            ->latest()
+            ->take($limit)
+            ->get();
+
+        return $ads;
     }
 
     public function getHomeAdsToMobile()
@@ -560,10 +578,10 @@ class AdvertisementService
             $query->whereIn('category_id', $request->categories_id);
         }
 
-        if ($request->filled('category_id')) {
+        if ($request->filled('category_id') && $request->category_id !== "null") {
             $query->where('category_id', $request->category_id);
         }
-
+//
         if ($request->filled('sub_category_id_1') && $request->sub_category_id_1 !== "null") {
             $query->where('sub_category_id_1', $request->sub_category_id_1);
         }

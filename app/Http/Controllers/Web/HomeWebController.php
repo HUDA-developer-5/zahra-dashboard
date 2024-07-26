@@ -46,7 +46,7 @@ class HomeWebController extends Controller
     public function index(FilterAdvertisementApiRequest $request)
     {
         $token = $request->get('token');
-        $ads = (new AdvertisementService())->filterAds($request);
+//        $ads = (new AdvertisementService())->filterAds($request);
         $categoryService = new CategoryService();
         $parentCategories = $categoryService->listParentCatsToHome();
         $allCats = $categoryService->listAllCats();
@@ -62,9 +62,9 @@ class HomeWebController extends Controller
             'parentCategories' => $parentCategories,
             'subCategories' => $subCats,
             'cities' => (new NationalityService())->listCitiesToFilter(),
-            'latest' => $ads['latest'],
+//            'latest' => $ads['latest'],
 //            'moreList' => $ads['more'],
-            'featured' => $ads['featured'],
+//            'featured' => $ads['featured'],
             'parent_cat_id' => $parent_cat_id,
             'token' => $token,
             'termsAndConditions' => (new DynamicPageService())->getPage(StaticPagesEnums::TermsAndConditions->value),
@@ -74,17 +74,20 @@ class HomeWebController extends Controller
         return view('frontend.home.index')->with($data);
     }
 
-    public function getAds(Request $request)
+    public function getFeaturedAds(Request $request)
     {
-        $ads = (new AdvertisementService())->filterAds($request);
-        $featuredAds = $ads['featured'];
-        $latestAds = $ads['latest'];
+        $ads = (new AdvertisementService())->filterAdvertisements($request, AdvertisementTypeEnums::Premium->value);
+        $featuredAdsHtml = view('frontend.render.featuredAds', ['featuredAds' => $ads])->render();
 
-        $featuredAdsHtml = view('frontend.render.featuredAds', compact('featuredAds'))->render();
-        $latestAdsHtml = view('frontend.render.latestAds', compact('latestAds'))->render();
+        return response()->json(['featuredAdsHtml' => $featuredAdsHtml]);
+    }
 
-        return response()->json(['featuredAdsHtml' => $featuredAdsHtml, 'latestAdsHtml' => $latestAdsHtml]);
+    public function getLatestAds(Request $request)
+    {
+        $ads = (new AdvertisementService())->filterAdvertisements($request, AdvertisementTypeEnums::Free->value);
+        $latestAdsHtml = view('frontend.render.latestAds', ['latestAds' => $ads])->render();
 
+        return response()->json(['latestAdsHtml' => $latestAdsHtml]);
     }
 
     public function changeLanguage(Request $request)
@@ -732,10 +735,11 @@ class HomeWebController extends Controller
         $subcategories = Category::where('parent_id', $parent_id)->get();
 
         // Map subcategories to include localized names
-        $localizedSubcategories = $subcategories->map(function ($subcategory){
+        $localizedSubcategories = $subcategories->map(function ($subcategory) {
             return [
                 'id' => $subcategory->id,
                 'name' => $subcategory->name,
+                'image_path' => $subcategory->image_path
             ];
         });
 

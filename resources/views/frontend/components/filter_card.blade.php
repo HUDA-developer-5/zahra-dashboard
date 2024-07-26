@@ -1,22 +1,22 @@
-{{ html()->form('get', route('web.home'))->class('filterForm')->open() }}
+{{--{{ html()->form('get', route('web.home'))->class('filterForm')->open() }}--}}
 {{ html()->hidden('type', $type)->id($type) }}
 <div class="d-flex flex-wrap align-items-center gap-2 filter">
 
     @if($allCats)
         <div class="sec-select">
-            <select class="select2 w-100 form-control category_id" name="category_id">
+            <select class="select2 w-100 form-control category_id_{{$type}}" name="category_id">
                 <option label="{{ trans('web.Category') }}">  </option>
                 @foreach($allCats as $cat)
                     <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}> {{ $cat->name }}</option>
                 @endforeach
             </select>
         </div>
-        <div class="sec-select subCategorySelects" id="subCategorySelects" style="display: none;"></div>
+        <div class="sec-select subCategorySelects_{{$type}}" id="subCategorySelects" ></div>
     @endif
 
     @if($countries->count())
         <div class="sec-select">
-            <select class="select2 w-100 form-control country_id" name="country_id">
+            <select class="select2 w-100 form-control country_id_{{$type}}" name="country_id">
                 <option label="{{ trans('web.Country') }}"> </option>
                 @foreach($countries as $country)
                     <option value="{{ $country->id }}" {{ request('country_id') == $country->id ? 'selected' : '' }}> {{ $country->name }}</option>
