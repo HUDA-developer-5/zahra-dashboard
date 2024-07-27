@@ -57,6 +57,7 @@ Route::group(['middleware' => ['localeSessionRedirect', 'localizationRedirect', 
 
     // get subCategories using ajax
     Route::get('/categories/{parentId}/subcategories', [HomeWebController::class, 'getSubCategories']);
+    Route::get('/categories/{parentId}/subcategoriesUsingView', [HomeWebController::class, 'getSubCategoriesUsingView']);
 
     Route::get('get-featured-ads', [HomeWebController::class, 'getFeaturedAds'])->name('web.get_featured_ads');
     Route::get('get-latest-ads', [HomeWebController::class, 'getLatestAds'])->name('web.get_latest_ads');

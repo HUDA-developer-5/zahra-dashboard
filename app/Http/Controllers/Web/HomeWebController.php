@@ -746,4 +746,12 @@ class HomeWebController extends Controller
         // Return the subcategories as a JSON response
         return response()->json($localizedSubcategories);
     }
+
+    public function getSubCategoriesUsingView($parent_id)
+    {
+        $subcategories = Category::where('parent_id', $parent_id)->get();
+        $subcategoriesHtml = view('frontend.render.subCategory', ['subcategories' => $subcategories])->render();
+
+        return response()->json(['subcategoriesHtml' => $subcategoriesHtml]);
+    }
 }

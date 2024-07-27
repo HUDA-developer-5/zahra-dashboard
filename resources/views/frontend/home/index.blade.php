@@ -1,6 +1,11 @@
 @extends('frontend.layouts.master')
 
 @section("style")
+{{--    <style>--}}
+{{--        .owl-item.active {--}}
+{{--            width: 100px !important;--}}
+{{--        }--}}
+{{--    </style>--}}
 @endsection
 
 @section('content')
@@ -16,12 +21,47 @@
                     </div>
                 </div>
                 <div class="categories-list">
+{{--                    <div class="owl-carousel categories-carousel">--}}
+{{--                        @forelse($parentCategories as $parentCategory)--}}
+{{--                            <div class="item">--}}
+{{--                                <div class="category text-center {{ ($parent_cat_id == $parentCategory->id) ? 'active' : '' }}">--}}
+{{--                                    <div class="img mb-2">--}}
+{{--                                        <a href="{{ route('web.home', ['parent_cat_id' => $parentCategory->id]) }}">--}}
+{{--                                            <img src="{{ $parentCategory->image_path }}" alt="{{ $parentCategory->name }}" class="img-fluid" loading="lazy">--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+{{--                                    <h6 class="name">{{ $parentCategory->name }}</h6>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @empty--}}
+{{--                            <p>{{ trans('web.No Categories Available') }}</p>--}}
+{{--                        @endforelse--}}
+{{--                    </div>--}}
+{{--                    <div class="sub-category">--}}
+{{--                        <div class="owl-carousel sub-category-carousel">--}}
+{{--                            @forelse($subCategories as $subCategory)--}}
+{{--                                <div class="item">--}}
+{{--                                    <div class="category text-center">--}}
+{{--                                        <div class="img mb-2">--}}
+{{--                                            <img src="{{ $subCategory->image_path }}" alt="{{ $subCategory->name }}" class="img-fluid" loading="lazy">--}}
+{{--                                        </div>--}}
+{{--                                        <h6 class="name">{{ $subCategory->name }}</h6>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @empty--}}
+{{--                                <p>{{ trans('web.No Subcategories Available') }}</p>--}}
+{{--                            @endforelse--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+
+
                     <div class="owl-carousel categories-carousel">
-                        @forelse($parentCategories as $parentCategory)
+                        @forelse($parentCategories as $index => $parentCategory)
                             <div class="item">
-                                <div class="category text-center {{ ($parent_cat_id == $parentCategory->id) ? 'active' : '' }}">
+                                <div class="category text-center parent-category {{ $index == 0 ? 'active' : '' }}" data-id="{{ $parentCategory->id }}">
                                     <div class="img mb-2">
-                                        <a href="{{ route('web.home', ['parent_cat_id' => $parentCategory->id]) }}">
+                                        <a href="#" class="parent-category-link">
                                             <img src="{{ $parentCategory->image_path }}" alt="{{ $parentCategory->name }}" class="img-fluid" loading="lazy">
                                         </a>
                                     </div>
@@ -33,21 +73,14 @@
                         @endforelse
                     </div>
                     <div class="sub-category">
-                        <div class="owl-carousel sub-category-carousel">
-                            @forelse($subCategories as $subCategory)
-                                <div class="item">
-                                    <div class="category text-center">
-                                        <div class="img mb-2">
-                                            <img src="{{ $subCategory->image_path }}" alt="{{ $subCategory->name }}" class="img-fluid" loading="lazy">
-                                        </div>
-                                        <h6 class="name">{{ $subCategory->name }}</h6>
-                                    </div>
-                                </div>
-                            @empty
-                                <p>{{ trans('web.No Subcategories Available') }}</p>
-                            @endforelse
+                        <div class="owl-carousel sub-category-carousel" id="sub-category-carousel">
+                            <!-- Subcategories will be loaded here dynamically -->
                         </div>
                     </div>
+
+
+
+
                     <div class="text-center mt-4 d-none d-lg-block">
                         <a href="{{ route('web.categories') }}" class="text-primary fw-bold">{{ trans('web.View More') }}</a>
                     </div>
@@ -347,6 +380,78 @@
             initSelects('featured');
             initSelects('latest');
         });
+    </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function fetchSubCategories(parentId) {
+                $.ajax({
+                    type: "GET",
+                    url: `/categories/${parentId}/subcategoriesUsingView`,
+                    success: function (data) {
+                        console.log("Data received:", data);
+                        const subCategoryCarousel = $('#sub-category-carousel');
+                        subCategoryCarousel.trigger('destroy.owl.carousel'); // Destroy the current instance
+                        subCategoryCarousel.empty(); // Clear the carousel
+                        subCategoryCarousel.append(data['subcategoriesHtml']); // Append the new items
+                        subCategoryCarousel.owlCarousel({
+                            // reinitialize carousel with settings
+                            loop: true,
+                            margin: 10,
+                            width: 100,
+                            responsive: {
+                                0: {
+                                    items: 1
+                                },
+                                600: {
+                                    items: 3
+                                },
+                                1000: {
+                                    items: 5
+                                }
+                            },
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching subcategories:', error);
+                    }
+                });
+            }
+
+            function selectFirstParentCategory() {
+                const firstParentCategory = $('.parent-category').first();
+                const parentId = firstParentCategory.data('id');
+                firstParentCategory.addClass('active');
+                fetchSubCategories(parentId);
+            }
+
+            $(document).on('click', '.parent-category-link', function (e) {
+                e.preventDefault();
+                $('.parent-category').removeClass('active');
+                const parentCategory = $(this).closest('.parent-category');
+                parentCategory.addClass('active');
+                const parentId = parentCategory.data('id');
+                fetchSubCategories(parentId);
+            });
+
+            selectFirstParentCategory();
+            // Initialize the Owl Carousels
+            $('.categories-carousel').owlCarousel({
+                loop: false,
+                margin: 10,
+                nav: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 4
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+        });
     </script>
 @endsection
