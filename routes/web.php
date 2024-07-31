@@ -59,6 +59,15 @@ Route::group(['middleware' => ['localeSessionRedirect', 'localizationRedirect', 
     Route::get('/categories/{parentId}/subcategories', [HomeWebController::class, 'getSubCategories']);
     Route::get('/categories/{parentId}/subcategoriesUsingView', [HomeWebController::class, 'getSubCategoriesUsingView']);
 
+    Route::get('/comments/{productId}', [HomeWebController::class, 'getComments'])->name('comments.get');
+    Route::post('/comments/add', [HomeWebController::class, 'addComment'])->name('comments.add');
+    Route::post('/comments/edit/{commentId}', [HomeWebController::class, 'editComment'])->name('comments.edit');
+    Route::delete('/comments/delete/{commentId}', [HomeWebController::class, 'deleteComment'])->name('comments.delete');
+
+
+
+
+
     Route::get('get-featured-ads', [HomeWebController::class, 'getFeaturedAds'])->name('web.get_featured_ads');
     Route::get('get-latest-ads', [HomeWebController::class, 'getLatestAds'])->name('web.get_latest_ads');
     Route::get('/', [HomeWebController::class, 'index'])->name('web.home');

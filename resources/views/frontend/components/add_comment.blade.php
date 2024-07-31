@@ -1,9 +1,8 @@
 @auth('users')
-    {{--    replay with-form-reply--}}
     <div class="comment">
         <div class="d-flex gap-2 ">
             <div class="img">
-                <img src="{{ (auth('users')->user()->image)? auth('users')->user()->image_path : asset('frontend/assets/images/icons/profile-circle.svg') }}"
+                <img src="{{ (auth('users')->user()->image)? auth('users')->user()->image : asset('frontend/assets/images/icons/profile-circle.svg') }}"
                      alt="user image">
             </div>
             <div class="user-details flex-grow-1">
@@ -11,6 +10,7 @@
                     <h6 class="text-dark fw-bold">{{ auth('users')->user()->name }}</h6>
                 </div>
                 {{ html()->form('post', route('web.comments.add', ['id' => $product_id]))->attribute('id', 'CommentForm')->open() }}
+                @csrf
                 <input type="hidden" name="product_id" value="{{$product_id}}">
                 <input type="hidden" name="parent" value="{{$parent_id}}">
                 <textarea name="comment" id="comment_replay" required rows="2" placeholder="{{ trans('web.Comment') }}" class="form-control"
@@ -38,6 +38,7 @@
             </div>
             <div class="user-details flex-grow-1">
                 {{ html()->form('post', route('web.comments.add.guest-user', ['id' => $product_id]))->open() }}
+                @csrf
                 <textarea name="comment" id="comment_replay" rows="2" placeholder="{{ trans('web.Comment') }}" class="form-control"
                           maxlength="250"></textarea>
 

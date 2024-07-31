@@ -25,6 +25,7 @@ use App\Http\Resources\Api\StateApiResource;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\State;
+use App\Models\UserAdsComment;
 use App\Services\Advertisement\AdvertisementService;
 use App\Services\CategoryService;
 use App\Services\ChatMessageService;
@@ -37,6 +38,7 @@ use App\Services\User\UserService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use function PHPUnit\Framework\isFalse;
@@ -247,18 +249,18 @@ class HomeWebController extends Controller
     }
 
     //addComment
-    public function addComment(int $id, CommentAdvertisementApiRequest $request)
-    {
-        $advertisementService = new AdvertisementService();
-        $advertisement = $advertisementService->findActiveAds($id);
-        if (!$advertisement) {
-            toastr()->error(trans('api.not found'));
-            return redirect()->route('web.home');
-        }
-        $advertisementService->addComment(auth('users')->user(), $advertisement, $request->get('comment'), $request->get('parent'));
-        toastr()->success(trans('api.added successfully'));
-        return redirect()->route('web.products.show', $advertisement->id);
-    }
+//    public function addComment(int $id, CommentAdvertisementApiRequest $request)
+//    {
+//        $advertisementService = new AdvertisementService();
+//        $advertisement = $advertisementService->findActiveAds($id);
+//        if (!$advertisement) {
+//            toastr()->error(trans('api.not found'));
+//            return redirect()->route('web.home');
+//        }
+//        $advertisementService->addComment(auth('users')->user(), $advertisement, $request->get('comment'), $request->get('parent'));
+//        toastr()->success(trans('api.added successfully'));
+//        return redirect()->route('web.products.show', $advertisement->id);
+//    }
 
     // updateComment
     public function updateComment(int $id, int $commentId, CommentAdvertisementApiRequest $request)
@@ -283,28 +285,28 @@ class HomeWebController extends Controller
         return redirect()->route('web.products.show', $advertisement->id);
     }
 
-    public function deleteComment(int $id, int $commentId)
-    {
-
-        $advertisementService = new AdvertisementService();
-        $advertisement = $advertisementService->findActiveAds($id);
-        if (!$advertisement) {
-            toastr()->error(trans('api.not found'));
-            return redirect()->route('web.home');
-        }
-        $userComment = $advertisementService->getUserComment(auth('users')->user()->id, $advertisement->id, $commentId);
-        if (!$userComment) {
-            toastr()->error(trans('api.not found'));
-            return redirect()->route('web.home');
-        }
-        if ($advertisementService->isCommentInPast($userComment)) {
-            toastr()->error(trans('api.not allowed'));
-            return redirect()->route('web.products.show', $advertisement->id);
-        }
-        $advertisementService->deleteComment($userComment);
-        toastr()->success(trans('api.deleted successfully'));
-        return redirect()->route('web.products.show', $advertisement->id);
-    }
+//    public function deleteComment(int $id, int $commentId)
+//    {
+//
+//        $advertisementService = new AdvertisementService();
+//        $advertisement = $advertisementService->findActiveAds($id);
+//        if (!$advertisement) {
+//            toastr()->error(trans('api.not found'));
+//            return redirect()->route('web.home');
+//        }
+//        $userComment = $advertisementService->getUserComment(auth('users')->user()->id, $advertisement->id, $commentId);
+//        if (!$userComment) {
+//            toastr()->error(trans('api.not found'));
+//            return redirect()->route('web.home');
+//        }
+//        if ($advertisementService->isCommentInPast($userComment)) {
+//            toastr()->error(trans('api.not allowed'));
+//            return redirect()->route('web.products.show', $advertisement->id);
+//        }
+//        $advertisementService->deleteComment($userComment);
+//        toastr()->success(trans('api.deleted successfully'));
+//        return redirect()->route('web.products.show', $advertisement->id);
+//    }
 
     public function reportComment(int $id, int $commentId, ReportAdvertisementApiRequest $request)
     {
@@ -753,5 +755,42 @@ class HomeWebController extends Controller
         $subcategoriesHtml = view('frontend.render.subCategory', ['subcategories' => $subcategories])->render();
 
         return response()->json(['subcategoriesHtml' => $subcategoriesHtml]);
+    }
+
+
+
+    public function getComments($productId)
+    {
+        $comments = UserAdsComment::where('advertisement_id', $productId)->whereNull('parent')->with('user')->get();
+        $html = view('frontend.render.comments_list', compact('comments'))->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
+
+    public function addComment(Request $request)
+    {
+        $comment = UserAdsComment::create([
+            'advertisement_id' => $request->input('product_id'),
+            'parent' => $request->input('parent'),
+            'user_id' => auth('users')->user()->id,
+            'comment' => $request->input('comment')
+        ]);
+
+        $html = view('frontend.components.show_comment', ['comment' => $comment, 'commentClass' => 'comment-list border-bottom', 'canReply' => true])->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
+
+    public function editComment(Request $request, $commentId)
+    {
+        $comment = UserAdsComment::findOrFail($commentId);
+        $comment->update(['comment' => $request->input('comment')]);
+
+        $html = view('frontend.components.show_comment', ['comment' => $comment, 'commentClass' => 'comment-list border-bottom', 'canReply' => true])->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
+
+    public function deleteComment($commentId)
+    {
+        UserAdsComment::destroy($commentId);
+        return response()->json(['success' => true]);
     }
 }

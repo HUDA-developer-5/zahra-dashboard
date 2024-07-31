@@ -32,7 +32,7 @@
 
                                 @if(auth('users')->user()->id == $product->user_id)
                                     <a href="{{ route('web.products.edit', ['id'=>$product->id]) }}" class="edit"><i
-                                                class="far fa-pen-to-square"></i></a>
+                                            class="far fa-pen-to-square"></i></a>
                                 @endif
                             @endif
                             {{--                            <a href="javascript:void(0)" class="share"><i class="fas fa-share-nodes"></i></a>--}}
@@ -166,8 +166,8 @@
                             <div class="user-tooltip">
                                 <div class="info mb-3">
                                     <div class="img mb-2"><img
-                                                src="{{ ($product->owner_image) ?: asset('frontend/assets/images/icons/profile-circle.svg')}}"
-                                                alt="image"></div>
+                                            src="{{ ($product->owner_image) ?: asset('frontend/assets/images/icons/profile-circle.svg')}}"
+                                            alt="image"></div>
                                     <h6 class="fw-bold mb-0">{{ $product->owner_name }}</h6>
                                 </div>
                                 <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -216,7 +216,7 @@
                             @if($product->is_sold == 1 && $product->user_id && auth('users')->id() != $product->user_id)
                                 <a href="{{ route('web.products.purchased', ['id' => $product->id]) }}"
                                    class="btn btn-gradiant btn-purchased"><span class="me-2"><i
-                                                class="fas fa-basket-shopping"></i></span><span>I {{ trans('web.Purchased') }}</span></a>
+                                            class="fas fa-basket-shopping"></i></span><span>I {{ trans('web.Purchased') }}</span></a>
                             @endif
 
                         @endif
@@ -229,8 +229,8 @@
                 <div class="d-flex flex-wrap justify-content-between mb-2">
                     <h3 class="text-dark fw-bold">{{ trans('web.Description') }}</h3>
                     <a href="javascript:void(0)" class="text-primary" id="translateDescription"><span class="me-2"><img
-                                    src="{{ asset('frontend/assets/images/icons/translate.svg') }}"
-                                    alt="icon"></span><span>{{ trans('web.translate') }}</span></a>
+                                src="{{ asset('frontend/assets/images/icons/translate.svg') }}"
+                                alt="icon"></span><span>{{ trans('web.translate') }}</span></a>
                 </div>
                 <p>{{ $product->description }}</p>
                 <p id="translatedDescription"></p>
@@ -243,12 +243,9 @@
                 <div class="card">
                     <h4 class="fw-bold">{{ trans('web.Comments') }} <span class="text-primary fw-400">({{ $product->comments_count }})</span>
                     </h4>
-                    @if($product->comments->count() > 0)
-                        @foreach($product->comments as $comment)
-                            @include('frontend.components.show_comment', ['comment' => $comment, 'commentClass' => 'comment-list border-bottom', 'canReply' => true])
-                        @endforeach
-                    @endif
-
+                    <div id="commentsList">
+                        {{-- Comments will be loaded here via AJAX --}}
+                    </div>
                     @include('frontend.components.add_comment', ['product_id' => $product->id, 'parent_id' => null])
                 </div>
             </div>
@@ -282,8 +279,8 @@
 @stop
 
 @section("script")
-    <script>
-        $(document).ready(function () {
+        <script>
+            $(document).ready(function () {
             $("#translateDescription").on('click', function () {
                 $("#translatedDescription").html('');
                 $.ajax({
@@ -296,6 +293,164 @@
                     }
                 });
             });
+        });
+    </script>show
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            // Load comments
+            function loadComments() {
+                $.ajax({
+                    url: '{{ route("comments.get", $product->id) }}',
+                    type: 'GET',
+                    success: function (data) {
+                        if (data.success) {
+                            $('#commentsList').html(data.html);
+                            bindCommentActions(); // Bind actions to new elements
+                        }
+                    }
+                });
+            }
+
+            // Initial load
+            loadComments();
+
+            // Handle comment form submission
+            $('#CommentForm').submit(function (e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+
+                $.ajax({
+                    url: '{{ route('comments.add') }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        if (data.success) {
+                            $('#commentsList').append(data.html);
+                            $('#CommentForm')[0].reset();
+                            bindCommentActions(); // Re-bind actions to new elements
+                        }
+                    }
+                });
+            });
+
+            // Function to bind actions to new elements
+            function bindCommentActions() {
+                $('.btn-replay').off('click').on('click', function () {
+                    @auth('users')
+                    var commentId = $(this).data('id');
+                    var formHtml = `
+                <div class="comment replay with-form-reply">
+                    <div class="d-flex gap-2 ">
+                        <div class="img">
+                            <img src="{{ auth('users')->user()->image ?? asset('frontend/assets/images/icons/profile-circle.svg') }}" alt="user image">
+                        </div>
+                        <div class="user-details flex-grow-1">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="text-dark fw-bold">{{ auth('users')->user()->name }}</h6>
+                            </div>
+                            <form method="post" action="{{ route('comments.add') }}" id="ReplayForm-${commentId}">
+                                @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="parent" value="${commentId}">
+                                <textarea name="comment" required rows="2" placeholder="{{ trans('web.Replay') }}" class="form-control" maxlength="250"></textarea>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-gradiant btn-send-replay py-1 px-4 mt-2">{{ trans('web.Send') }}</button>
+                                    <a href="javascript:void(0);" class="btn btn-border btn-cancel-replay py-1 px-4 mt-2">{{ trans('web.Cancel') }}</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>`;
+                    $(this).closest('.comment').append(formHtml);
+                    bindReplayFormActions(commentId);
+                    @endauth
+                });
+
+                $('.btn-edit').off('click').on('click', function () {
+                    var commentId = $(this).data('id');
+                    var commentText = $(this).closest('.comment').find('.msg-content').text();
+                    var formHtml = `
+                <form method="post" action="{{ url('/comments/edit/') }}/${commentId}" class="edit-form">
+                    @csrf
+                    <textarea name="comment" rows="2" class="form-control">${commentText}</textarea>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-gradiant btn-edit-comment py-1 px-4 mt-2" type="submit">{{ trans('web.Send') }}</button>
+                        <button class="btn btn-border btn-cancel-form py-1 px-4 mt-2" type="button">{{ trans('web.Cancel') }}</button>
+                    </div>
+                </form>`;
+                    $(this).closest('.comment').find('.user-details').append(formHtml);
+                    bindEditFormActions();
+                });
+
+                $('.btn-delete').off('click').on('click', function () {
+                    var commentId = $(this).data('id');
+
+                    $.ajax({
+                        url: `/comments/delete/${commentId}`,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                $(`.comment[data-id=${commentId}]`).remove();
+                            }
+                        }
+                    });
+                });
+            }
+
+            function bindReplayFormActions(commentId) {
+                $(`#ReplayForm-${commentId}`).submit(function (e) {
+                    e.preventDefault();
+                    let formData = $(this).serialize();
+
+                    $.ajax({
+                        url: '{{ route('comments.add') }}',
+                        type: 'POST',
+                        data: formData,
+                        success: function (data) {
+                            if (data.success) {
+                                loadComments();
+                            }
+                        }
+                    });
+                });
+
+                $(`#ReplayForm-${commentId} .btn-cancel-replay`).off('click').on('click', function () {
+                    $(this).closest('.comment').find('.with-form-reply').remove();
+                });
+            }
+
+            function bindEditFormActions() {
+                $('.edit-form').submit(function (e) {
+                    e.preventDefault();
+                    let formData = $(this).serialize();
+                    let actionUrl = $(this).attr('action');
+
+                    $.ajax({
+                        url: actionUrl,
+                        type: 'POST',
+                        data: formData,
+                        success: function (data) {
+                            if (data.success) {
+                                loadComments();
+                            }
+                        }
+                    });
+                });
+
+                $('.btn-cancel-form').off('click').on('click', function () {
+                    $(this).closest('.edit-form').remove();
+                });
+            }
         });
     </script>
 @endsection
