@@ -22,6 +22,24 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class UserRegisterWebController extends Controller
 {
+//    public function register(UserRegisterWebRequest $request)
+//    {
+//        try {
+//            DB::beginTransaction();
+//            $user = (new UserRegisterService())->store($request->getDTO());
+//            DB::commit();
+//            Auth::guard('users')->login($user, remember: true);
+//            toastr()->success(__("web.welcome") . " " . $user->name);
+//            return redirect()->route('web.home');
+//        } catch (\Exception|\TypeError $exception) {
+//            DB::rollBack();
+//            Log::error($exception->getMessage());
+//            toastr()->error(trans('api.something went wrong'));
+//            return redirect()->route('web.home');
+//        }
+//    }
+
+
     public function register(UserRegisterWebRequest $request)
     {
         try {
@@ -30,14 +48,27 @@ class UserRegisterWebController extends Controller
             DB::commit();
             Auth::guard('users')->login($user, remember: true);
             toastr()->success(__("web.welcome") . " " . $user->name);
+
+            // Check if request is AJAX
+            if ($request->ajax()) {
+                return response()->json(['redirect' => route('web.home')]);
+            }
+
             return redirect()->route('web.home');
         } catch (\Exception|\TypeError $exception) {
             DB::rollBack();
             Log::error($exception->getMessage());
             toastr()->error(trans('api.something went wrong'));
+
+            // Handle AJAX request
+            if ($request->ajax()) {
+                return response()->json(['error' => trans('api.something went wrong')], 500);
+            }
+
             return redirect()->route('web.home');
         }
     }
+
 
     public function login(UserLoginApiRequest $request)
     {

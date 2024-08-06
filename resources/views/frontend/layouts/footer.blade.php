@@ -282,6 +282,134 @@
     </div>
 </div>
 
+{{--<div class="modal main-modal registerModal fade" id="registerModal" aria-hidden="true" tabindex="-1">--}}
+{{--    <div class="modal-dialog modal-dialog-centered">--}}
+{{--        <div class="modal-content border-0">--}}
+{{--            <div class="modal-header justify-content-center border-0">--}}
+{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
+{{--                </button>--}}
+{{--                <div class="text-center">--}}
+{{--                    <div class="modal-logo mb-2">--}}
+{{--                        <img src="{{ asset('frontend/assets/images/icon.png') }}" alt="logo icon" loading="lazy">--}}
+{{--                    </div>--}}
+{{--                    <h3 class="text-capitalize text-center fw-bold mb-0">{{  trans('web.create account')}}</h3>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                {{ html()->form('post', route('register'))->open() }}--}}
+{{--                <div class="form-input  mb-3">--}}
+{{--                    <input type="text" id="register-name" name="name" class="form-control username"--}}
+{{--                           value="{{ old('name') }}"--}}
+{{--                           placeholder="{{ trans('web.Name') }}" required>--}}
+{{--                    <label class="form-label" for="register-name">{{ trans('web.Name') }}</label>--}}
+
+{{--                    @if($errors->register->has("name"))--}}
+{{--                        <div class="error-note">--}}
+{{--                            <span class="help-block text-danger">{{ $errors->register->first("name") }}</span>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <div class="form-input  mb-3">--}}
+{{--                    <input type="text" id="register-email" name="email" class="form-control email"--}}
+{{--                           value="{{ old('email') }}"--}}
+{{--                           placeholder="{{ trans('web.Email') }}" required>--}}
+{{--                    <label class="form-label" for="register-email">{{ trans('web.Email') }}</label>--}}
+{{--                    @if($errors->register->has("email"))--}}
+{{--                        <div class="error-note">--}}
+{{--                            <span class="help-block text-danger">{{ $errors->register->first("email") }}</span>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <div class="form-input  mb-3">--}}
+{{--                    <input type="text" id="register-phone" name="phone_number" class="form-control phone"--}}
+{{--                           value="{{ old('phone_number')}}"--}}
+{{--                           placeholder="{{ trans('web.Phone Number') }}">--}}
+{{--                    <label class="form-label" for="register-phone">{{ trans('web.Phone Number') }}</label>--}}
+{{--                    @if($errors->register->has("phone_number"))--}}
+{{--                        <div class="error-note">--}}
+{{--                            <span class="help-block text-danger">{{ $errors->register->first("phone_number") }}</span>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <div class="form-input  mb-3">--}}
+{{--                    <div>--}}
+{{--                        <input type="password" id="register-password" name="password"--}}
+{{--                               class="form-control password" placeholder="{{ trans('web.Password') }}" required>--}}
+{{--                        <label class="form-label" for="register-password">{{ trans('web.Password') }}</label>--}}
+{{--                        <div class="icon password-show"><i class="far fa-eye"></i></div>--}}
+{{--                    </div>--}}
+{{--                    @if($errors->register->has("password"))--}}
+{{--                        <div class="error-note">--}}
+{{--                            <span class="help-block text-danger">{{ $errors->register->first("password") }}</span>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <div class="form-input  mb-3">--}}
+{{--                    <div>--}}
+{{--                        <input type="password" id="register-confirm-password" name="password_confirmation"--}}
+{{--                               class="form-control password2" placeholder="{{ trans('web.Confirm Password') }}"--}}
+{{--                               required>--}}
+{{--                        <label class="form-label" for="register-password">{{ trans('web.Confirm Password') }}</label>--}}
+{{--                        <div class="icon password-show"><i class="far fa-eye"></i></div>--}}
+{{--                    </div>--}}
+{{--                    @if($errors->register->has("password_confirmation"))--}}
+{{--                        <div class="error-note">--}}
+{{--                            <span class="help-block text-danger">{{ $errors->register->first("password_confirmation") }}</span>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <div class="mb-3">--}}
+{{--                    <div class="validate-input form-check order-2 order-sm-1">--}}
+{{--                        <input class="form-check-input checkInput" name="remember" type="checkbox" value="1"--}}
+{{--                               id="agree-1" required>--}}
+{{--                        <label class="form-check-label fw-bold" for="flexCheckChecked-1">--}}
+{{--                            {{ trans('web.By signing up, I agree with the') }}--}}
+{{--                            <a data-bs-toggle="modal" href="#registerTermsModal" role="button"--}}
+{{--                               class="text-decoration-underline text-primary">{{ trans('web.Terms of use & Privacy policy') }}</a>--}}
+{{--                        </label>--}}
+{{--                        @if($errors->register->has("remember"))--}}
+{{--                            <div class="error-note">--}}
+{{--                                <span class="help-block text-danger">{{ $errors->register->first("remember") }}</span>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div>--}}
+{{--                    <button class="btn btn-gradiant fw-bold w-100"--}}
+{{--                            type="submit">{{ trans('web.Create an account') }}</button>--}}
+{{--                </div>--}}
+{{--                {{ html()->form()->close() }}--}}
+{{--                <div class="divider"><span>OR</span></div>--}}
+{{--                <div class="by_gmail text-center mb-3">--}}
+{{--                    <a href="{{ route('social.auth-provider', ['provider' => 'google']) }}">--}}
+{{--                        <div class="icon">--}}
+{{--                            <img src="{{ asset('frontend/assets/images/icons/google.svg') }}" alt="google icon"--}}
+{{--                                 loading="lazy">--}}
+{{--                        </div>--}}
+{{--                        <p class="text-uppercase fw-bold mb-0">{{  trans('web.Log in by gmail')}}l</p>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                <div class="by_apple text-center mb-3">--}}
+{{--                    <a href="{{ route('social.auth-provider', ['provider' => 'apple']) }}">--}}
+{{--                        <div class="icon">--}}
+{{--                            <img src="{{ asset('frontend/assets/images/icons/apple.svg') }}" alt="apple icon"--}}
+{{--                                 loading="lazy">--}}
+{{--                        </div>--}}
+{{--                        <p class="text-uppercase fw-bold mb-0">{{  trans('web.Log in by Apple')}}</p>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                <div class="mt-4 text-center">--}}
+{{--                    <span class="text-dark">{{ trans('web.Already have an account') }} </span>--}}
+{{--                    <a data-bs-toggle="modal" href="#loginModal" role="button"--}}
+{{--                       class="text-primary fw-bold">{{ trans('web.Login') }}</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+
 <div class="modal main-modal registerModal fade" id="registerModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
@@ -293,91 +421,65 @@
                     <div class="modal-logo mb-2">
                         <img src="{{ asset('frontend/assets/images/icon.png') }}" alt="logo icon" loading="lazy">
                     </div>
-                    <h3 class="text-capitalize text-center fw-bold mb-0">{{  trans('web.create account')}}</h3>
+                    <h3 class="text-capitalize text-center fw-bold mb-0">{{ trans('web.create account') }}</h3>
                 </div>
             </div>
             <div class="modal-body">
-                {{ html()->form('post', route('register'))->open() }}
-                <div class="form-input  mb-3">
+                {{ html()->form('post', route('register'))->id('registerForm')->open() }}
+                <div class="form-input mb-3">
                     <input type="text" id="register-name" name="name" class="form-control username"
                            value="{{ old('name') }}"
-                           placeholder="{{ trans('web.Name') }}" required>
+                           placeholder="{{ trans('web.Name') }}" >
                     <label class="form-label" for="register-name">{{ trans('web.Name') }}</label>
-
-                    @if($errors->register->has("name"))
-                        <div class="error-note">
-                            <span class="help-block text-danger">{{ $errors->register->first("name") }}</span>
-                        </div>
-                    @endif
+                    <div class="error-note" id="nameError"></div>
                 </div>
-                <div class="form-input  mb-3">
+                <div class="form-input mb-3">
                     <input type="text" id="register-email" name="email" class="form-control email"
                            value="{{ old('email') }}"
-                           placeholder="{{ trans('web.Email') }}" required>
+                           placeholder="{{ trans('web.Email') }}" >
                     <label class="form-label" for="register-email">{{ trans('web.Email') }}</label>
-                    @if($errors->register->has("email"))
-                        <div class="error-note">
-                            <span class="help-block text-danger">{{ $errors->register->first("email") }}</span>
-                        </div>
-                    @endif
+                    <div class="error-note" id="emailError"></div>
                 </div>
-                <div class="form-input  mb-3">
+                <div class="form-input mb-3">
                     <input type="text" id="register-phone" name="phone_number" class="form-control phone"
                            value="{{ old('phone_number')}}"
                            placeholder="{{ trans('web.Phone Number') }}">
                     <label class="form-label" for="register-phone">{{ trans('web.Phone Number') }}</label>
-                    @if($errors->register->has("phone_number"))
-                        <div class="error-note">
-                            <span class="help-block text-danger">{{ $errors->register->first("phone_number") }}</span>
-                        </div>
-                    @endif
+                    <div class="error-note" id="phoneError"></div>
                 </div>
-                <div class="form-input  mb-3">
+                <div class="form-input mb-3">
                     <div>
                         <input type="password" id="register-password" name="password"
-                               class="form-control password" placeholder="{{ trans('web.Password') }}" required>
+                               class="form-control password" placeholder="{{ trans('web.Password') }}" >
                         <label class="form-label" for="register-password">{{ trans('web.Password') }}</label>
                         <div class="icon password-show"><i class="far fa-eye"></i></div>
                     </div>
-                    @if($errors->register->has("password"))
-                        <div class="error-note">
-                            <span class="help-block text-danger">{{ $errors->register->first("password") }}</span>
-                        </div>
-                    @endif
+                    <div class="error-note" id="passwordError"></div>
                 </div>
-                <div class="form-input  mb-3">
+                <div class="form-input mb-3">
                     <div>
                         <input type="password" id="register-confirm-password" name="password_confirmation"
                                class="form-control password2" placeholder="{{ trans('web.Confirm Password') }}"
-                               required>
+                               >
                         <label class="form-label" for="register-password">{{ trans('web.Confirm Password') }}</label>
                         <div class="icon password-show"><i class="far fa-eye"></i></div>
                     </div>
-                    @if($errors->register->has("password_confirmation"))
-                        <div class="error-note">
-                            <span class="help-block text-danger">{{ $errors->register->first("password_confirmation") }}</span>
-                        </div>
-                    @endif
+                    <div class="error-note" id="confirmPasswordError"></div>
                 </div>
                 <div class="mb-3">
                     <div class="validate-input form-check order-2 order-sm-1">
                         <input class="form-check-input checkInput" name="remember" type="checkbox" value="1"
-                               id="agree-1" required>
+                               id="agree-1" >
                         <label class="form-check-label fw-bold" for="flexCheckChecked-1">
                             {{ trans('web.By signing up, I agree with the') }}
                             <a data-bs-toggle="modal" href="#registerTermsModal" role="button"
                                class="text-decoration-underline text-primary">{{ trans('web.Terms of use & Privacy policy') }}</a>
                         </label>
-                        @if($errors->register->has("remember"))
-                            <div class="error-note">
-                                <span class="help-block text-danger">{{ $errors->register->first("remember") }}</span>
-                            </div>
-                        @endif
+                        <div class="error-note" id="rememberError"></div>
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-gradiant fw-bold w-100"
-                            type="submit">{{ trans('web.Create an account') }}</button>
+                    <button class="btn btn-gradiant fw-bold w-100" type="submit">{{ trans('web.Create an account') }}</button>
                 </div>
                 {{ html()->form()->close() }}
                 <div class="divider"><span>OR</span></div>
@@ -387,7 +489,7 @@
                             <img src="{{ asset('frontend/assets/images/icons/google.svg') }}" alt="google icon"
                                  loading="lazy">
                         </div>
-                        <p class="text-uppercase fw-bold mb-0">{{  trans('web.Log in by gmail')}}l</p>
+                        <p class="text-uppercase fw-bold mb-0">{{ trans('web.Log in by gmail') }}</p>
                     </a>
                 </div>
                 <div class="by_apple text-center mb-3">
@@ -396,7 +498,7 @@
                             <img src="{{ asset('frontend/assets/images/icons/apple.svg') }}" alt="apple icon"
                                  loading="lazy">
                         </div>
-                        <p class="text-uppercase fw-bold mb-0">{{  trans('web.Log in by Apple')}}</p>
+                        <p class="text-uppercase fw-bold mb-0">{{ trans('web.Log in by Apple') }}</p>
                     </a>
                 </div>
                 <div class="mt-4 text-center">
@@ -408,6 +510,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 @guest()
     @if(isset($termsAndConditions))
         <div class="modal registerTermsModal fade" id="registerTermsModal" aria-hidden="true" tabindex="-1">
@@ -743,6 +849,122 @@
         });
 
     });
+</script>
+
+
+<script>
+    // $(document).ready(function() {
+    //     // Function to clear error messages on input
+    //     function clearErrorMessages() {
+    //         $(this).siblings('.error-note').html('');
+    //     }
+    //
+    //     // Attach input event listeners to clear error messages
+    //     $('#registerForm input').on('input', clearErrorMessages);
+    //
+    //     // AJAX form submission
+    //     $('#registerForm').on('submit', function(event) {
+    //         event.preventDefault();
+    //
+    //         // Clear previous error messages
+    //         $('.error-note').html('');
+    //
+    //         $.ajax({
+    //             url: $(this).attr('action'),
+    //             method: $(this).attr('method'),
+    //             data: $(this).serialize(),
+    //             success: function(response) {
+    //                 // Redirect to home on success
+    //                 window.location.href = response.redirect;
+    //             },
+    //             error: function(xhr) {
+    //                 // Handle validation errors
+    //                 if (xhr.status === 422) {
+    //                     var errors = xhr.responseJSON.errors;
+    //                     if (errors.name) {
+    //                         $('#nameError').html(errors.name[0]);
+    //                     }
+    //                     if (errors.email) {
+    //                         $('#emailError').html(errors.email[0]);
+    //                     }
+    //                     if (errors.phone_number) {
+    //                         $('#phoneError').html(errors.phone_number[0]);
+    //                     }
+    //                     if (errors.password) {
+    //                         $('#passwordError').html(errors.password[0]);
+    //                     }
+    //                     if (errors.password_confirmation) {
+    //                         $('#confirmPasswordError').html(errors.password_confirmation[0]);
+    //                     }
+    //                     if (errors.remember) {
+    //                         $('#rememberError').html(errors.remember[0]);
+    //                     }
+    //                 } else {
+    //                     // Handle general errors
+    //                     toastr.error('Something went wrong. Please try again.');
+    //                 }
+    //             }
+    //         });
+    //     });
+    // });
+
+
+    $(document).ready(function() {
+        // Function to clear error messages on input
+        function clearErrorMessages() {
+            $(this).closest('.form-input').find('.error-note').html('');
+        }
+
+        // Attach input event listeners to clear error messages
+        $('#registerForm input').on('input', clearErrorMessages);
+
+
+        // AJAX form submission
+        $('#registerForm').on('submit', function(event) {
+            event.preventDefault();
+
+            // Clear previous error messages
+            $('.error-note').html('');
+
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Redirect to home on success
+                    window.location.href = response.redirect;
+                },
+                error: function(xhr) {
+                    // Handle validation errors
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.name) {
+                            $('#nameError').html(errors.name[0]);
+                        }
+                        if (errors.email) {
+                            $('#emailError').html(errors.email[0]);
+                        }
+                        if (errors.phone_number) {
+                            $('#phoneError').html(errors.phone_number[0]);
+                        }
+                        if (errors.password) {
+                            $('#passwordError').html(errors.password[0]);
+                        }
+                        if (errors.password_confirmation) {
+                            $('#confirmPasswordError').html(errors.password_confirmation[0]);
+                        }
+                        if (errors.remember) {
+                            $('#rememberError').html(errors.remember[0]);
+                        }
+                    } else {
+                        // Handle general errors
+                        toastr.error('Something went wrong. Please try again.');
+                    }
+                }
+            });
+        });
+    });
+
 </script>
 
 @yield('script')

@@ -28,6 +28,14 @@
               crossorigin="anonymous">
     @endif
 
+    <style>
+        .error-note {
+            color: red;
+            font-size: 0.875rem; /* Optional: Adjust font size if needed */
+            margin-top: 0.25rem; /* Optional: Adjust spacing if needed */
+        }
+    </style>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
