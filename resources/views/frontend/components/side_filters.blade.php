@@ -16,78 +16,112 @@
                     </button>
                 </h2>
             </div>
+{{--            <div id="CategoryCollapse" class="accordion-collapse collapse show" aria-labelledby="headingOne">--}}
+{{--                <div class="search-input mb-2">--}}
+{{--                    <input type="text" name="search"  value="{{ request('search') }}" id="filter-search" class="form-control"--}}
+{{--                           placeholder="{{ trans('web.Search') }}">--}}
+{{--                    <span class="icon"><i class="fas fa-magnifying-glass"></i></span>--}}
+{{--                </div>--}}
+{{--                <ul class="list">--}}
+{{--                    @foreach($menuCategories as $menuCategory)--}}
+{{--                        <li class="form-check @if($menuCategory->child?->count()) sub-types @endif">--}}
+{{--                            <input name="categories_id[]" class="form-check-input" type="checkbox"--}}
+{{--                                   value="{{ $menuCategory->id }}" id="flexCheckChecked{{ $menuCategory->id }}" {{ in_array($menuCategory->id, request('categories_id', [])) ? 'checked' : '' }}>--}}
+{{--                            <label class="form-check-label"--}}
+{{--                                   for="flexCheckChecked_{{ $menuCategory->id }}">{{ $menuCategory->name }}</label>--}}
+{{--                            @if($menuCategory->child?->count())--}}
+{{--                                @foreach($menuCategory->child as $firstChild)--}}
+{{--                                    <ul>--}}
+{{--                                        <li class="form-check @if($firstChild->child?->count()) sub-types @endif">--}}
+{{--                                            <input name="categories_id[]" class="form-check-input" type="checkbox"--}}
+{{--                                                   value="{{$firstChild->id}}"--}}
+{{--                                                   id="flexCheckChecked_{{$firstChild->id}}" {{ in_array($firstChild->id, request('categories_id', [])) ? 'checked' : '' }}>--}}
+{{--                                            <label class="form-check-label"--}}
+{{--                                                   for="flexCheckChecked_{{$firstChild->id}}">{{ $firstChild->name }}</label>--}}
+
+{{--                                            @if($firstChild->child?->count())--}}
+{{--                                                @foreach($firstChild->child as $secondChild)--}}
+{{--                                                    <ul>--}}
+{{--                                                        <li class="form-check ">--}}
+{{--                                                            <input name="categories_id[]" class="form-check-input"--}}
+{{--                                                                   type="checkbox" value="{{$secondChild->id}}"--}}
+{{--                                                                   id="flexCheckChecked_{{$secondChild->id}}" {{ in_array($secondChild->id, request('categories_id', [])) ? 'checked' : '' }}>--}}
+{{--                                                            <label class="form-check-label"--}}
+{{--                                                                   for="flexCheckChecked_{{$secondChild->id}}">{{ $secondChild->name }}</label>--}}
+
+{{--                                                            @if($secondChild->child?->count())--}}
+{{--                                                                @foreach($secondChild->child as $thirdChild)--}}
+{{--                                                                    <ul>--}}
+{{--                                                                        <li class="form-check ">--}}
+{{--                                                                            <input name="categories_id[]" class="form-check-input"--}}
+{{--                                                                                   type="checkbox" value="{{$thirdChild->id}}"--}}
+{{--                                                                                   id="flexCheckChecked_{{$thirdChild->id}}" {{ in_array($thirdChild->id, request('categories_id', [])) ? 'checked' : '' }}>--}}
+{{--                                                                            <label class="form-check-label"--}}
+{{--                                                                                   for="flexCheckChecked_{{$thirdChild->id}}">{{ $thirdChild->name }}</label>--}}
+
+{{--                                                                            @if($thirdChild->child?->count())--}}
+{{--                                                                                @foreach($thirdChild->child as $fourthChild)--}}
+{{--                                                                                    <ul>--}}
+{{--                                                                                        <li class="form-check ">--}}
+{{--                                                                                            <input name="categories_id[]" class="form-check-input"--}}
+{{--                                                                                                   type="checkbox" value="{{$fourthChild->id}}"--}}
+{{--                                                                                                   id="flexCheckChecked_{{$fourthChild->id}}" {{ in_array($fourthChild->id, request('categories_id', [])) ? 'checked' : '' }}>--}}
+{{--                                                                                            <label class="form-check-label"--}}
+{{--                                                                                                   for="flexCheckChecked_{{$fourthChild->id}}">{{ $fourthChild->name }}</label>--}}
+{{--                                                                                        </li>--}}
+{{--                                                                                    </ul>--}}
+{{--                                                                                @endforeach--}}
+{{--                                                                            @endif--}}
+{{--                                                                        </li>--}}
+{{--                                                                    </ul>--}}
+{{--                                                                @endforeach--}}
+{{--                                                            @endif--}}
+{{--                                                        </li>--}}
+{{--                                                    </ul>--}}
+{{--                                                @endforeach--}}
+{{--                                            @endif--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                @endforeach--}}
+{{--                            @endif--}}
+{{--                        </li>--}}
+{{--                    @endforeach--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+
+
+{{--            <div class="accordion-collapse collapse show" aria-labelledby="headingOne">--}}
+{{--                <div class="search-input mb-2">--}}
+{{--                    <input type="text" name="search" value="{{ request('search') }}" id="filter-search" class="form-control"--}}
+{{--                           placeholder="{{ trans('web.Search') }}">--}}
+{{--                    <span class="icon"><i class="fas fa-magnifying-glass"></i></span>--}}
+{{--                </div>--}}
+{{--                <ul class="list" id="category-list">--}}
+{{--                    @foreach($menuCategories as $menuCategory)--}}
+{{--                        <li class="form-check @if($menuCategory->child?->count()) sub-types @endif">--}}
+{{--                            <input name="categories_id[]" class="form-check-input" type="checkbox"--}}
+{{--                                   value="{{ $menuCategory->id }}" id="flexCheckChecked{{ $menuCategory->id }}" {{ in_array($menuCategory->id, request('categories_id', [])) ? 'checked' : '' }}>--}}
+{{--                            <label class="form-check-label"--}}
+{{--                                   for="flexCheckChecked_{{ $menuCategory->id }}">{{ $menuCategory->name }}</label>--}}
+{{--                            <!-- Include nested categories here as needed -->--}}
+{{--                        </li>--}}
+{{--                    @endforeach--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+
+
             <div id="CategoryCollapse" class="accordion-collapse collapse show" aria-labelledby="headingOne">
                 <div class="search-input mb-2">
-                    <input type="text" name="search"  value="{{ request('search') }}" id="filter-search" class="form-control"
+                    <input type="text" name="search" value="{{ request('search') }}" id="filter-search" class="form-control"
                            placeholder="{{ trans('web.Search') }}">
                     <span class="icon"><i class="fas fa-magnifying-glass"></i></span>
                 </div>
-                <ul class="list">
-                    @foreach($menuCategories as $menuCategory)
-                        <li class="form-check @if($menuCategory->child?->count()) sub-types @endif">
-                            <input name="categories_id[]" class="form-check-input" type="checkbox"
-                                   value="{{ $menuCategory->id }}" id="flexCheckChecked{{ $menuCategory->id }}" {{ in_array($menuCategory->id, request('categories_id', [])) ? 'checked' : '' }}>
-                            <label class="form-check-label"
-                                   for="flexCheckChecked_{{ $menuCategory->id }}">{{ $menuCategory->name }}</label>
-                            @if($menuCategory->child?->count())
-                                @foreach($menuCategory->child as $firstChild)
-                                    <ul>
-                                        <li class="form-check @if($firstChild->child?->count()) sub-types @endif">
-                                            <input name="categories_id[]" class="form-check-input" type="checkbox"
-                                                   value="{{$firstChild->id}}"
-                                                   id="flexCheckChecked_{{$firstChild->id}}" {{ in_array($firstChild->id, request('categories_id', [])) ? 'checked' : '' }}>
-                                            <label class="form-check-label"
-                                                   for="flexCheckChecked_{{$firstChild->id}}">{{ $firstChild->name }}</label>
-
-                                            @if($firstChild->child?->count())
-                                                @foreach($firstChild->child as $secondChild)
-                                                    <ul>
-                                                        <li class="form-check ">
-                                                            <input name="categories_id[]" class="form-check-input"
-                                                                   type="checkbox" value="{{$secondChild->id}}"
-                                                                   id="flexCheckChecked_{{$secondChild->id}}" {{ in_array($secondChild->id, request('categories_id', [])) ? 'checked' : '' }}>
-                                                            <label class="form-check-label"
-                                                                   for="flexCheckChecked_{{$secondChild->id}}">{{ $secondChild->name }}</label>
-
-                                                            @if($secondChild->child?->count())
-                                                                @foreach($secondChild->child as $thirdChild)
-                                                                    <ul>
-                                                                        <li class="form-check ">
-                                                                            <input name="categories_id[]" class="form-check-input"
-                                                                                   type="checkbox" value="{{$thirdChild->id}}"
-                                                                                   id="flexCheckChecked_{{$thirdChild->id}}" {{ in_array($thirdChild->id, request('categories_id', [])) ? 'checked' : '' }}>
-                                                                            <label class="form-check-label"
-                                                                                   for="flexCheckChecked_{{$thirdChild->id}}">{{ $thirdChild->name }}</label>
-
-                                                                            @if($thirdChild->child?->count())
-                                                                                @foreach($thirdChild->child as $fourthChild)
-                                                                                    <ul>
-                                                                                        <li class="form-check ">
-                                                                                            <input name="categories_id[]" class="form-check-input"
-                                                                                                   type="checkbox" value="{{$fourthChild->id}}"
-                                                                                                   id="flexCheckChecked_{{$fourthChild->id}}" {{ in_array($fourthChild->id, request('categories_id', [])) ? 'checked' : '' }}>
-                                                                                            <label class="form-check-label"
-                                                                                                   for="flexCheckChecked_{{$fourthChild->id}}">{{ $fourthChild->name }}</label>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                @endforeach
-                                                                            @endif
-                                                                        </li>
-                                                                    </ul>
-                                                                @endforeach
-                                                            @endif
-                                                        </li>
-                                                    </ul>
-                                                @endforeach
-                                            @endif
-                                        </li>
-                                    </ul>
-                                @endforeach
-                            @endif
-                        </li>
-                    @endforeach
+                <ul class="list" id="category-list">
+                    @include('frontend.render.category_list', ['categories' => $menuCategories])
                 </ul>
             </div>
+
+
         </div>
     </div>
     <div class="card filters mb-3">
@@ -180,9 +214,11 @@
                     <div class="progress"></div>
                 </div>
                 <div class="range-input">
-                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100" id="rangeMin">
+                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100" id="rangeMax">
                 </div>
+                <input type="hidden" name="price_from" id="priceFrom" value="2500">
+                <input type="hidden" name="price_to" id="priceTo" value="7500">
             </div>
         </div>
     </div>

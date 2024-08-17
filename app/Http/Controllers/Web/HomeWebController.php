@@ -132,8 +132,41 @@ class HomeWebController extends Controller
         return view('frontend.category.index')->with($data);
     }
 
+//    public function filterProducts(Request $request)
+//    {
+//        $products = (new AdvertisementService())->filterAdsToWeb($request);
+//        $searchForCats = '';
+//        if ($request->get('categories_id')) {
+//            $searchForCats = implode(',', (new CategoryService())->getCategoriesByIds($request->get('categories_id'))->pluck('name')->toArray());
+//        }
+//        $data = [
+//            'products' => $products,
+//            'searchForCats' => $searchForCats
+//        ];
+//        return view('frontend.product.filter_products')->with($data);
+//    }
+
     public function filterProducts(Request $request)
     {
+        if ($request->ajax() && $request->get('filter') == 'categories') {
+            $categories = Category::where('name', 'LIKE', '%' . $request->get('search') . '%')
+                ->with('child') // eager load children recursively
+                ->get();
+
+            $html = view('frontend.render.category_list', compact('categories'))->render();
+
+            return response()->json(['html' => $html]);
+        }
+
+        if ($request->ajax()) {
+            $products = (new AdvertisementService())->filterAdsToWeb($request);
+
+            // Return the product list HTML for AJAX response
+            $html = view('frontend.render.product_list', compact('products'))->render();
+            return response()->json(['html' => $html]);
+        }
+
+        // Existing code for filtering products
         $products = (new AdvertisementService())->filterAdsToWeb($request);
         $searchForCats = '';
         if ($request->get('categories_id')) {
