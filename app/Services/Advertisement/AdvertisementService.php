@@ -570,9 +570,9 @@ class AdvertisementService
 
     protected function commonFilters(Builder $query, Request $request): Builder
     {
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
+//        if ($request->filled('search')) {
+//            $query->where('name', 'like', '%' . $request->search . '%');
+//        }
 
         if ($request->filled('categories_id')) {
             $query->whereIn('category_id', $request->categories_id);
