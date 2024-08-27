@@ -64,7 +64,7 @@
                 @include('frontend.components.side_filters')
                 <div class="col-lg-9">
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
-                        <p class="text-gray fw-400 mb-0">{{ trans('web.Products') }}: {{ count($products) }}
+                        <p class="text-gray fw-400 mb-0 product_search_details">{{ trans('web.Products') }}: {{ count($products) }}
                             ( {{ trans('web.search for') }} {{ $searchForCats }} ) </p>
                         <div class="d-flex gap-2">
                             <div class="sec-select">
@@ -203,6 +203,9 @@
                 data: formData,
                 success: function (response) {
                     $('#products-list').html(response.html); // Update the product list
+
+                    $('.product_search_details').html(`{{ trans('web.Products') }}: ${response.products} ( {{ trans('web.search for') }} ${response.searchForCats} )`);
+
                 },
                 error: function (error) {
                     console.log("Error:", error);

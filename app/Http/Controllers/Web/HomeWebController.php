@@ -153,17 +153,27 @@ class HomeWebController extends Controller
                 ->with('child') // eager load children recursively
                 ->get();
 
+            $searchForCats = '';
+            if ($request->get('categories_id')) {
+                $searchForCats = implode(',', (new CategoryService())->getCategoriesByIds($request->get('categories_id'))->pluck('name')->toArray());
+            }
+
             $html = view('frontend.render.category_list', compact('categories'))->render();
 
-            return response()->json(['html' => $html]);
+            return response()->json(['html' => $html, 'searchForCats' => $searchForCats]);
         }
 
         if ($request->ajax()) {
             $products = (new AdvertisementService())->filterAdsToWeb($request);
 
+            $searchForCats = '';
+            if ($request->get('categories_id')) {
+                $searchForCats = implode(',', (new CategoryService())->getCategoriesByIds($request->get('categories_id'))->pluck('name')->toArray());
+            }
+
             // Return the product list HTML for AJAX response
             $html = view('frontend.render.product_list', compact('products'))->render();
-            return response()->json(['html' => $html]);
+            return response()->json(['html' => $html, 'searchForCats' => $searchForCats, 'products' => count($products)]);
         }
 
         // Existing code for filtering products
@@ -789,7 +799,6 @@ class HomeWebController extends Controller
 
         return response()->json(['subcategoriesHtml' => $subcategoriesHtml]);
     }
-
 
 
     public function getComments($productId)
