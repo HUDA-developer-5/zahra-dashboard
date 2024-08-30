@@ -466,12 +466,18 @@ class HomeWebController extends Controller
     //save product
     public function storeProduct(AdvertisementApiRequest $request)
     {
+        if ($request->ajax()) {
+            // If it's an AJAX request, validate and return a response without saving
+            $request->validate($request->rules());
+            return response()->json(['status' => 'success']);
+        }
+
         try {
             $user = auth('users')->user();
             $advertisementService = new AdvertisementService();
             $advertisement = $advertisementService->addNewAdvertisement($user, $request->getDTO());
             toastr()->success(trans('api.added successfully'));
-            \session()->flash('advertisement_published', true);
+            session()->flash('advertisement_published', true);
             return redirect()->route('web.products.add');
         } catch (Exception $exception) {
             toastr()->error($exception->getMessage());

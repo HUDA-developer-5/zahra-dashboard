@@ -64,8 +64,10 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-3" id="categorySelects">
                                     <div class="sec-select">
-                                        <select class="select2 w-100 form-control" name="category_id" id="category_id" required>
-                                            <option value="" selected disabled>{{ trans('web.Select Category') }}</option>
+                                        <select class="select2 w-100 form-control" name="category_id" id="category_id"
+                                                required>
+                                            <option value="" selected
+                                                    disabled>{{ trans('web.Select Category') }}</option>
                                             @foreach($allCategories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
@@ -449,17 +451,17 @@
                     $('#successModal').modal('show');
                     @endif
 
-                    $("#confirmFormBtn").click(function () {
-                        var productType = $("input[name='type']:checked").val();
-                        if (productType == 'free') {
-                            $("#addProductForm").submit();
-                        }
-
-                        if (productType == 'premium') {
-                            // show confirm modal
-                            $("#confirmModal").modal('show');
-                        }
-                    });
+                    // $("#confirmFormBtn").click(function () {
+                    //     var productType = $("input[name='type']:checked").val();
+                    //     if (productType == 'free') {
+                    //         $("#addProductForm").submit();
+                    //     }
+                    //
+                    //     if (productType == 'premium') {
+                    //         // show confirm modal
+                    //         $("#confirmModal").modal('show');
+                    //     }
+                    // });
 
                     $("#submitConfirmPay").click(function () {
                         $("#addProductForm").submit();
@@ -763,6 +765,76 @@
                     // Initialize select2 for the initial category select
                     $('#category_id').select2();
                 });
+
+
+                // start of script code of confirm modal
+                // Trigger AJAX validation when the Confirm button is clicked
+                $('#confirmFormBtn').click(function (e) {
+                    e.preventDefault(); // Prevent the default form submission
+
+                    var productType = $("input[name='type']:checked").val();
+
+                    if (productType == 'free') {
+                        validateAndSubmitForm();
+                    } else if (productType == 'premium') {
+                        // show confirm modal
+                        $("#confirmModal").modal('show');
+                    }
+                });
+
+                // Handle the confirm payment button in the modal
+                $("#submitConfirmPay").click(function () {
+                    validateAndSubmitForm();
+                });
+
+                // Function to validate and submit the form via AJAX
+                function validateAndSubmitForm() {
+                    let form = $('#addProductForm');
+                    let url = form.attr('action'); // The form action URL
+                    let formData = form.serialize(); // Serialize the form data
+
+                    // Send an AJAX request to validate the form
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            clearErrors(); // Clear previous errors
+
+                            // If validation is successful, submit the form
+                            form.off('submit').submit();
+                        },
+                        error: function (xhr) {
+                            let errors = xhr.responseJSON.errors;
+                            clearErrors(); // Clear previous errors
+                            displayErrors(errors); // Display the errors
+                        }
+                    });
+                }
+
+                // Function to clear previous errors
+                function clearErrors() {
+                    $('.is-invalid').removeClass('is-invalid');
+                    $('.invalid-feedback').remove();
+                }
+
+                // Function to display errors under each field
+                function displayErrors(errors) {
+                    $.each(errors, function (key, errorMessages) {
+                        let input = $('[name=' + key + ']');
+                        input.addClass('is-invalid'); // Add Bootstrap's is-invalid class
+                        let errorContainer = $('<div class="invalid-feedback"></div>'); // Create error message container
+                        errorContainer.text(errorMessages[0]); // Set the error message
+                        input.after(errorContainer); // Insert the error message after the input field
+                    });
+                }
+
+                // Clear error messages when the user types or changes a selection
+                $('#addProductForm').on('input change', 'input, select, textarea', function () {
+                    $(this).removeClass('is-invalid'); // Remove the Bootstrap invalid class
+                    $(this).next('.invalid-feedback').remove(); // Remove the error message
+                });
+                // end of script code of confirm modal
 
             </script>
 @endsection
