@@ -1,11 +1,11 @@
 @extends('frontend.layouts.master')
 
 @section("style")
-{{--    <style>--}}
-{{--        .owl-item.active {--}}
-{{--            width: 100px !important;--}}
-{{--        }--}}
-{{--    </style>--}}
+    {{--    <style>--}}
+    {{--        .owl-item.active {--}}
+    {{--            width: 100px !important;--}}
+    {{--        }--}}
+    {{--    </style>--}}
 @endsection
 
 @section('content')
@@ -17,52 +17,54 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h2 class="title fw-bold">{{ trans('web.Categories') }}</h2>
                     <div class="d-lg-none d-block">
-                        <a href="{{ route('web.categories') }}" class="text-primary fw-bold">{{ trans('web.View More') }}</a>
+                        <a href="{{ route('web.categories') }}"
+                           class="text-primary fw-bold">{{ trans('web.View More') }}</a>
                     </div>
                 </div>
                 <div class="categories-list">
-{{--                    <div class="owl-carousel categories-carousel">--}}
-{{--                        @forelse($parentCategories as $parentCategory)--}}
-{{--                            <div class="item">--}}
-{{--                                <div class="category text-center {{ ($parent_cat_id == $parentCategory->id) ? 'active' : '' }}">--}}
-{{--                                    <div class="img mb-2">--}}
-{{--                                        <a href="{{ route('web.home', ['parent_cat_id' => $parentCategory->id]) }}">--}}
-{{--                                            <img src="{{ $parentCategory->image_path }}" alt="{{ $parentCategory->name }}" class="img-fluid" loading="lazy">--}}
-{{--                                        </a>--}}
-{{--                                    </div>--}}
-{{--                                    <h6 class="name">{{ $parentCategory->name }}</h6>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        @empty--}}
-{{--                            <p>{{ trans('web.No Categories Available') }}</p>--}}
-{{--                        @endforelse--}}
-{{--                    </div>--}}
-{{--                    <div class="sub-category">--}}
-{{--                        <div class="owl-carousel sub-category-carousel">--}}
-{{--                            @forelse($subCategories as $subCategory)--}}
-{{--                                <div class="item">--}}
-{{--                                    <div class="category text-center">--}}
-{{--                                        <div class="img mb-2">--}}
-{{--                                            <img src="{{ $subCategory->image_path }}" alt="{{ $subCategory->name }}" class="img-fluid" loading="lazy">--}}
-{{--                                        </div>--}}
-{{--                                        <h6 class="name">{{ $subCategory->name }}</h6>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            @empty--}}
-{{--                                <p>{{ trans('web.No Subcategories Available') }}</p>--}}
-{{--                            @endforelse--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
+                    {{--                    <div class="owl-carousel categories-carousel">--}}
+                    {{--                        @forelse($parentCategories as $parentCategory)--}}
+                    {{--                            <div class="item">--}}
+                    {{--                                <div class="category text-center {{ ($parent_cat_id == $parentCategory->id) ? 'active' : '' }}">--}}
+                    {{--                                    <div class="img mb-2">--}}
+                    {{--                                        <a href="{{ route('web.home', ['parent_cat_id' => $parentCategory->id]) }}">--}}
+                    {{--                                            <img src="{{ $parentCategory->image_path }}" alt="{{ $parentCategory->name }}" class="img-fluid" loading="lazy">--}}
+                    {{--                                        </a>--}}
+                    {{--                                    </div>--}}
+                    {{--                                    <h6 class="name">{{ $parentCategory->name }}</h6>--}}
+                    {{--                                </div>--}}
+                    {{--                            </div>--}}
+                    {{--                        @empty--}}
+                    {{--                            <p>{{ trans('web.No Categories Available') }}</p>--}}
+                    {{--                        @endforelse--}}
+                    {{--                    </div>--}}
+                    {{--                    <div class="sub-category">--}}
+                    {{--                        <div class="owl-carousel sub-category-carousel">--}}
+                    {{--                            @forelse($subCategories as $subCategory)--}}
+                    {{--                                <div class="item">--}}
+                    {{--                                    <div class="category text-center">--}}
+                    {{--                                        <div class="img mb-2">--}}
+                    {{--                                            <img src="{{ $subCategory->image_path }}" alt="{{ $subCategory->name }}" class="img-fluid" loading="lazy">--}}
+                    {{--                                        </div>--}}
+                    {{--                                        <h6 class="name">{{ $subCategory->name }}</h6>--}}
+                    {{--                                    </div>--}}
+                    {{--                                </div>--}}
+                    {{--                            @empty--}}
+                    {{--                                <p>{{ trans('web.No Subcategories Available') }}</p>--}}
+                    {{--                            @endforelse--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
 
 
                     <div class="owl-carousel categories-carousel">
                         @forelse($parentCategories as $index => $parentCategory)
                             <div class="item">
-                                <div class="category text-center parent-category {{ $index == 0 ? 'active' : '' }}" data-id="{{ $parentCategory->id }}">
+                                <div class="category text-center parent-category {{ $index == 0 ? 'active' : '' }}"
+                                     data-id="{{ $parentCategory->id }}">
                                     <div class="img mb-2">
                                         <a href="#" class="parent-category-link">
-                                            <img src="{{ $parentCategory->image_path }}" alt="{{ $parentCategory->name }}" class="img-fluid" loading="lazy">
+                                            <img src="{{ $parentCategory->image_path }}"
+                                                 alt="{{ $parentCategory->name }}" class="img-fluid" loading="lazy">
                                         </a>
                                     </div>
                                     <h6 class="name">{{ $parentCategory->name }}</h6>
@@ -79,10 +81,9 @@
                     </div>
 
 
-
-
                     <div class="text-center mt-4 d-none d-lg-block">
-                        <a href="{{ route('web.categories') }}" class="text-primary fw-bold">{{ trans('web.View More') }}</a>
+                        <a href="{{ route('web.categories') }}"
+                           class="text-primary fw-bold">{{ trans('web.View More') }}</a>
                     </div>
                 </div>
             </div>
@@ -94,14 +95,15 @@
                     <h5 class="fw-bold">{{ trans('web.Featured') }}</h5>
                     @includeIf('frontend.components.filter_card', ['parentCategories' => $parentCategories, 'mapId' => 'featureMapModal', 'type' => 'featured'])
                 </div>
-{{--                @if($featured->count())--}}
-                    <div class="ads-list-sec">
-                        <div class="row" id="featured_ads"></div>
-                    </div>
-                    <div class="text-center mt-4">
-                        <a href="{{ route('web.products.search', ['is_featured' => 1]) }}" class="text-primary fw-bold">{{ trans('web.View More') }}</a>
-                    </div>
-{{--                @endif--}}
+                {{--                @if($featured->count())--}}
+                <div class="ads-list-sec">
+                    <div class="row" id="featured_ads"></div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="{{ route('web.products.search', ['is_featured' => 1]) }}"
+                       class="text-primary fw-bold">{{ trans('web.View More') }}</a>
+                </div>
+                {{--                @endif--}}
             </div>
         </div>
 
@@ -119,7 +121,8 @@
                                 <div class="content-txt">
                                     <h5 class="title fw-bold mb-2">{{ $banner->name }}</h5>
                                     <p class="desc mb-3">{{ $banner->description }}</p>
-                                    <a href="{{ $banner->link }}" target="_blank" class="btn btn-gradiant fw-bold">{{ trans('web.Create') }}</a>
+                                    <a href="{{ $banner->link }}" target="_blank"
+                                       class="btn btn-gradiant fw-bold">{{ trans('web.Create') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -134,14 +137,15 @@
                     <h5 class="fw-bold">{{ trans('web.Latest') }}</h5>
                     @includeIf('frontend.components.filter_card', ['parentCategories' => $parentCategories, 'mapId' => 'mapModalLatest', 'type' => 'latest'])
                 </div>
-{{--                @if($latest->count())--}}
-                    <div class="ads-list-sec">
-                        <div class="row" id="latest_ads"></div>
-                    </div>
-                    <div class="text-center mt-4">
-                        <a href="{{ route('web.products.search') }}" class="text-primary fw-bold">{{ trans('web.View More') }}</a>
-                    </div>
-{{--                @endif--}}
+                {{--                @if($latest->count())--}}
+                <div class="ads-list-sec">
+                    <div class="row" id="latest_ads"></div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="{{ route('web.products.search') }}"
+                       class="text-primary fw-bold">{{ trans('web.View More') }}</a>
+                </div>
+                {{--                @endif--}}
             </div>
         </div>
 
@@ -234,18 +238,18 @@
             //     zoom: 10 // Set the initial zoom level
             // });
 
-{{--            @if($featured->count())--}}
-{{--            @foreach($featured as $product)--}}
-{{--            @if($product->latitude && $product->longitude)--}}
-{{--            var featureLatLng = new google.maps.LatLng({{$product->latitude}}, {{$product->longitude}});--}}
-{{--            new google.maps.Marker({--}}
-{{--                position: featureLatLng,--}}
-{{--                map: mapFeature,--}}
-{{--                title: "{{$product->default_price}}",--}}
-{{--            });--}}
-{{--            @endif--}}
-{{--            @endforeach--}}
-{{--            @endif--}}
+            {{--            @if($featured->count())--}}
+            {{--            @foreach($featured as $product)--}}
+            {{--            @if($product->latitude && $product->longitude)--}}
+            {{--            var featureLatLng = new google.maps.LatLng({{$product->latitude}}, {{$product->longitude}});--}}
+            {{--            new google.maps.Marker({--}}
+            {{--                position: featureLatLng,--}}
+            {{--                map: mapFeature,--}}
+            {{--                title: "{{$product->default_price}}",--}}
+            {{--            });--}}
+            {{--            @endif--}}
+            {{--            @endforeach--}}
+            {{--            @endif--}}
 
             {{--            @if($latest->count())--}}
             {{--            @foreach($latest as $product)--}}
@@ -292,8 +296,9 @@
                 let countryElement = document.querySelector(`.country_id_${type}`);
                 let country_id = countryElement ? countryElement.value : null;
 
-                let mostViewedElement = document.querySelector(`.most-viewed-${type} input`);
+                let mostViewedElement = document.querySelector(`.most_viewed_${type} input[name="most_viewed"]`);
                 let most_viewed = mostViewedElement ? mostViewedElement.value : null;
+
 
                 const filter = {
                     category_id: category_id,
@@ -301,7 +306,8 @@
                     sub_category_id_1: sub_category_id_1,
                     sub_category_id_2: sub_category_id_2,
                     sub_category_id_3: sub_category_id_3,
-                    most_viewed: most_viewed
+                    most_viewed: most_viewed // Add most_viewed to the filter
+
                 };
 
                 const queryString = new URLSearchParams(filter).toString();
@@ -322,12 +328,12 @@
             function initSelects(type) {
                 function createSubCategorySelect(level) {
                     return `
-                    <div class="sec-select sub-category-${type}-${level}">
-                        <select class="select2 w-100 form-control sub_category_id_${type}_${level}" name="sub_category_id_${level}">
-                            <option selected disabled>{{ trans('web.select_Sub_Category') }}</option>
-                        </select>
-                    </div>
-                `;
+                <div class="sec-select sub-category-${type}-${level}">
+                    <select class="select2 w-100 form-control sub_category_id_${type}_${level}" name="sub_category_id_${level}">
+                        <option selected disabled>{{ trans('web.select_Sub_Category') }}</option>
+                    </select>
+                </div>
+            `;
                 }
 
                 function fetchSubCategories(parentId, level) {
@@ -358,6 +364,7 @@
                     });
                 }
 
+                // Event listeners for select and checkbox changes
                 $(`.country_id_${type}`).change(function () {
                     filterAds(type, type === 'featured' ? featuredAds : latestAds);
                 });
@@ -373,6 +380,40 @@
 
                 $(`.category_id_${type}`).select2();
 
+                // // Event listener for "Near by", "Available photo", and "Most viewed" checkboxes
+                // $(`.sec-check input`).change(function () {
+                //     filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                // });
+
+                // Select the div with the most_viewed class specific to the type
+                {{--const type = @json($type); // Convert PHP variable to JavaScript--}}
+
+                const mostViewedDiv = document.querySelector(`.most_viewed_${type}`);
+
+                if (mostViewedDiv) {
+                    // Add a click event listener
+                    mostViewedDiv.addEventListener('click', function () {
+                        const hiddenInput = mostViewedDiv.querySelector('input[name="most_viewed"]');
+
+                        console.log('Most Viewed clicked!'); // Debug log
+
+                        if (hiddenInput.value === "1") {
+                            // If already checked, uncheck it
+                            hiddenInput.value = ''; // Clear the hidden input value
+                            mostViewedDiv.classList.add('checked');
+                            console.log('Unchecked: ', hiddenInput.value); // Debug log
+                        } else {
+                            // If not checked, check it and set the value to true
+                            hiddenInput.value = '1'; // Set value to '1'
+                            mostViewedDiv.classList.remove('checked');
+                            console.log('Checked: ', hiddenInput.value); // Debug log
+                        }
+
+                        // Trigger the filterAds function after the value changes
+                        filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                    });
+                }
+
             }
 
             filterAds('featured', featuredAds);
@@ -380,6 +421,7 @@
             initSelects('featured');
             initSelects('latest');
         });
+
     </script>
 
     <script>
