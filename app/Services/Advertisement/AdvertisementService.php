@@ -33,6 +33,7 @@ use App\Models\Banner;
 use App\Models\FreeCommission;
 use App\Models\PremiumCommission;
 use App\Models\PremiumUserSetting;
+use App\Models\Scopes\CurrencyScope;
 use App\Models\User;
 use App\Models\UserAdsChat;
 use App\Models\UserAdsComment;
@@ -709,7 +710,7 @@ class AdvertisementService
 
     protected function adsBuilder(): Builder
     {
-        return (new Advertisement())->where('status', '=', AdvertisementStatusEnums::Active->value)->newQuery();
+        return (new Advertisement())->withoutGlobalScope(CurrencyScope::class)->where('status', '=', AdvertisementStatusEnums::Active->value)->newQuery();
     }
 
     public function addAdsToFavourite(User $user, Advertisement $advertisement): void
