@@ -35,7 +35,7 @@
         <input type="hidden" name="longitude" id="longitude_{{$type}}" value="{{ request('longitude') }}">
     </div>
 
-    <div class="sec-check  @if(request()->has('available_photo') && request('available_photo') ) checked @endif">
+    <div class="sec-check available_photo_{{$type}} @if(request()->has('available_photo') && request('available_photo') ) checked @endif">
         <span>{{ trans('web.Available photo') }}</span>
         <span class="clear"><i class="far fa-circle-xmark"></i></span>
         <input type="hidden" name="available_photo" value="{{ request('available_photo') }}">

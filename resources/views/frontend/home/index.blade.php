@@ -299,6 +299,9 @@
                 let mostViewedElement = document.querySelector(`.most_viewed_${type} input[name="most_viewed"]`);
                 let most_viewed = mostViewedElement ? mostViewedElement.value : null;
 
+                let availablePhotoElement = document.querySelector(`.available_photo_${type} input[name="available_photo"]`);
+                let available_photo = availablePhotoElement ? availablePhotoElement.value : null;
+
 
                 const filter = {
                     category_id: category_id,
@@ -306,7 +309,8 @@
                     sub_category_id_1: sub_category_id_1,
                     sub_category_id_2: sub_category_id_2,
                     sub_category_id_3: sub_category_id_3,
-                    most_viewed: most_viewed // Add most_viewed to the filter
+                    most_viewed: most_viewed, // Add most_viewed to the filter,
+                    available_photo: available_photo
 
                 };
 
@@ -406,6 +410,33 @@
                             // If not checked, check it and set the value to true
                             hiddenInput.value = '1'; // Set value to '1'
                             mostViewedDiv.classList.remove('checked');
+                            console.log('Checked: ', hiddenInput.value); // Debug log
+                        }
+
+                        // Trigger the filterAds function after the value changes
+                        filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                    });
+                }
+
+
+                const availablePhotoDiv = document.querySelector(`.available_photo_${type}`);
+
+                if (availablePhotoDiv) {
+                    // Add a click event listener
+                    availablePhotoDiv.addEventListener('click', function () {
+                        const hiddenInput = availablePhotoDiv.querySelector('input[name="available_photo"]');
+
+                        console.log('Most Viewed clicked!'); // Debug log
+
+                        if (hiddenInput.value === "1") {
+                            // If already checked, uncheck it
+                            hiddenInput.value = ''; // Clear the hidden input value
+                            availablePhotoDiv.classList.add('checked');
+                            console.log('Unchecked: ', hiddenInput.value); // Debug log
+                        } else {
+                            // If not checked, check it and set the value to true
+                            hiddenInput.value = '1'; // Set value to '1'
+                            availablePhotoDiv.classList.remove('checked');
                             console.log('Checked: ', hiddenInput.value); // Debug log
                         }
 
