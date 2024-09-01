@@ -302,6 +302,9 @@
                 let availablePhotoElement = document.querySelector(`.available_photo_${type} input[name="available_photo"]`);
                 let available_photo = availablePhotoElement ? availablePhotoElement.value : null;
 
+                let createdAtElement = document.querySelector(`#created_at_select_${type}`);
+                let created_at = createdAtElement ? createdAtElement.value : null;
+
 
                 const filter = {
                     category_id: category_id,
@@ -310,7 +313,8 @@
                     sub_category_id_2: sub_category_id_2,
                     sub_category_id_3: sub_category_id_3,
                     most_viewed: most_viewed, // Add most_viewed to the filter,
-                    available_photo: available_photo
+                    available_photo: available_photo,
+                    created_at: created_at
 
                 };
 
@@ -444,6 +448,11 @@
                         filterAds(type, type === 'featured' ? featuredAds : latestAds);
                     });
                 }
+
+                // Event listener for created_at select change
+                $(`#created_at_select_${type}`).change(function () {
+                    filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                });
 
             }
 

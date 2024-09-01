@@ -49,7 +49,7 @@
     </div>
 
     <div class="sec-select">
-        <select class="select2 w-100 form-control" name="created_at">
+        <select id="created_at_select_{{$type}}" class="select2 w-100 form-control" name="created_at_{{$type}}">
             <option value="">-------</option>
             <option
                 value="today" {{ request('created_at') == "today" ? 'selected' : '' }}> {{ trans('web.Today') }}</option>
