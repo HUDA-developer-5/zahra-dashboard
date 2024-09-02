@@ -15,16 +15,36 @@
         <div class="sec-select subCategorySelects_{{$type}}" id="subCategorySelects"></div>
     @endif
 
-    @if($countries->count())
-        <div class="sec-select">
-            <select class="select2 w-100 form-control country_id_{{$type}}" name="country_id">
-                <option label="{{ trans('web.Country') }}"></option>
-                @foreach($countries as $country)
-                    <option
-                        value="{{ $country->id }}" {{ request('country_id') == $country->id ? 'selected' : '' }}> {{ $country->name }}</option>
-                @endforeach
-            </select>
-        </div>
+{{--    @if($countries->count())--}}
+{{--        <div class="sec-select">--}}
+{{--            <select class="select2 w-100 form-control country_id_{{$type}}" name="country_id">--}}
+{{--                <option label="{{ trans('web.Country') }}"></option>--}}
+{{--                @foreach($countries as $country)--}}
+{{--                    <option--}}
+{{--                        value="{{ $country->id }}" {{ request('country_id') == $country->id ? 'selected' : '' }}> {{ $country->name }}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        </div>--}}
+{{--    @endif--}}
+
+    @if($states->count())
+            <div class="sec-select">
+                <select class="select2 w-100 form-control state_id_{{$type}}" name="state_id" id="state_id_{{$type}}">
+                    <option label="{{ trans('web.State') }}"></option>
+                    @foreach($states as $state)
+                        <option value="{{ $state->id }}" {{ request('state_id') == $state->id ? 'selected' : '' }}>
+                            {{ $state->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="sec-select">
+                <select class="select2 w-100 form-control city_id_{{$type}}" name="city_id" id="city_id_{{$type}}">
+                    <option label="{{ trans('web.City') }}"></option>
+                    <!-- Cities will be populated here -->
+                </select>
+            </div>
     @endif
 
     <div class="sec-check  @if(request()->has('near_by') && request('near_by') ) checked @endif">
@@ -35,7 +55,8 @@
         <input type="hidden" name="longitude" id="longitude_{{$type}}" value="{{ request('longitude') }}">
     </div>
 
-    <div class="sec-check available_photo_{{$type}} @if(request()->has('available_photo') && request('available_photo') ) checked @endif">
+    <div
+        class="sec-check available_photo_{{$type}} @if(request()->has('available_photo') && request('available_photo') ) checked @endif">
         <span>{{ trans('web.Available photo') }}</span>
         <span class="clear"><i class="far fa-circle-xmark"></i></span>
         <input type="hidden" name="available_photo" value="{{ request('available_photo') }}">

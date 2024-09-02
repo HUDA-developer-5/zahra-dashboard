@@ -60,6 +60,9 @@ class HomeWebController extends Controller
         if ($parent_cat_id) {
             $subCats = $categoryService->listChild($parent_cat_id);
         }
+
+        $states = State::where('nationality_id', '=', session()->get('country_id') ?? 1)->where('status', '=', CommonStatusEnums::Active->value)->get();
+
         $data = [
             'parentCategories' => $parentCategories,
             'subCategories' => $subCats,
@@ -71,7 +74,8 @@ class HomeWebController extends Controller
             'token' => $token,
             'termsAndConditions' => (new DynamicPageService())->getPage(StaticPagesEnums::TermsAndConditions->value),
             'banner' => (new AdvertisementService())->getActiveBanner(),
-            'allCats' => $allCats
+            'allCats' => $allCats,
+            'states' => $states
         ];
         return view('frontend.home.index')->with($data);
     }

@@ -599,6 +599,14 @@ class AdvertisementService
             $query->where('nationality_id', $request->country_id);
         }
 
+        if ($request->filled('state_id')) {
+            $query->where('state_id', $request->state_id);
+        }
+
+        if ($request->filled('city_id')) {
+            $query->where('city_id', $request->city_id);
+        }
+
         if ($request->filled('price_from')) {
             $query->where('price', '>=', $request->price_from)
                 ->where('min_price', '>=', $request->price_from);

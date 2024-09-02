@@ -305,16 +305,24 @@
                 let createdAtElement = document.querySelector(`#created_at_select_${type}`);
                 let created_at = createdAtElement ? createdAtElement.value : null;
 
+                const stateElement = document.querySelector(`.state_id_${type}`);
+                const state_id = stateElement ? stateElement.value : null;
+
+                const cityElement = document.querySelector(`.city_id_${type}`);
+                const city_id = cityElement ? cityElement.value : null;
+
 
                 const filter = {
                     category_id: category_id,
-                    country_id: country_id,
+                    // country_id: country_id,
                     sub_category_id_1: sub_category_id_1,
                     sub_category_id_2: sub_category_id_2,
                     sub_category_id_3: sub_category_id_3,
                     most_viewed: most_viewed, // Add most_viewed to the filter,
                     available_photo: available_photo,
-                    created_at: created_at
+                    created_at: created_at,
+                    state_id: state_id,
+                    city_id: city_id
 
                 };
 
@@ -344,32 +352,35 @@
             `;
                 }
 
+
                 function fetchSubCategories(parentId, level) {
                     $.ajax({
-                        type: "GET",
-                        url: `/categories/${parentId}/subcategories`,
-                        success: function (data) {
-                            if (data.length > 0) {
-                                const newSelect = createSubCategorySelect(level);
-                                $(`.subCategorySelects_${type}`).append(newSelect);
+                            type: "GET",
+                            url: ` / categories /${parentId}/subcategories`,
+                            success: function (data) {
+                                if (data.length > 0) {
+                                    const newSelect = createSubCategorySelect(level);
+                                    $(`.subCategorySelects_${type}`).append(newSelect);
 
-                                $.each(data, function (index, subCategory) {
-                                    $(`.sub_category_id_${type}_${level}`).append(`<option value="${subCategory.id}">${subCategory.name}</option>`);
-                                });
+                                    $.each(data, function (index, subCategory) {
+                                        $(`.sub_category_id_${type}_${level}`).append(`<option value="${subCategory.id}">${subCategory.name}</option>`);
+                                    });
 
-                                $(`.sub_category_id_${type}_${level}`).change(function () {
-                                    const selectedSubCategoryId = $(this).val();
-                                    $(`.sub-category-${type}-${level + 1}`).remove();
-                                    if (selectedSubCategoryId) {
-                                        fetchSubCategories(selectedSubCategoryId, level + 1);
-                                        filterAds(type, type === 'featured' ? featuredAds : latestAds);
-                                    }
-                                });
+                                    $(`.sub_category_id_${type}_${level}`).change(function () {
+                                        const selectedSubCategoryId = $(this).val();
+                                        $(`.sub-category-${type}-${level + 1}`).remove();
+                                        if (selectedSubCategoryId) {
+                                            fetchSubCategories(selectedSubCategoryId, level + 1);
+                                            filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                                        }
+                                    });
 
-                                $(`.sub_category_id_${type}_${level}`).select2();
+                                    $(`.sub_category_id_${type}_${level}`).select2();
+                                }
                             }
                         }
-                    });
+                    )
+                    ;
                 }
 
                 // Event listeners for select and checkbox changes
@@ -454,13 +465,48 @@
                     filterAds(type, type === 'featured' ? featuredAds : latestAds);
                 });
 
+
+                // Event listener for state_id select change
+                $(`.state_id_${type}`).on('change', function () {
+                    var stateId = $(this).val();
+                    console.log('State ID:', stateId);
+                    var citySelect = $(`.city_id_${type}`);
+
+                    // Clear the existing options in the city dropdown
+                    citySelect.empty().append('<option label="{{ trans('web.City') }}"></option>');
+
+                    if (stateId) {
+                        $.ajax({
+                            url: "{{ url('cities') }}" + "/" + stateId,
+                            type: 'GET',
+                            success: function (data) {
+                                $.each(data.data, function (key, value) {
+                                    citySelect.append('<option value="' + value.id + '">' + value.name + '</option>');
+                                });
+                            },
+                            error: function (error) {
+                                console.error('Error fetching cities:', error);
+                            }
+                        });
+
+                        filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                    }
+                });
+
+                // Event listeners for select and checkbox changes
+                $(`.city_id_${type}`).change(function () {
+                    filterAds(type, type === 'featured' ? featuredAds : latestAds);
+                });
+
+
             }
 
             filterAds('featured', featuredAds);
             filterAds('latest', latestAds);
             initSelects('featured');
             initSelects('latest');
-        });
+        })
+        ;
 
     </script>
 
