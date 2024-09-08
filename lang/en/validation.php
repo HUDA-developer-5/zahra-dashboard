@@ -206,7 +206,9 @@ return [
         'videos' => 'Videos',
         'premium_amount' => 'Premium Amount',
         'payment_type' => 'Payment Type',
-        'payment_method' => 'Payment Method'
+        'payment_method' => 'Payment Method',
+        'Fixed' => 'Fixed',
+        'OpenOffer' => 'Open Offer',
     ],
     'phone' => 'The :attribute field must be a valid number.',
 ];

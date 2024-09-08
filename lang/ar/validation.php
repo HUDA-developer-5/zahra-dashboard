@@ -133,6 +133,8 @@ return [
         'videos' => 'مقاطع الفيديو',
         'premium_amount' => 'المبلغ المميز',
         'payment_type' => 'نوع الدفع',
-        'payment_method' => 'طريقة الدفع'
+        'payment_method' => 'طريقة الدفع',
+        'Fixed' => 'ثابت',
+        'OpenOffer' => 'فتح عرض',
     ],
 ];

@@ -100,7 +100,7 @@
                                     <select class="form-select" id="priceType" name="price_type" required
                                             value="{{ old('price_type') }}">
                                         @foreach($price_types as $key => $price_type)
-                                            <option value="{{ $key }}"> {{ $price_type }}</option>
+                                            <option value="{{ $key }}"> {{ __('validation.attributes.'.$price_type) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
