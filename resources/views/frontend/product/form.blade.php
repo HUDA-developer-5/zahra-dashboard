@@ -40,7 +40,8 @@
                             <div id="pro_images" class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="flex-grow-1">{{ trans('web.Product images') }}</h6>
-                                    <p> (<span class="text-secondary">0</span>/20)</p>
+{{--                                    <p> (<span class="text-secondary">0</span>/20)</p>--}}
+                                    <p> (<span class="text-secondary" id="imageCount">0</span>/20)</p>
                                 </div>
                                 <div>
                                     <input name="images[]" type="file" id="upload_File" value="" multiple>
@@ -50,7 +51,9 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="flex-grow-1">{{ trans('web.Product Video') }} <span
                                             class="text-gray">( {{ trans('web.optional') }} )</span></h6>
-                                    <p> (<span class="text-secondary">0</span>/20)</p>
+{{--                                    <p> (<span class="text-secondary">0</span>/20)</p>--}}
+                                    <p> (<span class="text-secondary" id="videoCount">0</span>/20)</p>
+
                                 </div>
                                 <div>
                                     <input name="videos[]" type="file" id="upload_video" value="" multiple>
@@ -835,6 +838,22 @@
                     $(this).next('.invalid-feedback').remove(); // Remove the error message
                 });
                 // end of script code of confirm modal
+
+
+                $(document).ready(function() {
+                    // Handle changes in the image upload input
+                    $('input[name="images[]"]').on('change', function() {
+                        var fileCount = this.files.length; // Get the number of files
+                        $('#imageCount').text(fileCount); // Update the count display
+                    });
+
+                    // Handle changes in the video upload input
+                    $('input[name="videos[]"]').on('change', function() {
+                        var fileCount = this.files.length; // Get the number of files
+                        $('#videoCount').text(fileCount); // Update the count display
+                    });
+                });
+
 
             </script>
 @endsection
