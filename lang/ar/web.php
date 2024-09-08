@@ -279,4 +279,6 @@ return [
     'Highest Offer' => 'العرض الاعلى',
     'Lowest Offer' => 'العرض الادنى',
     'No data found' => 'لاتوجد بيانات',
+    'Select Category' => 'اختر القسم',
+    'Select Sub Category' => 'اختر القسم الفرعي',
 ];
