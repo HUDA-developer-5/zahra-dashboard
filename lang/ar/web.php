@@ -138,6 +138,7 @@ return [
     "Yas, iam Sure" => "نعم,أنا متأكد",
     "Cancel" => "الغاء",
     "Cancle" => "إلغاء",
+    "Delete" => "حذف",
     "Why" => "لماذا؟",
     "Follow Comment" => "متابعة التعليق",
     "Report" => "تبليغ",
