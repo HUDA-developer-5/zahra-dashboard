@@ -356,7 +356,7 @@
                 function fetchSubCategories(parentId, level) {
                     $.ajax({
                             type: "GET",
-                            url: ` / categories /${parentId}/subcategories`,
+                            url: ` /categories/${parentId}/subcategories`,
                             success: function (data) {
                                 if (data.length > 0) {
                                     const newSelect = createSubCategorySelect(level);
