@@ -202,11 +202,11 @@
             <div id="PriceCollapse" class="accordion-collapse collapse show" aria-labelledby="headingFour">
                 <div class="price-input d-flex flex-wrap mb-3">
                     <div class="form-input">
-                        <input type="text" id="from" name="price_from" class="form-control" placeholder="{{ trans('web.From') }}" value="{{ request('price_from') }}">
+                        <input type="text" id="from" name="price_from" class="form-control" placeholder="{{ trans('web.From') }}" value="{{ $maxPrice }}">
                         <label class="form-label" for="from">{{ trans('web.From') }}</label>
                     </div>
                     <div class="form-input">
-                        <input type="text" id="to" name="price_to" class="form-control" placeholder="{{ trans('web.To') }}" value="{{ request('price_to') }}">
+                        <input type="text" id="to" name="price_to" class="form-control" placeholder="{{ trans('web.To') }}" value="{{ $minPrice }}">
                         <label class="form-label" for="to">{{ trans('web.To') }}</label>
                     </div>
                 </div>

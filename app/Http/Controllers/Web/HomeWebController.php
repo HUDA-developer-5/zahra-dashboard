@@ -190,7 +190,9 @@ class HomeWebController extends Controller
         }
         $data = [
             'products' => $products,
-            'searchForCats' => $searchForCats
+            'searchForCats' => $searchForCats,
+            'maxPrice' => count($products)>0 ? max($products->pluck('price')->toArray()) : 0,
+            'minPrice' => count($products)>0 ? min($products->pluck('price')->toArray()) : 0
         ];
         return view('frontend.product.filter_products')->with($data);
     }
