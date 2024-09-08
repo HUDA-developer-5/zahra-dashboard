@@ -143,7 +143,7 @@ return [
     "Follow Comment" => "متابعة التعليق",
     "Report" => "تبليغ",
     "Following" => "متابعة",
-    "Are you sure you want to report this ads?" => "هل أنت متأكد من أنك تريد تبليغ عن هذا الإعلان؟",
+    "Are you sure you want to report this ads?" => "هل أنت متأكد من أنك تريد الإبلاغ عن هذا الإعلان؟",
     "Add ad" => "أضف إعلان",
     "Upload attachments" => "تحميل المرفقات",
     "You can add up to 20 images or videos." => "يمكنك إضافة ما يصل إلى 20 صورة أو مقطع فيديو.",
