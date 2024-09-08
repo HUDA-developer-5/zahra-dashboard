@@ -432,7 +432,7 @@
                                 <a class="btn btn-gradiant py-3 w-50" href="{{  route('web.products.add')}}"><span
                                         class="fw-bold">{{ trans('web.Add New Advertisement') }}</span>
                                 </a>
-                                <a class="btn btn-border py-3 w-50" data-bs-dismiss="modal" aria-label="Close"><span
+                                <a class="btn btn-border py-3 w-50" href="{{ route('web.my-products.list') }}"><span
                                         class="fw-bold">{{  trans('web.Cancel') }}</span> </a>
                             </div>
                         </form>
