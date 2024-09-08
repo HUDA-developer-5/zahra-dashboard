@@ -183,7 +183,7 @@
                                         <label class="form-check-label">
                                             {{ trans('web.Yes') }}
                                         </label>
-                                        {{ html()->radio('is_negotiable',null, 0)->addClass('form-check-input') }}
+                                        {{ html()->radio('is_negotiable',null, 1)->addClass('form-check-input') }}
                                     </div>
                                 </div>
                                 <div class="col-lg-6 mb-3">
@@ -191,7 +191,7 @@
                                         <label class="form-check-label">
                                             <span>{{ trans('web.No') }}</span>
                                         </label>
-                                        {{ html()->radio('is_negotiable', null,1)->addClass('form-check-input') }}
+                                        {{ html()->radio('is_negotiable', null, 0)->addClass('form-check-input') }}
                                     </div>
                                 </div>
                             </div>
