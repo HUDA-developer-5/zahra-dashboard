@@ -99,6 +99,8 @@ class HomeWebController extends Controller
     public function changeLanguage(Request $request)
     {
         $lang = $request->get('language');
+        Session::put('lang', $lang);
+
         $country_id = $request->get('country_id');
         if ($lang && in_array($lang, LaravelLocalization::getSupportedLanguagesKeys())) {
             app()->setLocale($lang);

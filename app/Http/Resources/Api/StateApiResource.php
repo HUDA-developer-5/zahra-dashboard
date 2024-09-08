@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Session;
 
 class StateApiResource extends JsonResource
 {
@@ -14,9 +15,12 @@ class StateApiResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $locale = Session::get('lang') ?? 'en'; // Gets the current locale
+        $name = $this->getTranslation('name', $locale);
+
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $name,
             'cities' => CityApiResource::collection($this->whenLoaded('cities'))
         ];
     }
