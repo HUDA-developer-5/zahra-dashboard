@@ -219,12 +219,14 @@
                                 <div class="col-lg-4 mb-3">
                                     <select class="select2 w-100 form-control" name="state_id" id="stateList" required
                                             value="{{ old('state_id') }}">
+                                        <option label="{{ trans('web.Select State') }}"></option>
 
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mb-3">
                                     <select class="select2 w-100 form-control" name="city_id" id="cityList" required
                                             value="{{ old('city_id') }}">
+                                        <option label="{{ trans('web.Select City') }}"></option>
 
                                     </select>
                                 </div>
@@ -671,7 +673,7 @@
                                 success: function (data) {
                                     $('#stateList').empty();
                                     $('#cityList').empty();
-                                    $('#stateList').append('<option value="">{{ trans('web.Select State') }}</option>');
+{{--                                    $('#stateList').append('<option value="">{{ trans('web.Select State') }}</option>');--}}
                                     $.each(data.data, function (key, value) {
                                         $('#stateList').append('<option value="' + value.id + '">' + value.name + '</option>');
                                     });
@@ -692,7 +694,7 @@
                                 url: "{{ url('cities') }}" + "/" + state_id,
                                 success: function (data) {
                                     $('#cityList').empty();
-                                    $('#cityList').append('<option value="">{{ trans('web.Select City') }}</option>');
+{{--                                    $('#cityList').append('<option value="">{{ trans('web.Select City') }}</option>');--}}
                                     $.each(data.data, function (key, value) {
                                         $('#cityList').append('<option value="' + value.id + '">' + value.name + '</option>');
                                     });
