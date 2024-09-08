@@ -180,6 +180,33 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'Name',
+        'category_id' => 'Category',
+        'sub_category_id_1' => 'Sub Category 1',
+        'sub_category_id_2' => 'Sub Category 2',
+        'sub_category_id_3' => 'Sub Category 3',
+        'is_negotiable' => 'Is Negotiable',
+        'price_type' => 'Price Type',
+        'price' => 'Price',
+        'min_price' => 'Minimum Price',
+        'max_price' => 'Maximum Price',
+        'phone_number' => 'Phone Number',
+        'whatsapp_number' => 'Whatsapp Number',
+        'type' => 'Type',
+        'currency' => 'Currency',
+        'nationality_id' => 'Nationality ID',
+        'state_id' => 'State ID',
+        'city_id' => 'City ID',
+        'latitude' => 'Latitude',
+        'longitude' => 'Longitude',
+        'description' => 'Description',
+        'image' => 'Image',
+        'images' => 'Images',
+        'videos' => 'Videos',
+        'premium_amount' => 'Premium Amount',
+        'payment_type' => 'Payment Type',
+        'payment_method' => 'Payment Method'
+    ],
     'phone' => 'The :attribute field must be a valid number.',
 ];
