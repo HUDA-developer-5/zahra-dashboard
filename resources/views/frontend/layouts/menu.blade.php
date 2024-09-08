@@ -23,14 +23,16 @@
                                 <ul class="sub-category">
                                     @foreach($menuCategories as $menuCategory)
                                         <li class="active">
-                                            <a href="{{ route('web.show_category', ['id' => $menuCategory->id]) }}"
+{{--                                            route('web.show_category', ['id' => $menuCategory->id])--}}
+                                            <a href="{{  url()->route('web.categories').'?category_id='.$menuCategory->id }}"
                                                class="d-flex justify-content-between"><span>{{ $menuCategory->name }}</span><span
                                                         class="icon"><i class="fas fa-chevron-right"></i></span></a>
                                             @if($menuCategory->child?->count())
                                                 <ul class="sub-category">
                                                     @foreach($menuCategory->child as $firstChild)
                                                         <li>
-                                                            <a href="{{ route('web.show_category', ['id' => $firstChild->id]) }}"
+{{--                                                            href="{{ route('web.show_category', ['id' => $firstChild->id]) }}"--}}
+                                                            <a href="{{  url()->route('web.categories').'?category_id='.$menuCategory->id }}"
                                                                class="d-flex justify-content-between"><span>{{ $firstChild->name }}</span><span
                                                                         class="icon"><i
                                                                             class="fas fa-chevron-right"></i></span></a>
@@ -38,7 +40,8 @@
                                                                 <ul class="sub-category">
                                                                     @foreach($firstChild->child as $secondChild)
                                                                         <li>
-                                                                            <a href="{{ route('web.show_category', ['id' => $secondChild->id]) }}"
+{{--                                                                            href="{{ route('web.show_category', ['id' => $secondChild->id]) }}"--}}
+                                                                            <a href="{{ url()->route('web.categories').'?category_id='.$menuCategory->id }}"
                                                                                class="d-flex justify-content-between"><span>{{ $secondChild->name }}</span><span
                                                                                         class="icon"><i
                                                                                             class="fas fa-chevron-right"></i></span></a>
@@ -46,7 +49,8 @@
                                                                                 <ul class="sub-category">
                                                                                     @foreach($secondChild->child as $thirdChild)
                                                                                         <li>
-                                                                                            <a href="{{ route('web.show_category', ['id' => $thirdChild->id]) }}"
+{{--                                                                                            href="{{ route('web.show_category', ['id' => $thirdChild->id]) }}"--}}
+                                                                                            <a href="{{  url()->route('web.categories').'?category_id='.$menuCategory->id }}"
                                                                                                class="d-flex justify-content-between"><span>{{ $thirdChild->name }}</span></a>
                                                                                         </li>
                                                                                     @endforeach
