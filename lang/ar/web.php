@@ -131,6 +131,7 @@ return [
     "Send offer" => "إرسال عرض",
     "Translate to English" => "ترجمة الي الانجليزية",
     "highest offer" => "أعلى عرض",
+    "lowest offer" => "أقل عرض",
     "Open offer" => "فتح العرض",
     "related" => "الإعلانات ذات صلة",
     "Resent Item" => "العنصر الأخير",

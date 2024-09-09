@@ -149,6 +149,10 @@
                                     <span class="fs-6 text-gray me-1">{{ trans('web.highest offer') }} :</span>
                                     {{ $product->max_offer_price }} {{ trans('web.'.$product->currency) }}
                                 </p>
+                                    <p class="price text-primary fw-bold fs-5 mb-2">
+                                        <span class="fs-6 text-gray me-1">{{ trans('web.lowest offer') }} :</span>
+                                        {{ $product->min_offer_price }} {{ trans('web.'.$product->currency) }}
+                                    </p>
                             </div>
                         @endif
                     </div>

@@ -131,6 +131,7 @@ return [
     "Send offer" => "Send offer",
     "Translate to English" => "Translate to English",
     "highest offer" => "highest offer",
+    "lowest offer" => "lowest offer",
     "Open offer" => "Open offer",
     "related ads" => "Related Ads",
     "Resent Item" => "Resent Item",

@@ -202,4 +202,17 @@ class Advertisement extends Model
             return $this->price;
         }
     }
+
+    public function getMinOfferPriceAttribute()
+    {
+        if ($this->price_type == AdvertisementPriceTypeEnums::OpenOffer->value) {
+            // check if the this ads has any accepted offers
+            if ($this->offers()->where('status', OfferStatusEnums::Approved->value)->exists()) {
+                return $this->offers()->where('status', OfferStatusEnums::Approved->value)->max('offer');
+            }
+            return $this->min_price;
+        }  else {
+            return $this->price;
+        }
+    }
 }
