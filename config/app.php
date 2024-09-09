@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Moscow',  // Assuming Moscow time which is UTC+3
 
     /*
     |--------------------------------------------------------------------------
