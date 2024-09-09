@@ -390,7 +390,7 @@ class AdvertisementService
 
         // check if the offer not less than ads min price and not greater than ads max price
         if ($offer < $advertisement->min_price || $offer > $advertisement->max_price) {
-            return ['status' => $status, 'message' => trans('web.offer not in range')];
+            return ['status' => $status, 'message' => trans('web.offer should be between :min and :max', ['min' => $advertisement->min_price, 'max' => $advertisement->max_price])];
         }
 
         $offer = UserAdsOffer::UpdateOrCreate(

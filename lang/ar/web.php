@@ -276,6 +276,7 @@ return [
     'Add New Advertisement' => 'اضافة اعلان',
     'advertisement is not open offer' => 'الاعلان غير مفتوح للطلب',
     'offer not in range' => 'العرض ليس في نطاق العرض',
+    'offer should be between :min and :max' => 'العرض يجب ان يكون بين :min و :max',
     'offer sent successfully' => 'تم ارسال العرض بنجاح',
     'approved' => 'تمت الموافقة',
     'Write Something' => 'اكتب شيء',

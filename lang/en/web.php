@@ -276,6 +276,7 @@ return [
     'advertisement is not open offer' => 'advertisement is not open offer',
     'offer not in range' => 'offer not in range',
     'offer sent successfully' => 'offer sent successfully',
+    'offer should be between :min and :max' => 'offer should be between :min and :max',
     'approved' => 'Approved',
     'Write Something' => 'Write Something',
     'translate' => 'Translate',
