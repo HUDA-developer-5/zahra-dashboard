@@ -136,5 +136,8 @@ return [
         'payment_method' => 'طريقة الدفع',
         'Fixed' => 'ثابت',
         'OpenOffer' => 'فتح عرض',
+        'email' => 'البريد الالكتروني',
+        'password' => 'كلمة المرور',
+        'remember' => 'تذكرني',
     ],
 ];

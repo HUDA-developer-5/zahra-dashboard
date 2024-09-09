@@ -209,6 +209,9 @@ return [
         'payment_method' => 'Payment Method',
         'Fixed' => 'Fixed',
         'OpenOffer' => 'Open Offer',
+        'email' => 'Email',
+        'password' => 'Password',
+        'remember' => 'Remember',
     ],
     'phone' => 'The :attribute field must be a valid number.',
 ];
