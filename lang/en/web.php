@@ -181,6 +181,7 @@ return [
     "SR" => "SR",
     "SAR" => "SAR",
     "EGP" => "EGP",
+    "AED" => "AED",
     'Register Now' => 'Register Now',
     'welcome' => 'welcome',
     'profile' => 'Profile',
