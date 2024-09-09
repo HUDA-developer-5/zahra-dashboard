@@ -286,4 +286,6 @@ return [
     'No data found' => 'لاتوجد بيانات',
     'Select Category' => 'اختر القسم',
     'Select Sub Category' => 'اختر القسم الفرعي',
+    "related ads" => "منتجات مشابهة",
+    'See More' => 'اظهار المزيد'
 ];
