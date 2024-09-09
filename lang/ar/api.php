@@ -25,4 +25,6 @@ return [
     'you must login first' => 'يجب عليك تسجيل الدخول',
     'not allowed to report your comment' => 'غير مسموح لك بالتقييم علي تعليقك',
     'not allowed to follow your comment' => 'غير مسموح لك بالمتابعة علي تعليقك',
+    'not allowed' => 'غير مسموح',
+    'added successfully' => 'تمت الاضافة بنجاح',
 ];
