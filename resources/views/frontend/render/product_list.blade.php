@@ -7,7 +7,7 @@
                 </div>
             @endforeach
         @else
-            <p>{{ __('No products found') }}</p>
+            <p>{{ __('web.No products found') }}</p>
         @endif
     </div>
 </div>

@@ -287,5 +287,6 @@ return [
     'Select Category' => 'اختر القسم',
     'Select Sub Category' => 'اختر القسم الفرعي',
     "related ads" => "منتجات مشابهة",
-    'See More' => 'اظهار المزيد'
+    'See More' => 'اظهار المزيد',
+    'No products found' => 'لاتوجد منتجات',
 ];

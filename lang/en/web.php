@@ -285,4 +285,5 @@ return [
     'No data found' => 'No data found',
     'Select Category' => 'Select Category',
     'Select Sub Category' => 'Select Sub Category',
+    'No products found' => 'No products found',
 ];
