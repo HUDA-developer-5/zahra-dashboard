@@ -137,7 +137,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
                 </button>
-                <h3 class="text-capitalize text-center fw-bold mb-0">Preference</h3>
+                <h3 class="text-capitalize text-center fw-bold mb-0">{{ trans('web.Preferences') }}</h3>
             </div>
             <div class="modal-body">
                 {{ html()->form('post', route('web.change_lang'))->open() }}
@@ -163,7 +163,7 @@
                     </select>
                 </div>
                 <div>
-                    <button class="btn btn-gradiant w-100" type="submit">Save</button>
+                    <button class="btn btn-gradiant w-100" type="submit">{{ trans('web.Save') }}</button>
                 </div>
                 {{ html()->form()->close() }}
             </div>

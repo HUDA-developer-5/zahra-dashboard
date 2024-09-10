@@ -38,6 +38,7 @@ return [
     "Country" => "Country",
     "Language" => "Language",
     "Save" => "Save",
+    "Preferences" => "Preferences",
     "Messages" => "Messages",
     "View More" => "View More",
     "Latest" => "Latest",
