@@ -910,6 +910,13 @@
 
 
     $(document).ready(function() {
+        $('#registerModal').on('hide.bs.modal', function () {
+            $(this).find('form')[0].reset();
+            $(this).find('input').val('');
+            $(this).find('.error-note').empty();
+        });
+
+
         // Function to clear error messages on input
         function clearErrorMessages() {
             $(this).closest('.form-input').find('.error-note').html('');
