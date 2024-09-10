@@ -16,5 +16,6 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'Please review the terms and conditions and agree to create an account.' => 'Please review the terms and conditions and agree to create an account.',
 
 ];
