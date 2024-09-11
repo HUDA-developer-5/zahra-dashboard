@@ -22,6 +22,7 @@ use App\Http\Requests\Web\SubscribeNewsletterWebRequest;
 use App\Http\Resources\Api\Advertisement\SimpleAdvertisementApiResource;
 use App\Http\Resources\Api\CityApiResource;
 use App\Http\Resources\Api\StateApiResource;
+use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\State;
@@ -39,6 +40,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use function PHPUnit\Framework\isFalse;
@@ -824,14 +826,22 @@ class HomeWebController extends Controller
 
     public function addComment(Request $request)
     {
-        $comment = UserAdsComment::create([
-            'advertisement_id' => $request->input('product_id'),
-            'parent' => $request->input('parent'),
-            'user_id' => auth('users')->user()->id,
-            'comment' => $request->input('comment')
-        ]);
+//        $comment = UserAdsComment::create([
+//            'advertisement_id' => $request->input('product_id'),
+//            'parent' => $request->input('parent'),
+//            'user_id' => auth('users')->user()->id,
+//            'comment' => $request->input('comment')
+//        ]);
+
+        DB::beginTransaction();
+        $advertisementService = new AdvertisementService();
+        $advertisement = $advertisementService->findActiveAds($request->input('product_id'));
+        $comment = $advertisementService->addComment(auth('users')->user(), $advertisement, $request->input('comment'), $request->get('parent'));
 
         $html = view('frontend.components.show_comment', ['comment' => $comment, 'commentClass' => 'comment-list border-bottom', 'canReply' => true])->render();
+
+        DB::commit();
+
         return response()->json(['success' => true, 'html' => $html]);
     }
 

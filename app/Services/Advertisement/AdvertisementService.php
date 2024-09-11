@@ -756,7 +756,7 @@ class AdvertisementService
         }
     }
 
-    public function addComment(User $user, Advertisement $advertisement, string $comment, $parent = null): void
+    public function addComment(User $user, Advertisement $advertisement, string $comment, $parent = null)
     {
         $related_id = null;
         if ($parent) {
@@ -782,6 +782,8 @@ class AdvertisementService
         if ($advertisement->user_id && $user->id !== $advertisement->user_id) {
             $userCommentService->sendNotificationToAdvertisementOwner($userComment);
         }
+
+        return $userComment;
     }
 
     public function getUserComment(int $userId, int $adsId, int $commentId)
