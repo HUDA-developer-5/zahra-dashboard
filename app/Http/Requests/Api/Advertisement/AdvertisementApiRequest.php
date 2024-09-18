@@ -33,8 +33,18 @@ class AdvertisementApiRequest extends FormRequest
             'price' => ['nullable', 'required_if:price_type,' . AdvertisementPriceTypeEnums::Fixed->value, 'integer', 'min:1'],
             'min_price' => ['nullable', 'required_if:price_type,' . AdvertisementPriceTypeEnums::OpenOffer->value, 'integer', 'min:1', 'lt:max_price'],
             'max_price' => ['nullable', 'required_if:price_type,' . AdvertisementPriceTypeEnums::OpenOffer->value, 'integer', 'min:1', 'gt:min_price'],
-            'phone_number' => 'required',
-            'whatsapp_number' => 'required',
+            'phone_number' => [
+                'required',
+                'string',
+                'min:11', // Ensures at least 11 digits
+                'regex:/^[0-9]+$/', // Ensures only digits
+            ],
+            'whatsapp_number' => [
+                'required',
+                'string',
+                'min:11', // Ensures at least 11 digits
+                'regex:/^[0-9]+$/', // Ensures only digits
+            ],
             'type' => ['required', Rule::enum(AdvertisementTypeEnums::class)],
             'currency' => 'required|exists:nationalities,currency',
             'nationality_id' => 'required|exists:nationalities,id',
