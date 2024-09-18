@@ -292,6 +292,7 @@ class AdvertisementService
             $createAdvertisementDTO->is_sold = false;
             $createAdvertisementDTO->status = $this->getAdsDefaultStatus($createAdvertisementDTO->type);
             $advertisement = $this->store($createAdvertisementDTO);
+            $advertisement->update(['currency' => $createAdvertisementDTO->currency]);
             // check ads type if premium return payment link
             if ($createAdvertisementDTO->type->value == AdvertisementTypeEnums::Premium->value) {
                 $advertisementCommissionDetailsDTO = $this->calculatePremiumAmount($createAdvertisementDTO->premium_amount);
