@@ -779,10 +779,15 @@ class AdvertisementService
         // send notification to all users who follow this comment
         $userCommentService = new UserCommentService();
         $userCommentService->sendNotificationToCommentFollowers($related_id != null ? UserAdsComment::find($related_id) : $userComment);
+
+        if ($parent) {
+            $userCommentService->sendNotificationForUserAboutReplyComment(UserAdsComment::find($parent));
+        }
         // skip notification for advertisement owner
         if ($advertisement->user_id && $user->id !== $advertisement->user_id) {
             $userCommentService->sendNotificationToAdvertisementOwner($userComment);
         }
+
 
         return $userComment;
     }

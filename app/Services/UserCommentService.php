@@ -39,6 +39,30 @@ class UserCommentService
         }
     }
 
+    public function sendNotificationForUserAboutReplyComment(UserAdsComment $userAdsComment): void
+    {
+        // save notification
+        (new NotificationService())->save(CreateNotificationDTO::from([
+            'user_id' => $userAdsComment->user_id,
+            'target_user_id' => $userAdsComment->user_id,
+            'action' => NotificationActionEnums::FollowComment->value,
+            'type' => NotificationTypeEnums::Push->value,
+            'title_ar' => $userAdsComment->user->name,
+            'title_en' => $userAdsComment->user->name,
+            'content_ar' => 'ردا على تعليقك: "' . $userAdsComment->comment . '"',
+            'content_en' => 'Replied to your comment: "' . $userAdsComment->comment . '"',
+            'payload' => [
+                'user_id' => $userAdsComment->user_id,
+                'comment_id' => $userAdsComment->id,
+                'advertisement_id' => $userAdsComment->advertisement_id,
+                'comment' => $userAdsComment->comment,
+            ],
+            'comment_id' => $userAdsComment->id,
+            'advertisement_id' => $userAdsComment->advertisement_id,
+        ]));
+
+    }
+
     public function sendNotificationToAdvertisementOwner(UserAdsComment $userAdsComment): void
     {
         (new NotificationService())->save(CreateNotificationDTO::from([
