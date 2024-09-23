@@ -102,7 +102,11 @@ class UserApiController extends Controller
     {
         try {
             $user = auth('api')->user();
-            $currency = $user->default_currency;
+//            $currency = $user->default_currency;
+
+            $country_key = request()->header('country-key', 'SA');
+            $currency = $country_key == 'SA' ? 'SAR' : ($country_key == 'EG' ? 'EGP' : 'AED');
+
             $returnPaymentTransactionDTO = (new PaymentService())->chargeWallet($user, $request->get('amount'), $request->get('payment_method'), $currency);
 
             if ($returnPaymentTransactionDTO->status->value == PaymentTransactionStatusEnum::Completed->value) {
