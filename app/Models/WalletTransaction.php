@@ -21,6 +21,7 @@ class WalletTransaction extends Model
         'amount',
         'type',
         'payment_transaction_id',
+        'currency',
     ];
 
     public function user()

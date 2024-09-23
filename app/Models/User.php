@@ -40,7 +40,11 @@ class User extends Authenticatable
         'nationality_id',
         'default_language',
         'balance',
-        'provider', 'provider_id',
+        'provider',
+        'provider_id',
+        'balance_egp',
+        'balance_sar',
+        'balance_aed',
     ];
 
     public static string $destination_path = 'users';

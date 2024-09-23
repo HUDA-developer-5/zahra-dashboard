@@ -17,7 +17,7 @@
                                 <div class="d-flex flex-wrap justify-content-between align-items-center details">
                                     <div class="info">
                                         <h6 class="fw-400">{{ trans('web.My Balance') }}</h6>
-                                        <p class="fs-5 fw-bold mb-0">{{ auth('users')->user()->balance ?? 0 }} {{ \Illuminate\Support\Str::upper(auth('users')->user()->default_currency) }}</p>
+                                        <p class="fs-5 fw-bold mb-0">{{ $user_balance ?? 0 }} {{ $currency }}</p>
                                     </div>
                                     <div>
                                         <a href="javascript:void(0)"
@@ -72,8 +72,8 @@
                                         <button class="btn btn-gradiant btn-confirm fw-bold confirmButton">{{ trans('web.Confirm') }}</button>
                                     @else
                                         <button data-bs-toggle="modal"
-                                           data-bs-target="#addNewCardModal"
-                                           class="btn btn-gradiant btn-confirm fw-bold">
+                                                data-bs-target="#addNewCardModal"
+                                                class="btn btn-gradiant btn-confirm fw-bold">
                                             <i class="fas fa-plus"></i>
                                             <span>{{ trans('web.Add new Card') }}</span>
                                         </button>
@@ -124,9 +124,9 @@
                     @endif
                     <div class="d-flex gap-2">
                         <button class="btn btn-gradiant py-3 w-50"><span
-                                    class="fw-bold">{{ trans('web.Confirm') }}</span></button>
+                                class="fw-bold">{{ trans('web.Confirm') }}</span></button>
                         <a class="btn btn-border py-3 w-50" data-bs-dismiss="modal" aria-label="Close"><span
-                                    class="fw-bold">{{ trans('web.Cancel') }}</span> </a>
+                                class="fw-bold">{{ trans('web.Cancel') }}</span> </a>
                     </div>
                     {{ html()->form()->close() }}
                 </div>
@@ -144,15 +144,22 @@
             $('.confirmButton').on('click', function () {
                 // check if the payment method is selected
                 if ($('input[name="payment_method"]:checked').length == 0) {
-                    $('#rechargeConfirmModal').modal('hide');
+
+                    var myModal = new bootstrap.Modal(document.getElementById('rechargeConfirmModal'));
+                    myModal.hide();
+
+                    // $('#rechargeConfirmModal').modal('hide');
                     alert('{{ trans('web.Please select a payment method') }}');
                 } else {
                     $('#paymentMethodInput').val($('input[name="payment_method"]:checked').val());
-                    $('#rechargeConfirmModal').modal('show');
+                    // $('#rechargeConfirmModal').modal('show');
+
+                    var myModal = new bootstrap.Modal(document.getElementById('rechargeConfirmModal'));
+                    myModal.show();
                 }
             })
             @if($errors->wallet->count())
-                $('#rechargeConfirmModal').modal('show');
+            $('#rechargeConfirmModal').modal('show');
             @endif
         });
     </script>

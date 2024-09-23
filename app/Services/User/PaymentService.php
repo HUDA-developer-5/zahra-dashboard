@@ -37,15 +37,19 @@ class PaymentService
         // if the payment is successful, update user wallet balance
         if ($returnPaymentTransactionDTO->status->value == PaymentTransactionStatusEnum::Completed->value) {
             $walletTransactionService = new WalletTransactionService();
-            $user = $walletTransactionService->addWalletBalance($user, $amount);
+            $user = $walletTransactionService->addWalletBalance($user, $amount,$currency);
+
+            $user_balance = $currency == 'SAR' ? $user->balance_sar : ($currency == 'EGP' ? $user->balance_egp : $user->balance_aed);
+
             // add wallet transaction
             $walletTransactionService->createWalletTransaction(CreateWalletTransactionDTO::from([
                 'user_id' => $user->id,
-                'current_balance' => $user->balance,
+                'current_balance' => $user_balance,
                 'amount' => $amount,
-                'previous_balance' => $user->balance - $amount,
+                'previous_balance' => $user_balance - $amount,
                 'type' => WalletTransactionTypesEnum::Add,
-                'payment_transaction_id' => $paymentTransaction->id
+                'payment_transaction_id' => $paymentTransaction->id,
+                'currency' => $currency
             ]));
         }
         return $returnPaymentTransactionDTO;

@@ -25,6 +25,7 @@ use App\Http\Resources\Api\StateApiResource;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Nationality;
 use App\Models\State;
 use App\Models\UserAdsComment;
 use App\Services\Advertisement\AdvertisementService;
@@ -428,7 +429,12 @@ class HomeWebController extends Controller
         $user = auth('users')->user();
         $cards = $userService->listUserCards($user);
         $intent = $userService->createSetupIntent($user);
-        return view('frontend.profile.wallet')->with(['intent' => $intent->client_secret, 'cards' => $cards]);
+
+        $country_id = session()->get('country_id') ?? 2;
+        $currency = Nationality::where('id', $country_id)->first()->currency;
+        $user_balance = $currency == 'SAR' ? $user->balance_sar : ( $currency== 'EGP' ? $user->balance_egp : $user->balance_aed);
+
+        return view('frontend.profile.wallet')->with(['intent' => $intent->client_secret, 'cards' => $cards, 'user_balance' => $user_balance, 'currency' => $currency]);
     }
 
     public function myCommission()

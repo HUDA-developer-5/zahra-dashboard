@@ -81,6 +81,11 @@ class UserRegisterWebController extends Controller
             }
             Auth::guard('users')->login($user, remember: true);
             toastr()->success(__("web.welcome") . " " . $user->name);
+
+            // Set country session SAR as default
+            $country = Nationality::where('currency','SAR')->first();
+            Session::put('country_id', $country->id);
+
             return redirect()->route('web.home');
         } catch (\Exception|\TypeError $exception) {
             Log::error($exception->getMessage());

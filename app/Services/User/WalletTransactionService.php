@@ -15,9 +15,18 @@ class WalletTransactionService
         return $user;
     }
 
-    public function addWalletBalance(User $user, $amount): User
+    public function addWalletBalance(User $user, $amount, $currency): User
     {
-        $user->balance = $user->balance + $amount;
+        if ($currency == 'SAR') {
+            $user->balance_sar = $user->balance_sar + $amount;
+        } elseif ($currency == 'EGP') {
+            $user->balance_egp = $user->balance_egp + $amount;
+        } else{
+            $user->balance_aed = $user->balance_aed + $amount;
+        }
+
+//        $user->balance = $user->balance + $amount;
+
         $user->save();
         return $user;
     }
@@ -33,6 +42,7 @@ class WalletTransactionService
         $walletTransaction->amount = $createWalletTransactionDTO->amount;
         $walletTransaction->type = $createWalletTransactionDTO->type->value;
         $walletTransaction->payment_transaction_id = $createWalletTransactionDTO->payment_transaction_id;
+        $walletTransaction->currency = $createWalletTransactionDTO->currency;
         $walletTransaction->save();
     }
 }

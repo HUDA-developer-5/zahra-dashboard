@@ -19,6 +19,7 @@ use App\Http\Requests\Api\RechargeWalletRequest;
 use App\Http\Resources\Api\CityApiResource;
 use App\Http\Resources\Api\StateApiResource;
 use App\Models\City;
+use App\Models\Nationality;
 use App\Models\State;
 use App\Services\Advertisement\AdvertisementService;
 use App\Services\CategoryService;
@@ -49,7 +50,10 @@ class PaymentWebController extends Controller
     public function submitChargeWallet(RechargeWalletRequest $request)
     {
         $user = auth('users')->user();
-        $currency = $user->default_currency;
+//        $currency = $user->default_currency;
+        $country_id = session()->get('country_id') ?? 2;
+        $currency = Nationality::where('id', $country_id)->first()->currency;
+
         $returnPaymentTransactionDTO = (new PaymentService())->chargeWallet($user, $request->get('amount'), $request->get('payment_method'), $currency);
 
         if ($returnPaymentTransactionDTO->status->value == PaymentTransactionStatusEnum::Completed->value) {

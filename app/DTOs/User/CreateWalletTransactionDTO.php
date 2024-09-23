@@ -19,4 +19,6 @@ class CreateWalletTransactionDTO extends Data
 
     public string $payment_transaction_id;
 
+    public string $currency;
+
 }
