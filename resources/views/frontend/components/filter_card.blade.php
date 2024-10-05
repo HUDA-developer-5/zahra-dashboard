@@ -90,11 +90,25 @@
                 value="year" {{ request('created_at') == "year" ? 'selected' : '' }}> {{ trans('web.year') }}</option>
         </select>
     </div>
+
     @auth('users')
-        <div>
-            <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#mapModal" class="map"><i
-                    class="far fa-map"></i></a>
-        </div>
+            <!-- Additional Filter for Featured Ads Map Button -->
+            @if($type === 'featured')
+                <div>
+                    <a href="javascript:void()" data-bs-toggle="modal"  data-bs-target="#featureMapModal" class="map"><i
+                            class="far fa-map"></i></a>
+                </div>
+            @endif
+
+            <!-- Additional Filter for Latest Ads Map Button -->
+            @if($type === 'latest')
+                <div>
+                    <a href="javascript:void()" data-bs-toggle="modal"  data-bs-target="#mapModalLatest" class="map"><i
+                            class="far fa-map"></i></a>
+                </div>
+            @endif
+
+
     @endauth
 </div>
 {{ html()->form()->close() }}

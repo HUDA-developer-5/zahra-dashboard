@@ -1,11 +1,20 @@
 @extends('frontend.layouts.master')
 
 @section("style")
-    {{--    <style>--}}
-    {{--        .owl-item.active {--}}
-    {{--            width: 100px !important;--}}
-    {{--        }--}}
-    {{--    </style>--}}
+        <style>
+            /*.owl-item.active {*/
+            /*    width: 100px !important;*/
+            /*}*/
+            .custom-marker-label {
+                background-color: #efecec; /* Red background */
+                padding: 5px 10px; /* Padding to make it a box */
+                border-radius: 3px; /* Rounded corners */
+                font-size: 12px; /* Font size */
+                border: 1px solid #000000; /* Optional: Border for the box */
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Optional: Add shadow for 3D effect */
+            }
+
+        </style>
 @endsection
 
 @section('content')
@@ -89,13 +98,13 @@
             </div>
         </div>
 
+        <!-- Featured Ads Section -->
         <div id="featured-ads" class="z-ads-section py-4">
             <div class="container">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
                     <h5 class="fw-bold">{{ trans('web.Featured') }}</h5>
                     @includeIf('frontend.components.filter_card', ['parentCategories' => $parentCategories, 'mapId' => 'featureMapModal', 'type' => 'featured'])
                 </div>
-                {{--                @if($featured->count())--}}
                 <div class="ads-list-sec">
                     <div class="row" id="featured_ads"></div>
                 </div>
@@ -103,7 +112,7 @@
                     <a href="{{ route('web.products.search', ['is_featured' => 1]) }}"
                        class="text-primary fw-bold">{{ trans('web.View More') }}</a>
                 </div>
-                {{--                @endif--}}
+
             </div>
         </div>
 
@@ -131,13 +140,13 @@
             </div>
         @endif
 
+        <!-- Latest Ads Section -->
         <div id="latest-ads" class="z-ads-section py-4">
             <div class="container">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
                     <h5 class="fw-bold">{{ trans('web.Latest') }}</h5>
                     @includeIf('frontend.components.filter_card', ['parentCategories' => $parentCategories, 'mapId' => 'mapModalLatest', 'type' => 'latest'])
                 </div>
-                {{--                @if($latest->count())--}}
                 <div class="ads-list-sec">
                     <div class="row" id="latest_ads"></div>
                 </div>
@@ -145,11 +154,12 @@
                     <a href="{{ route('web.products.search') }}"
                        class="text-primary fw-bold">{{ trans('web.View More') }}</a>
                 </div>
-                {{--                @endif--}}
+
             </div>
         </div>
 
     </div>
+
 @stop
 
 @section("script")
@@ -226,12 +236,12 @@
         //     });
         // });
 
-        function initMap() {
-            // Initialize the map
-            var mapFeature = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 30.033333, lng: 31.233334},
-                zoom: 10 // Set the initial zoom level
-            });
+        // function initMap() {
+        //     // Initialize the map
+        //     var mapFeature = new google.maps.Map(document.getElementById('map'), {
+        //         center: {lat: 30.033333, lng: 31.233334},
+        //         zoom: 10 // Set the initial zoom level
+        //     });
 
             // var mapLatest = new google.maps.Map(document.getElementById('mapLatest'), {
             //     center: {lat: 30.033333, lng: 31.233334},
@@ -263,7 +273,104 @@
             {{--            @endif--}}
             {{--            @endforeach--}}
             {{--            @endif--}}
+        // }
+
+
+    </script>
+
+    <script>
+        let featuredMap, latestMap;
+        let featuredMarkers = [];
+        let latestMarkers = [];
+
+        function initMap() {
+            // Initialize the featured ads map
+            featuredMap = new google.maps.Map(document.getElementById('mapFeature'), {
+                center: { lat: 30.033333, lng: 31.233334 }, // Default center
+                zoom: 10
+            });
+
+            // Initialize the latest ads map
+            latestMap = new google.maps.Map(document.getElementById('mapLatest'), {
+                center: { lat: 30.033333, lng: 31.233334 }, // Default center
+                zoom: 10
+            });
         }
+
+        // Clear all markers from the map
+        function clearMarkers(markersArray) {
+            for (let marker of markersArray) {
+                marker.setMap(null);
+            }
+            markersArray = [];
+        }
+
+        // Add markers for ads on the map
+        function addMarkersForAds(map, adsData, markersArray) {
+            clearMarkers(markersArray);
+            adsData.forEach(function (ad) {
+                if (ad.latitude && ad.longitude && !isNaN(ad.latitude) && !isNaN(ad.longitude)) {
+                    console.log('ad latitude:', ad.latitude, 'longitude:', ad.longitude);
+                    let marker = new google.maps.Marker({
+                        position: { lat: +ad.latitude, lng: +ad.longitude },
+                        map: map,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE, // You can use custom SVG or other shapes too
+                            scale: 0, // No default marker
+                        },
+                        label: {
+                            text: `$${ad.price}`, // Display price as label
+                            color: '#c70707', // White text color
+                            fontWeight: 'bold',
+                            className: 'custom-marker-label' // CSS class for custom styling
+                        }
+                    });
+
+
+                    markersArray.push(marker);
+                } else {
+                    console.warn('Invalid latitude or longitude for ad:', ad);
+                }
+            });
+        }
+
+        // Fetch and render featured ads with map markers
+        function fetchFeaturedAds() {
+            fetch("{{ route('web.get_featured_ads') }}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('featured_ads').innerHTML = data.featuredAdsHtml;
+                    addMarkersForAds(featuredMap, data.adsForMap, featuredMarkers);
+                })
+                .catch(error => console.error('Error fetching featured ads:', error));
+        }
+
+        // Fetch and render latest ads with map markers
+        function fetchLatestAds() {
+            fetch("{{ route('web.get_latest_ads') }}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('latest_ads').innerHTML = data.latestAdsHtml;
+                    addMarkersForAds(latestMap, data.adsForMap, latestMarkers);
+                })
+                .catch(error => console.error('Error fetching latest ads:', error));
+        }
+
+        // Initialize maps and fetch ads when the page is ready
+        document.addEventListener('DOMContentLoaded', function () {
+            initMap(); // Initialize maps
+            // fetchFeaturedAds(); // Fetch featured ads and populate map
+            // fetchLatestAds(); // Fetch latest ads and populate map
+        });
+
+        // When the modal is shown, trigger the resize event to make sure the maps are properly displayed
+        $('#featureMapModal').on('shown.bs.modal', function () {
+            google.maps.event.trigger(featuredMap, 'resize');
+        });
+
+        $('#mapModalLatest').on('shown.bs.modal', function () {
+            google.maps.event.trigger(latestMap, 'resize');
+        });
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDl02ktqMdvzEwH-_oa7RREoI8Gr-6c9eQ&callback=initMap"
@@ -335,6 +442,12 @@
                     .then(data => {
                         container.innerHTML = '';
                         container.insertAdjacentHTML('beforeend', data[`${type}AdsHtml`]);
+                        // Check the type and execute the corresponding addMarkersForAds function
+                        if (type === 'featured') {
+                            addMarkersForAds(featuredMap, data.adsForMap, featuredMarkers);
+                        } else if (type === 'latest') {
+                            addMarkersForAds(latestMap, data.adsForMap, latestMarkers);
+                        }
                     })
                     .catch(error => {
                         console.error('Error fetching ads:', error);

@@ -86,17 +86,39 @@ class HomeWebController extends Controller
     public function getFeaturedAds(Request $request)
     {
         $ads = (new AdvertisementService())->filterAdvertisements($request, AdvertisementTypeEnums::Premium->value);
+
+        // Prepare ad data for the map (id, latitude, longitude, price)
+        $adsForMap = $ads->map(function ($ad) {
+            return [
+                'id' => $ad->id,
+                'latitude' => $ad->latitude,
+                'longitude' => $ad->longitude,
+                'price' => $ad->price,
+            ];
+        });
+
         $featuredAdsHtml = view('frontend.render.featuredAds', ['featuredAds' => $ads])->render();
 
-        return response()->json(['featuredAdsHtml' => $featuredAdsHtml]);
+        return response()->json(['featuredAdsHtml' => $featuredAdsHtml, 'adsForMap' => $adsForMap]);
     }
 
     public function getLatestAds(Request $request)
     {
         $ads = (new AdvertisementService())->filterAdvertisements($request, AdvertisementTypeEnums::Free->value);
+
+        // Prepare ad data for the map (id, latitude, longitude, price)
+        $adsForMap = $ads->map(function ($ad) {
+            return [
+                'id' => $ad->id,
+                'latitude' => $ad->latitude,
+                'longitude' => $ad->longitude,
+                'price' => $ad->price,
+            ];
+        });
+
         $latestAdsHtml = view('frontend.render.latestAds', ['latestAds' => $ads])->render();
 
-        return response()->json(['latestAdsHtml' => $latestAdsHtml]);
+        return response()->json(['latestAdsHtml' => $latestAdsHtml, 'adsForMap' => $adsForMap]);
     }
 
     public function changeLanguage(Request $request)

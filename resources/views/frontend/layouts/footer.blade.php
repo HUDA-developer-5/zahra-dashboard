@@ -667,95 +667,136 @@
         </div>
     </div>
 @endif
-<div class="modal main-modal mapModal fade" id="mapModal" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content border-0">
-            <div class="modal-header justify-content-center border-0 p-0">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                {{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
-                {{--                    <div class="input-txt">--}}
-                {{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
-                {{--                        <input type="text" placeholder="Search">--}}
-                {{--                    </div>--}}
-                {{--                    <div class="active">All</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                    <div>shops for rent</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                    <div>shops for rent</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                </div>--}}
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
+
+
+
+{{--<div class="modal main-modal mapModal fade" id="mapModal" aria-hidden="true" tabindex="-1">--}}
+{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
+{{--        <div class="modal-content border-0">--}}
+{{--            <div class="modal-header justify-content-center border-0 p-0">--}}
+{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body p-0">--}}
+{{--                --}}{{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
+{{--                --}}{{--                    <div class="input-txt">--}}
+{{--                --}}{{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
+{{--                --}}{{--                        <input type="text" placeholder="Search">--}}
+{{--                --}}{{--                    </div>--}}
+{{--                --}}{{--                    <div class="active">All</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                    <div>shops for rent</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                    <div>shops for rent</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                </div>--}}
+{{--                <div id="map"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--<div class="modal main-modal featureMapModal fade" id="featureMapModal" aria-hidden="true" tabindex="-1">--}}
+{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
+{{--        <div class="modal-content border-0">--}}
+{{--            <div class="modal-header justify-content-center border-0 p-0">--}}
+{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body p-0">--}}
+{{--                --}}{{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
+{{--                --}}{{--                    <div class="input-txt">--}}
+{{--                --}}{{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
+{{--                --}}{{--                        <input type="text" placeholder="Search">--}}
+{{--                --}}{{--                    </div>--}}
+{{--                --}}{{--                    <div class="active">All</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                    <div>shops for rent</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                    <div>shops for rent</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                </div>--}}
+{{--                <div id="mapFeature"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--<div class="modal main-modal mapModalLatest fade" id="mapModalLatest" aria-hidden="true" tabindex="-1">--}}
+{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
+{{--        <div class="modal-content border-0">--}}
+{{--            <div class="modal-header justify-content-center border-0 p-0">--}}
+{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body p-0">--}}
+{{--                --}}{{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
+{{--                --}}{{--                    <div class="input-txt">--}}
+{{--                --}}{{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
+{{--                --}}{{--                        <input type="text" placeholder="Search">--}}
+{{--                --}}{{--                    </div>--}}
+{{--                --}}{{--                    <div class="active">All</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                    <div>shops for rent</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                    <div>shops for rent</div>--}}
+{{--                --}}{{--                    <div>Fella</div>--}}
+{{--                --}}{{--                    <div>Lands for sale</div>--}}
+{{--                --}}{{--                </div>--}}
+{{--                <div id="mapLatest"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+
+
+
+
+<!-- Modal for Featured Ads Map -->
 <div class="modal main-modal featureMapModal fade" id="featureMapModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0">
-            <div class="modal-header justify-content-center border-0 p-0">
+            <div class="modal-header justify-content-center border-0">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
                 </button>
             </div>
-            <div class="modal-body p-0">
-                {{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
-                {{--                    <div class="input-txt">--}}
-                {{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
-                {{--                        <input type="text" placeholder="Search">--}}
-                {{--                    </div>--}}
-                {{--                    <div class="active">All</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                    <div>shops for rent</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                    <div>shops for rent</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                </div>--}}
-                <div id="mapFeature"></div>
+            <div class="modal-body">
+                <div id="mapFeature" style="height: 500px;"></div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal for Latest Ads Map -->
 <div class="modal main-modal mapModalLatest fade" id="mapModalLatest" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0">
-            <div class="modal-header justify-content-center border-0 p-0">
+            <div class="modal-header justify-content-center border-0">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
                 </button>
             </div>
-            <div class="modal-body p-0">
-                {{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
-                {{--                    <div class="input-txt">--}}
-                {{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
-                {{--                        <input type="text" placeholder="Search">--}}
-                {{--                    </div>--}}
-                {{--                    <div class="active">All</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                    <div>shops for rent</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                    <div>shops for rent</div>--}}
-                {{--                    <div>Fella</div>--}}
-                {{--                    <div>Lands for sale</div>--}}
-                {{--                </div>--}}
-                <div id="mapLatest"></div>
+            <div class="modal-body">
+                <div id="mapLatest" style="height: 500px;"></div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script defer src="https://fastly.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
