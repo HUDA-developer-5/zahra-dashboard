@@ -15,7 +15,11 @@ class CityApiResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $locale = Session::get('lang') ?? 'en'; // Gets the current locale
+//        $locale = $request->header('Accept-Language') !== null ? $request->header('Accept-Language') : (Session::get('lang') ?? 'en');
+
+        $locale = Session::get('lang') ? Session::get('lang') : $request->header('Accept-Language', 'en');
+
+//        $locale = Session::get('lang') ?? 'en'; // Gets the current locale
         $name = $this->getTranslation('name', $locale);
 
         return [
