@@ -16,8 +16,8 @@
                     </div>
                     <div class="d-flex align-items-center gap-3 mb-4">
                         <span class="icon"><img
-                                    src="{{ asset('frontend/assets/images/icons/sms-tracking.svg') }}"
-                                    alt="sms icon" loading="lazy"></span>
+                                src="{{ asset('frontend/assets/images/icons/sms-tracking.svg') }}"
+                                alt="sms icon" loading="lazy"></span>
                         <span>Zahra@gmail.com</span>
                     </div>
                     <div>
@@ -429,14 +429,14 @@
                 <div class="form-input mb-3">
                     <input type="text" id="register-name" name="name" class="form-control username"
                            value="{{ old('name') }}"
-                           placeholder="{{ trans('web.Name') }}" >
+                           placeholder="{{ trans('web.Name') }}">
                     <label class="form-label" for="register-name">{{ trans('web.Name') }}</label>
                     <div class="error-note" id="nameError"></div>
                 </div>
                 <div class="form-input mb-3">
                     <input type="text" id="register-email" name="email" class="form-control email"
                            value="{{ old('email') }}"
-                           placeholder="{{ trans('web.Email') }}" >
+                           placeholder="{{ trans('web.Email') }}">
                     <label class="form-label" for="register-email">{{ trans('web.Email') }}</label>
                     <div class="error-note" id="emailError"></div>
                 </div>
@@ -450,7 +450,7 @@
                 <div class="form-input mb-3">
                     <div>
                         <input type="password" id="register-password" name="password"
-                               class="form-control password" placeholder="{{ trans('web.Password') }}" >
+                               class="form-control password" placeholder="{{ trans('web.Password') }}">
                         <label class="form-label" for="register-password">{{ trans('web.Password') }}</label>
                         <div class="icon password-show"><i class="far fa-eye"></i></div>
                     </div>
@@ -460,7 +460,7 @@
                     <div>
                         <input type="password" id="register-confirm-password" name="password_confirmation"
                                class="form-control password2" placeholder="{{ trans('web.Confirm Password') }}"
-                               >
+                        >
                         <label class="form-label" for="register-password">{{ trans('web.Confirm Password') }}</label>
                         <div class="icon password-show"><i class="far fa-eye"></i></div>
                     </div>
@@ -469,7 +469,7 @@
                 <div class="mb-3">
                     <div class="validate-input form-check order-2 order-sm-1">
                         <input class="form-check-input checkInput" name="remember" type="checkbox" value="1"
-                               id="agree-1" >
+                               id="agree-1">
                         <label class="form-check-label fw-bold" for="flexCheckChecked-1">
                             {{ trans('web.By signing up, I agree with the') }}
                             <a data-bs-toggle="modal" href="#registerTermsModal" role="button"
@@ -479,7 +479,8 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-gradiant fw-bold w-100" type="submit">{{ trans('web.Create an account') }}</button>
+                    <button class="btn btn-gradiant fw-bold w-100"
+                            type="submit">{{ trans('web.Create an account') }}</button>
                 </div>
                 {{ html()->form()->close() }}
                 <div class="divider"><span>OR</span></div>
@@ -637,7 +638,8 @@
                         <div class="icon"><i class="far fa-eye"></i></div>
                         @if($errors->resetPassword->has("password"))
                             <div class="error-note">
-                                <span class="help-block text-danger">{{ $errors->resetPassword->first("password") }}</span>
+                                <span
+                                    class="help-block text-danger">{{ $errors->resetPassword->first("password") }}</span>
                             </div>
                         @endif
                     </div>
@@ -648,7 +650,8 @@
                         <div class="icon"><i class="far fa-eye-slash"></i></div>
                         @if($errors->resetPassword->has("password_confirmation"))
                             <div class="error-note">
-                                <span class="help-block text-danger">{{ $errors->resetPassword->first("password_confirmation") }}</span>
+                                <span
+                                    class="help-block text-danger">{{ $errors->resetPassword->first("password_confirmation") }}</span>
                             </div>
                         @endif
                     </div>
@@ -701,101 +704,102 @@
 {{--    </div>--}}
 {{--</div>--}}
 
-{{--<div class="modal main-modal featureMapModal fade" id="featureMapModal" aria-hidden="true" tabindex="-1">--}}
-{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
-{{--        <div class="modal-content border-0">--}}
-{{--            <div class="modal-header justify-content-center border-0 p-0">--}}
-{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
-{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
-{{--                </button>--}}
-{{--            </div>--}}
-{{--            <div class="modal-body p-0">--}}
-{{--                --}}{{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
-{{--                --}}{{--                    <div class="input-txt">--}}
-{{--                --}}{{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
-{{--                --}}{{--                        <input type="text" placeholder="Search">--}}
-{{--                --}}{{--                    </div>--}}
-{{--                --}}{{--                    <div class="active">All</div>--}}
-{{--                --}}{{--                    <div>Fella</div>--}}
-{{--                --}}{{--                    <div>Lands for sale</div>--}}
-{{--                --}}{{--                    <div>shops for rent</div>--}}
-{{--                --}}{{--                    <div>Fella</div>--}}
-{{--                --}}{{--                    <div>Lands for sale</div>--}}
-{{--                --}}{{--                    <div>shops for rent</div>--}}
-{{--                --}}{{--                    <div>Fella</div>--}}
-{{--                --}}{{--                    <div>Lands for sale</div>--}}
-{{--                --}}{{--                </div>--}}
-{{--                <div id="mapFeature"></div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
-
-{{--<div class="modal main-modal mapModalLatest fade" id="mapModalLatest" aria-hidden="true" tabindex="-1">--}}
-{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
-{{--        <div class="modal-content border-0">--}}
-{{--            <div class="modal-header justify-content-center border-0 p-0">--}}
-{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
-{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
-{{--                </button>--}}
-{{--            </div>--}}
-{{--            <div class="modal-body p-0">--}}
-{{--                --}}{{--                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">--}}
-{{--                --}}{{--                    <div class="input-txt">--}}
-{{--                --}}{{--                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>--}}
-{{--                --}}{{--                        <input type="text" placeholder="Search">--}}
-{{--                --}}{{--                    </div>--}}
-{{--                --}}{{--                    <div class="active">All</div>--}}
-{{--                --}}{{--                    <div>Fella</div>--}}
-{{--                --}}{{--                    <div>Lands for sale</div>--}}
-{{--                --}}{{--                    <div>shops for rent</div>--}}
-{{--                --}}{{--                    <div>Fella</div>--}}
-{{--                --}}{{--                    <div>Lands for sale</div>--}}
-{{--                --}}{{--                    <div>shops for rent</div>--}}
-{{--                --}}{{--                    <div>Fella</div>--}}
-{{--                --}}{{--                    <div>Lands for sale</div>--}}
-{{--                --}}{{--                </div>--}}
-{{--                <div id="mapLatest"></div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
-
-
-
-
-
-<!-- Modal for Featured Ads Map -->
 <div class="modal main-modal featureMapModal fade" id="featureMapModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0">
-            <div class="modal-header justify-content-center border-0">
+            <div class="modal-header justify-content-center border-0 p-0">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-0">
+                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">
+                    <div class="input-txt">
+                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>
+                        <input type="text" placeholder="Search">
+                    </div>
+                    <div class="active">All</div>
+                    <div>Fella</div>
+                    <div>Lands for sale</div>
+                    <div>shops for rent</div>
+                    <div>Fella</div>
+                    <div>Lands for sale</div>
+                    <div>shops for rent</div>
+                    <div>Fella</div>
+                    <div>Lands for sale</div>
+                </div>
                 <div id="mapFeature" style="height: 500px;"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal for Latest Ads Map -->
 <div class="modal main-modal mapModalLatest fade" id="mapModalLatest" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0">
-            <div class="modal-header justify-content-center border-0">
+            <div class="modal-header justify-content-center border-0 p-0">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-0">
+                                <div id="map_tabs" class="d-flex flex-wrap justify-content-between">
+                                    <div class="input-txt">
+                                        <span class="icon"><i class="fas fa-search fa-xs"></i></span>
+                                        <input type="text" placeholder="Search">
+                                    </div>
+                                    <div class="active">All</div>
+                                    <div>Fella</div>
+                                    <div>Lands for sale</div>
+                                    <div>shops for rent</div>
+                                    <div>Fella</div>
+                                    <div>Lands for sale</div>
+                                    <div>shops for rent</div>
+                                    <div>Fella</div>
+                                    <div>Lands for sale</div>
+                                </div>
                 <div id="mapLatest" style="height: 500px;"></div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+<!-- Modal for Featured Ads Map -->
+{{--<div class="modal main-modal featureMapModal fade" id="featureMapModal" aria-hidden="true" tabindex="-1">--}}
+{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
+{{--        <div class="modal-content border-0">--}}
+{{--            <div class="modal-header justify-content-center border-0">--}}
+{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                <div id="mapFeature" style="height: 500px;"></div>--}}
+
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+<!-- Modal for Latest Ads Map -->
+{{--<div class="modal main-modal mapModalLatest fade" id="mapModalLatest" aria-hidden="true" tabindex="-1">--}}
+{{--    <div class="modal-dialog modal-xl modal-dialog-centered">--}}
+{{--        <div class="modal-content border-0">--}}
+{{--            <div class="modal-header justify-content-center border-0">--}}
+{{--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                    <img src="{{ asset('frontend/assets/images/icons/close.svg') }}" alt="close image">--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--            <div class="modal-body">--}}
+{{--                <div id="mapLatest" style="height: 500px;"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -950,7 +954,7 @@
     // });
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#registerModal').on('hide.bs.modal', function () {
             $(this).find('form')[0].reset();
             $(this).find('input').val('');
@@ -968,7 +972,7 @@
 
 
         // AJAX form submission
-        $('#registerForm').on('submit', function(event) {
+        $('#registerForm').on('submit', function (event) {
             event.preventDefault();
 
             // Clear previous error messages
@@ -978,11 +982,11 @@
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
                 data: $(this).serialize(),
-                success: function(response) {
+                success: function (response) {
                     // Redirect to home on success
                     window.location.href = response.redirect;
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     // Handle validation errors
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;

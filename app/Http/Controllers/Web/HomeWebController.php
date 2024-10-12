@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Enums\Advertisement\AdvertisementPriceTypeEnums;
+use App\Enums\Advertisement\AdvertisementStatusEnums;
 use App\Enums\Advertisement\AdvertisementTypeEnums;
 use App\Enums\Advertisement\OfferStatusEnums;
 use App\Enums\ChatTypeEnums;
@@ -88,7 +89,10 @@ class HomeWebController extends Controller
         $ads = (new AdvertisementService())->filterAdvertisements($request, AdvertisementTypeEnums::Premium->value);
 
         // Prepare ad data for the map (id, latitude, longitude, price)
-        $adsForMap = $ads->map(function ($ad) {
+        $realStateADS = Advertisement::where('status', '=', AdvertisementStatusEnums::Active->value)
+            ->where('category_id', '=', 2)
+            ->get();
+        $adsForMap = $realStateADS->map(function ($ad) {
             return [
                 'id' => $ad->id,
                 'latitude' => $ad->latitude,
@@ -107,7 +111,10 @@ class HomeWebController extends Controller
         $ads = (new AdvertisementService())->filterAdvertisements($request, AdvertisementTypeEnums::Free->value);
 
         // Prepare ad data for the map (id, latitude, longitude, price)
-        $adsForMap = $ads->map(function ($ad) {
+        $realStateADS = Advertisement::where('status', '=', AdvertisementStatusEnums::Active->value)
+            ->where('category_id', '=', 2)
+            ->get();
+        $adsForMap = $realStateADS->map(function ($ad) {
             return [
                 'id' => $ad->id,
                 'latitude' => $ad->latitude,
