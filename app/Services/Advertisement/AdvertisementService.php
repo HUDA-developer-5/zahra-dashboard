@@ -56,6 +56,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class AdvertisementService
 {
@@ -719,7 +720,9 @@ class AdvertisementService
 
     protected function adsBuilder(): Builder
     {
-        return (new Advertisement())->withoutGlobalScope(CurrencyScope::class)->where('status', '=', AdvertisementStatusEnums::Active->value)->newQuery();
+        return (new Advertisement())->when(Route::is('web.my-products.list'),function ($q){
+            $q->withoutGlobalScope(CurrencyScope::class);
+        })->where('status', '=', AdvertisementStatusEnums::Active->value)->newQuery();
     }
 
     public function addAdsToFavourite(User $user, Advertisement $advertisement): void

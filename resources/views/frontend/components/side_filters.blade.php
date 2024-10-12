@@ -217,8 +217,8 @@
                     <input type="range" class="range-min" min="0" max="10000" value="2500" step="100" id="rangeMin">
                     <input type="range" class="range-max" min="0" max="10000" value="7500" step="100" id="rangeMax">
                 </div>
-                <input type="hidden" name="price_from" id="priceFrom" value="2500">
-                <input type="hidden" name="price_to" id="priceTo" value="7500">
+                <input type="hidden" name="price_from" id="priceFrom" value="">
+                <input type="hidden" name="price_to" id="priceTo" value="">
             </div>
         </div>
     </div>
