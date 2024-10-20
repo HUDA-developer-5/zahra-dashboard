@@ -31,6 +31,7 @@ use App\Models\Advertisement;
 use App\Models\AdvertisementMedia;
 use App\Models\Banner;
 use App\Models\FreeCommission;
+use App\Models\Nationality;
 use App\Models\PremiumCommission;
 use App\Models\PremiumUserSetting;
 use App\Models\Scopes\CurrencyScope;
@@ -1044,7 +1045,12 @@ class AdvertisementService
         $transactionId = null;
         $message = trans('api.not enough balance');
         // check the wallet amount
-        $walletBalance = $user->balance;
+//        $walletBalance = $user->balance;
+
+        $country_id = session()->get('country_id') ?? 2;
+        $currency = Nationality::where('id', $country_id)->first()->currency;
+        $walletBalance = $currency == 'SAR' ? $user->balance_sar : ($currency == 'EGP' ? $user->balance_egp : $user->balance_aed);
+
         if ($walletBalance < $totalAmount) {
             return ReturnPaymentTransactionDTO::from([
                 'status' => $status,
@@ -1054,7 +1060,7 @@ class AdvertisementService
         }
 
         try {
-            $currency = $user->default_currency;
+//            $currency = $user->default_currency;
             // add new payment transaction with wallet type
             $paymentTransactionDTO = PaymentTransactionDTO::from([
                 'payment_method' => PaymentMethodsEnum::Wallet,
@@ -1074,11 +1080,12 @@ class AdvertisementService
             // add wallet transaction
             $walletTransactionService->createWalletTransaction(CreateWalletTransactionDTO::from([
                 'user_id' => $user->id,
-                'current_balance' => $user->balance,
+                'current_balance' => $walletBalance,
                 'amount' => $totalAmount,
-                'previous_balance' => $user->balance - $totalAmount,
+                'previous_balance' => $walletBalance - $totalAmount,
                 'type' => WalletTransactionTypesEnum::Deduct,
-                'payment_transaction_id' => $paymentTransaction->id
+                'payment_transaction_id' => $paymentTransaction->id,
+                'currency' => $currency
             ]));
 
             return ReturnPaymentTransactionDTO::from([
@@ -1097,7 +1104,13 @@ class AdvertisementService
     public function payByCard(User $user, float $totalAmount, string $paymentMethod): ReturnPaymentTransactionDTO
     {
         $status = PaymentTransactionStatusEnum::Failed;
-        $currency = $user->default_currency;
+
+
+//        $currency = $user->default_currency;
+        $country_id = session()->get('country_id') ?? 2;
+        $currency = Nationality::where('id', $country_id)->first()->currency;
+
+
         $returnPaymentTransactionDTO = (new PaymentService())->payPremiumAdvertisementAdjustment($user, $totalAmount, $paymentMethod, $currency);
         if ($returnPaymentTransactionDTO->status->value == PaymentTransactionStatusEnum::Completed->value) {
             $message = trans('api.paid successfully');
