@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Helpers\FilesHelper;
 use App\Traits\UserTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,10 +17,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, CrudTrait, SoftDeletes, UserTrait, Billable;
 
+    public static string $destination_path = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -46,9 +47,6 @@ class User extends Authenticatable
         'balance_sar',
         'balance_aed',
     ];
-
-    public static string $destination_path = 'users';
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -99,14 +97,14 @@ class User extends Authenticatable
         return $this->hasMany(UserAdsCommentFollow::class, 'user_id', 'id');
     }
 
-    public function notifications(): HasMany
-    {
-        return $this->hasMany(Notification::class, 'user_id', 'id')->orderByDesc('is_read');
-    }
-
     public function unreadNotifications(): HasMany
     {
         return $this->notifications()->where('is_read', '=', 0);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'user_id', 'id')->orderByDesc('is_read');
     }
 
     public function premiumSubscription(): HasOne
@@ -119,12 +117,13 @@ class User extends Authenticatable
         return $this->balance . '' . $this->default_currency;
     }
 
-    public function chats(): HasMany
+    public function getNewWalletBalanceAttribute()
     {
-        return $this->hasMany(Chat::class, 'sender_id', 'id')
-            ->orWhere(function ($query) {
-                $query->where('receiver_id', $this->id);
-            });
+        $country_id = session()->get('country_id') ?? 2;
+        $currency = \App\Models\Nationality::where('id', $country_id)->first()->currency;
+        $user_balance = $currency == 'SAR' ? $this->balance_sar : ($currency == 'EGP' ? $this->balance_egp : $this->balance_aed);
+
+        return $user_balance . ' ' . $currency;
     }
 
     public function unReadChatMessagesCount(): int
@@ -132,5 +131,13 @@ class User extends Authenticatable
         return $this->chats()->whereHas('unReadMessages', function (Builder $builder) {
             $builder->where('receiver_id', '=', $this->id);
         })->count();
+    }
+
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'sender_id', 'id')
+            ->orWhere(function ($query) {
+                $query->where('receiver_id', $this->id);
+            });
     }
 }

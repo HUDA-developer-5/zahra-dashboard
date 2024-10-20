@@ -354,7 +354,7 @@
                         <div class="d-flex justify-content-between mb-3 check-form">
                             <label class="form-check-label" for="payWallet">
                                 <img src="{{ asset('frontend/assets/images/icons/wallet.svg') }}" alt="wallet icon">
-                                <span>{{ trans('web.Pay by wallet') }} <span class="text-success">({{  auth('users')->user()->wallet_balance }})</span></span>
+                                <span>{{ trans('web.Pay by wallet') }} <span class="text-success">({{  auth('users')->user()->new_wallet_balance }})</span></span>
                             </label>
                             <input class="form-check-input" type="radio" name="payWay" id="payWallet" value="wallet"
                                    checked>
@@ -798,6 +798,7 @@
                     let url = form.attr('action'); // The form action URL
                     let formData = form.serialize(); // Serialize the form data
 
+                    console.log('the url is ' + url);
                     // Send an AJAX request to validate the form
                     $.ajax({
                         url: url,
