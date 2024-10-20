@@ -721,9 +721,15 @@ class AdvertisementService
 
     protected function adsBuilder(): Builder
     {
-        return (new Advertisement())->when(Route::is('web.my-products.list'),function ($q){
+        return (new Advertisement())
+            ->when(Route::is('web.my-products.list'),function ($q){
             $q->withoutGlobalScope(CurrencyScope::class);
-        })->where('status', '=', AdvertisementStatusEnums::Active->value)->newQuery();
+            })
+            ->when(Route::is('web.products.edit'), function ($q) {
+                $q->withoutGlobalScope(CurrencyScope::class);
+            })
+            ->where('status', '=', AdvertisementStatusEnums::Active->value)
+            ->newQuery();
     }
 
     public function addAdsToFavourite(User $user, Advertisement $advertisement): void
