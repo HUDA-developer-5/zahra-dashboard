@@ -713,14 +713,17 @@ class HomeWebController extends Controller
         $advertisementCommissionDetailsDTO = (new AdvertisementService())->calculatePremiumAmount($amount);
         // Total 1500 SR and Discount <span class="text-primary">20%</span> = 1000 SR
 
+        $country_id = session()->get('country_id') ?? 2;
+        $currency = Nationality::where('id', $country_id)->first()->currency;
+
         return response()->json(['data' => trans('web.premium ad amount details', [
             'amount' => $amount,
             'commission' => $advertisementCommissionDetailsDTO->commission,
             'amount_after_commission' => $advertisementCommissionDetailsDTO->amount_after_commission,
-            'currency' => auth('users')->user()->default_currency,
+            'currency' => $currency,
         ]),
             'amount_after_commission' => $advertisementCommissionDetailsDTO->amount_after_commission,
-            'currency' => auth('users')->user()->default_currency,
+            'currency' => $currency,
         ]);
     }
 
