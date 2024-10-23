@@ -28,7 +28,7 @@ class FreeCommissionCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\FreeCommission::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/free-commission');
-        CRUD::setEntityNameStrings('free commission', 'free commissions');
+        CRUD::setEntityNameStrings('free commission', 'free');
     }
 
     /**

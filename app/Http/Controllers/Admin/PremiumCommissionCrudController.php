@@ -29,7 +29,7 @@ class PremiumCommissionCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\PremiumCommission::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/premium-commission');
-        CRUD::setEntityNameStrings('premium commission', 'premium commissions');
+        CRUD::setEntityNameStrings('premium commission', 'premium');
     }
 
     /**
